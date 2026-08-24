@@ -76,10 +76,10 @@ Cloudflare 检测到推送，自动重新构建部署。**整个过程 1~2 分�
 
 ## 上线前清单（Checklist）
 
-- [ ] `src/consts.ts`：网站名、简介改成真的
-- [ ] `src/pages/index.astro`：`你好，我是[你的名字]` 改成真名
-- [ ] `src/pages/about.astro`：补充你的联系方式
-- [ ] `src/content/blog/`：把示例文章换成 / 加进你的内容
+- [ ] `src/consts.ts`：网站名、简介、编辑署名确认无误
+- [ ] `src/pages/about.astro`：补充联系方式
+- [ ] `src/content/issues/`：确认第 1 期占位已换成真实内容
+- [ ] 每期周报都有 `originalUrl`（B 站原文链接）
 - [ ] `npm run build` 能通过
 - [ ] GitHub 仓库已推送
 - [ ] Cloudflare 部署成功，`*.pages.dev` 能打开

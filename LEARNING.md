@@ -37,15 +37,15 @@
 - 产出：`npm run dev` 后在 http://localhost:4321 看到网站
 - 动手题：改 `src/consts.ts` 里的网站名，刷新看变化
 
-### 阶段二：写内容（进行中 ▶️）
+### 阶段二：收录周报（进行中 ▶️）
 - 理解：Markdown、frontmatter、内容集合
-- 产出：在 `src/content/blog/` 写 3 篇文章（不同分类）
-- 动手题：新开一个分类，观察首页分类列表自动出现它
+- 产出：把每周的 B 站周报重排成 `src/content/issues/` 下的一个 `.md` 文件
+- 动手题：复制 `templates/周报模板.md`，改期数和正文，观察归档页自动出现新一期
 
 ### 阶段三：改样子
 - 理解：Astro 组件、页面路由、CSS
 - 产出：改首页布局、文章页样式、导航栏
-- 动手题：把 `src/components/Header.astro` 的导航加一个"标签"入口
+- 动手题：把 `src/components/Header.astro` 的导航加一个链接（比如 B 站主页）
 
 ### 阶段四：部署上线
 - 理解：git 版本控制、构建产物、静态托管
@@ -61,20 +61,19 @@
 
 | 文件 | 作用 | 你要改它的频率 |
 |---|---|---|
-| `src/consts.ts` | 网站名、简介 | 偶尔 |
-| `src/content.config.ts` | 文章字段定义（分类/标签在这里声明） | 很少 |
-| `src/content/blog/*.md` | **你的文章** | 每周 |
-| `src/pages/index.astro` | 首页 | 偶尔 |
-| `src/pages/blog/[...slug].astro` | 文章详情页 | 偶尔 |
-| `src/pages/category/[category].astro` | 分类列表页 | 很少 |
-| `src/pages/tag/[tag].astro` | 标签列表页 | 很少 |
+| `src/consts.ts` | 网站名、简介、编辑署名 | 偶尔 |
+| `src/content.config.ts` | 周报字段定义（期数/日期/原文链接） | 很少 |
+| `src/content/issues/*.md` | **每周收录的周报** | 每周 |
+| `src/pages/index.astro` | 首页（最新一期 + 往期列表） | 偶尔 |
+| `src/pages/archive.astro` | 全部期数归档 | 很少 |
+| `src/pages/issue/[...slug].astro` | 单期页面（动态路由） | 很少 |
+| `src/layouts/IssueLayout.astro` | 期数页布局（含阅读进度条） | 偶尔 |
 | `src/components/Header.astro` | 顶部导航 | 偶尔 |
 | `src/components/Footer.astro` | 页脚 | 很少 |
-| `src/layouts/BlogPost.astro` | 文章页布局模板 | 偶尔 |
-| `src/styles/global.css` | 全局样式 | 偶尔 |
+| `src/styles/global.css` | 全局样式（红黑 + 交通色） | 偶尔 |
 | `astro.config.mjs` | Astro 配置 | 几乎不 |
 
-**核心原则：文章在 `content/blog/`，结构在 `pages/`，外观在 `components/` + `styles/`。想改什么，先想清楚它属于哪一层。**
+**核心原则：周报内容在 `content/issues/`，结构在 `pages/`，外观在 `components/` + `styles/`。想改什么，先想清楚它属于哪一层。**
 
 ## 五、常见问题排查
 
@@ -82,5 +81,5 @@
 |---|---|---|
 | `npm run dev` 报"astro: 不是内部或外部命令" | 没装依赖 | 先 `npm install` |
 | 构建报 frontmatter 错误 | 文章少写了必填字段 | 对照 README 的字段表 |
-| 新增文章首页没出现 | 保存的文件不是 `.md`，或文件在错误目录 | 确认在 `src/content/blog/` 下 |
+| 新增周报归档没出现 | 保存的文件不是 `.md`，或文件在错误目录 | 确认在 `src/content/issues/` 下 |
 | 端口被占用 | 4321 已被别的程序使用 | 看终端提示的实际端口 |

@@ -1,0 +1,39 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title={`404 | ${SITE_TITLE}`} description="页面不存在" />
+		<style>
+			.center {
+				text-align: center;
+				padding: 4em 0;
+			}
+			h1 {
+				font-family: var(--font-serif);
+				font-size: 3em;
+				color: var(--red);
+				margin-bottom: 0.3em;
+			}
+			p {
+				color: rgb(var(--gray));
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="center">
+				<h1>404</h1>
+				<p>这里没有观测记录——可能链接写错了，或者内容被移动了。</p>
+				<p><a href="/">← 回到首页</a></p>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
