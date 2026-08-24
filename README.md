@@ -46,6 +46,8 @@ heroImage: '../../assets/blog-placeholder-1.jpg'  # 可选：封面图
 
 保存后，开发服务器会自动刷新页面。文章会出现在首页、笔记列表页，以及对应的分类页（`/category/游戏设计/`）和标签页（`/tag/系统设计/`）。
 
+> 💡 也可以直接复制 `templates/文章模板.md` 到 `src/content/blog/` 里改，字段说明都写在里面。
+
 **规则：**
 - `category` 和 `pubDate` 是必填的（忘了写会构建报错）
 - `tags` 不写默认为空
@@ -80,4 +82,4 @@ notes-site/
 - [ ] 把网站名改成你自己的（`src/consts.ts`）
 - [ ] 把首页和关于页的占位信息换成你的（`src/pages/index.astro`、`src/pages/about.astro`）
 - [ ] 写你的第一篇真文章（`src/content/blog/`）
-- [ ] 用 git 管理项目，部署到 Cloudflare Pages（见 `LEARNING.md` 阶段四）
+- [ ] 按 `DEPLOY.md` 指南部署到 Cloudflare Pages（免备案上线；本地 git 仓库已初始化、首次提交已完成）
