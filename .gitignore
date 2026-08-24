@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# 本地参考素材（朋友周报原文，仅本机使用，不随仓库分发）
+参考文献/
