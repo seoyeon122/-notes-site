@@ -1,0 +1,154 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import { getCollection } from 'astro:content';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+// 读取所有笔记，按发布日期从新到旧排序
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+// 从所有笔记里收集去重后的分类和标签
+const categories = [...new Set(posts.map((p) => p.data.category))].sort();
+const tags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
+const latestPosts = posts.slice(0, 5);
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			main {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: 0 auto;
+				padding: 1em;
+			}
+			.hero {
+				text-align: center;
+				padding: 3em 0 2em;
+			}
+			.hero h1 {
+				margin: 0 0 0.5em;
+			}
+			.hero p {
+				color: rgb(var(--gray));
+			}
+			section {
+				margin-bottom: 2.5em;
+			}
+			h2 {
+				font-size: 1.4em;
+			}
+			.post-list {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+			.post-list li {
+				margin-bottom: 1.5em;
+				padding-bottom: 1.5em;
+				border-bottom: 1px solid rgb(var(--gray), 20%);
+			}
+			.post-list a {
+				text-decoration: none;
+				color: inherit;
+			}
+			.post-list h3 {
+				margin: 0 0 0.3em;
+				color: rgb(var(--black));
+			}
+			.post-list a:hover h3 {
+				color: rgb(var(--accent));
+			}
+			.meta {
+				margin: 0 0 0.5em;
+				font-size: 0.85em;
+				color: rgb(var(--gray));
+			}
+			.desc {
+				margin: 0;
+				color: rgb(var(--gray-dark));
+			}
+			.chips {
+				list-style: none;
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.6em;
+				margin: 0;
+				padding: 0;
+			}
+			.chips a {
+				display: inline-block;
+				padding: 0.3em 0.9em;
+				border-radius: 999px;
+				background: rgb(var(--gray), 10%);
+				color: rgb(var(--gray-dark));
+				text-decoration: none;
+				font-size: 0.9em;
+			}
+			.chips a:hover {
+				background: rgb(var(--accent), 15%);
+				color: rgb(var(--accent));
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero">
+				<h1>你好，我是[你的名字]</h1>
+				<p>一名刚入行的游戏策划。这里记录我的学习、读书与生活笔记。</p>
+			</section>
+
+			<section>
+				<h2>最新笔记</h2>
+				<ul class="post-list">
+					{
+						latestPosts.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`}>
+									<h3>{post.data.title}</h3>
+									<p class="meta">
+										<FormattedDate date={post.data.pubDate} /> · {post.data.category}
+									</p>
+									<p class="desc">{post.data.description}</p>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+
+			<section>
+				<h2>栏目分类</h2>
+				<ul class="chips">
+					{
+						categories.map((c) => (
+							<li>
+								<a href={`/category/${c}/`}>{c}</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+
+			<section>
+				<h2>标签</h2>
+				<ul class="chips">
+					{
+						tags.map((t) => (
+							<li>
+								<a href={`/tag/${t}/`}>#{t}</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
