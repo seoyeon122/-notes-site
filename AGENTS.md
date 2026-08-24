@@ -37,6 +37,7 @@ frontmatter：`title`(必填) / `issue`(必填，整数期数) / `pubDate`(必�
 - `npm run dev`（或 `astro dev --background` 后台模式；用 `astro dev status / stop / logs` 管理）
 - `npm run build` → `dist/`（改完必跑，验证一切）
 - git：`add → commit → push` 到 `origin/main`；仓库 **https://github.com/seoyeon122/-notes-site**（**PRIVATE，勿改公开**）
+- ⚠️ **dev 模式疑难杂症先重启**：长驻的 Vite dev server 模块图会陈旧（尤其是中途新增 npm 依赖后），症状是"初次加载样式不生效/行为怪异、导航后恢复"。遇到先 `astro dev stop` 再 `astro dev --background`。此问题只存在于 dev 模式，`npm run build` 产物不受影响。
 
 ## 6. 动效约定（MotionInit.astro）
 
