@@ -3,7 +3,7 @@
    主色：交通红 + 近黑；点缀色：黄 / 绿 / 蓝（交通指示牌配色）*/
 
 :root {
-	--paper: #faf7f2; /* 纸感背景 */
+	--paper: #ffffff; /* 底色：纯白（与 anyway.fm 的 #fff 一致） */
 	--ink: #171717; /* 近黑正文 */
 	--red: #c8102e; /* 主色：交通红 */
 	--yellow: #ffd100; /* 点缀：黄 */
@@ -13,7 +13,7 @@
 	--accent: var(--red);
 	--black: 23, 23, 23;
 	--gray: 128, 124, 116;
-	--gray-light: 232, 227, 216;
+	--gray-light: 230, 230, 230; /* 中性浅灰（配纯白底） */
 	--gray-dark: 23, 23, 23;
 	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
 	--box-shadow: 0 2px 6px rgba(var(--gray), 20%), 0 8px 24px rgba(var(--gray), 25%);

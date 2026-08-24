@@ -21,25 +21,28 @@ const rest = issues.slice(1);
 				padding: 3.5em 0 2em;
 			}
 			.signals {
-				display: flex;
-				justify-content: center;
-				gap: 0.5em;
-				margin-bottom: 1.2em;
+				display: inline-flex;
+				align-items: center;
+				gap: 0.7em;
+				padding: 0.55em 0.9em;
+				margin-bottom: 1.4em;
+				background: var(--ink);
+				border-radius: 12px;
+				box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
 			}
 			.signals span {
-				width: 12px;
-				height: 12px;
+				width: 14px;
+				height: 14px;
 				border-radius: 50%;
-				box-shadow: 0 0 0 3px rgb(var(--gray-light));
+			}
+			.signals .r {
+				background: var(--red);
 			}
 			.signals .y {
 				background: var(--yellow);
 			}
 			.signals .g {
 				background: var(--green);
-			}
-			.signals .b {
-				background: var(--blue);
 			}
 			.hero h1 {
 				font-family: var(--font-serif);
@@ -140,7 +143,7 @@ const rest = issues.slice(1);
 		<main>
 			<section class="hero">
 				<div class="signals" data-animate>
-					<span class="y"></span><span class="g"></span><span class="b"></span>
+					<span class="r"></span><span class="y"></span><span class="g"></span>
 				</div>
 				<h1 data-animate>{SITE_TITLE}</h1>
 				<p data-animate>{SITE_DESCRIPTION}</p>
