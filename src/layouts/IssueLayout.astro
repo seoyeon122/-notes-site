@@ -58,7 +58,7 @@ const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
 			<article>
 				<header class="issue-head">
 					{issue && <p class="issue-no">第 {issue} 期</p>}
-					<h1>{title}</h1>
+					<h1 data-animate>{title}</h1>
 					<p class="meta">
 						<FormattedDate date={pubDate} />
 						{author && ` · ${author}`}

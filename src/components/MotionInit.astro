@@ -1,0 +1,56 @@
+---
+// 动效地基（全站动效管理器）
+// 提供：
+//   1. Lenis 平滑滚动（专业站标配的"丝滑感"）
+//   2. 滚动进场动画：给任意元素加 data-animate 属性即可
+//   3. 自动兼容 ClientRouter 页面切换与系统"减少动态效果"设置
+// 用法示例：<h1 data-animate>标题</h1>
+---
+
+<script>
+	import gsap from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+	import Lenis from 'lenis';
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	// 尊重系统"减少动态效果"设置：开启时关闭平滑滚动和进场动画
+	const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	if (!reduced) {
+		// 1) 平滑滚动
+		const lenis = new Lenis({ duration: 1.15 });
+		lenis.on('scroll', ScrollTrigger.update);
+		gsap.ticker.add((time) => lenis.raf(time * 1000));
+		gsap.ticker.lagSmoothing(0);
+
+		// 2) 通用滚动进场动画
+		function setupReveals() {
+			const targets = gsap.utils.toArray('[data-animate]');
+			if (!targets.length) return;
+			gsap.set(targets, { opacity: 0, y: 28 });
+			ScrollTrigger.batch(targets, {
+				start: 'top 88%',
+				once: true,
+				onEnter: (batch) =>
+					gsap.to(batch, {
+						opacity: 1,
+						y: 0,
+						duration: 0.9,
+						ease: 'power3.out',
+						stagger: 0.08,
+						overwrite: true,
+					}),
+			});
+		}
+
+		setupReveals();
+
+		// 3) ClientRouter 页面切换后：清掉旧触发点、重新初始化
+		document.addEventListener('astro:page-load', () => {
+			ScrollTrigger.getAll().forEach((t) => t.kill());
+			setupReveals();
+			ScrollTrigger.refresh();
+		});
+	}
+</script>

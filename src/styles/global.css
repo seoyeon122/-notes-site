@@ -20,6 +20,12 @@
 
 	--font-serif: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'SimSun', serif;
 	--font-sans: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+
+	/* 动效基调：全站统一的手感（CSS 过渡用；JS 动画用 MotionInit 里的 GSAP 缓动） */
+	--ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+	--ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+	--dur-fast: 0.3s;
+	--dur-base: 0.6s;
 }
 
 html {

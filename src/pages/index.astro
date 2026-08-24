@@ -139,16 +139,16 @@ const rest = issues.slice(1);
 		<Header />
 		<main>
 			<section class="hero">
-				<div class="signals">
+				<div class="signals" data-animate>
 					<span class="y"></span><span class="g"></span><span class="b"></span>
 				</div>
-				<h1>{SITE_TITLE}</h1>
-				<p>{SITE_DESCRIPTION}</p>
+				<h1 data-animate>{SITE_TITLE}</h1>
+				<p data-animate>{SITE_DESCRIPTION}</p>
 			</section>
 
 			{
 				latest && (
-					<section class="latest-card">
+					<section class="latest-card" data-animate>
 						<p class="label">最新观测 · 第 {latest.data.issue} 期</p>
 						<h2>{latest.data.title}</h2>
 						<p class="summary">{latest.data.summary || latest.data.title}</p>
@@ -161,12 +161,12 @@ const rest = issues.slice(1);
 			}
 
 			<section>
-				<h2>往期观测</h2>
+				<h2 data-animate>往期观测</h2>
 				<ul class="issue-list">
 					{
 						rest.map((issue) => (
 							<li>
-								<a class="row" href={`/issue/${issue.id}/`}>
+								<a class="row" href={`/issue/${issue.id}/`} data-animate>
 									<span class="no">第 {issue.data.issue} 期</span>
 									<span class="title">{issue.data.title}</span>
 									<span class="date">
@@ -177,7 +177,9 @@ const rest = issues.slice(1);
 						))
 					}
 				</ul>
-				{rest.length > 0 && <a class="archive-link" href="/archive">查看全部归档 →</a>}
+				{rest.length > 0 && (
+					<a class="archive-link" href="/archive" data-animate>查看全部归档 →</a>
+				)}
 			</section>
 		</main>
 		<Footer />
