@@ -23,9 +23,8 @@
 		gsap.ticker.add((time) => lenis.raf(time * 1000));
 		gsap.ticker.lagSmoothing(0);
 
-		// 2) 滚动进场动画
-		//    每个元素独立触发；data-animate-done 标记"已显示"的元素，
-		//    防止重复初始化（astro:page-load 初次加载也会触发一次）把已显示的再藏回去。
+		// 2) 滚动进场动画：每个元素独立触发
+		//    data-animate-done 标记"已显示"的元素，防止重复初始化把它们再藏回去
 		function setupReveals() {
 			const targets = gsap.utils.toArray('[data-animate]:not([data-animate-done])');
 			targets.forEach((el) => {
@@ -46,16 +45,29 @@
 			});
 		}
 
-		setupReveals();
-
-		// 3) 网页字体加载完可能引起布局偏移，刷新一次触发点位置
-		document.fonts?.ready.then(() => ScrollTrigger.refresh());
-
-		// 4) ClientRouter 页面切换后：清掉旧触发点、重新初始化
-		document.addEventListener('astro:page-load', () => {
+		// 3) 统一入口：清旧触发点 → 重建 → 刷新位置
+		//    （实测：导航后走这条路径一切正常，说明"刷新触发点位置"是必需步骤）
+		function initReveals() {
 			ScrollTrigger.getAll().forEach((t) => t.kill());
 			setupReveals();
 			ScrollTrigger.refresh();
+		}
+
+		// 初次加载：立即初始化；等字体/图片布局稳定后再刷新触发点位置
+		initReveals();
+		window.addEventListener('load', () => ScrollTrigger.refresh());
+		document.fonts?.ready.then(() => ScrollTrigger.refresh());
+
+		// 4) ClientRouter 页面切换后重置。
+		//    astro:page-load 在初次加载时也会触发一次，跳过它（初次加载已由上方处理），
+		//    避免把正在进场动画中的元素重新藏回去。
+		let firstLoad = true;
+		document.addEventListener('astro:page-load', () => {
+			if (firstLoad) {
+				firstLoad = false;
+				return;
+			}
+			initReveals();
 		});
 	}
 </script>
