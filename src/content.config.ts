@@ -2,20 +2,20 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-const blog = defineCollection({
-	// Load Markdown and MDX files in the `src/content/blog/` directory.
-	loader: glob({ base: './src/content/blog', pattern: '**/*.{md,mdx}' }),
-	// Type-check frontmatter using a schema
+// 内容模型：一期周报 = 一个 Markdown 文件
+const issues = defineCollection({
+	// 读取 src/content/issues/ 目录下的 Markdown 文件
+	loader: glob({ base: './src/content/issues', pattern: '**/*.md' }),
 	schema: ({ image }) =>
 		z.object({
-			title: z.string(), // 标题
-			description: z.string(), // 摘要（列表页和搜索引擎用）
-			pubDate: z.coerce.date(), // 发布日期（会自动转成 Date 对象）
-			updatedDate: z.coerce.date().optional(), // 更新日期（可选）
-			category: z.string(), // 分类 = 你的子方向（如：游戏设计、读书笔记、随笔）
-			tags: z.array(z.string()).default([]), // 标签，可以多个
+			title: z.string(), // 本期标题
+			issue: z.number().int().positive(), // 期数（第几期）
+			pubDate: z.coerce.date(), // 发布日期
+			author: z.string().default('又一不举害我备孕失败'), // 作者署名（周报编辑）
+			originalUrl: z.string().url().optional(), // B 站原文链接（每期保留署名+原文链接）
+			summary: z.string().default(''), // 一句话摘要（首页用）
 			heroImage: z.optional(image()), // 封面图（可选）
 		}),
 });
 
-export const collections = { blog };
+export const collections = { issues };

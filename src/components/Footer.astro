@@ -1,22 +1,29 @@
 ---
-import { SITE_TITLE } from '../consts';
+import { SITE_AUTHOR, SITE_TAGLINE } from '../consts';
 const today = new Date();
 ---
 
 <footer>
-	&copy; {today.getFullYear()} {SITE_TITLE} · 用 <a href="https://astro.build/">Astro</a> 构建
+	<p class="tagline">{SITE_TAGLINE}</p>
+	<p class="meta">
+		编辑：{SITE_AUTHOR} · 本站周报同步自 B 站专栏 · © {today.getFullYear()} 四时小路 Komichi
+	</p>
 </footer>
 <style>
 	footer {
-		padding: 2em 1em 6em 1em;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		color: rgb(var(--gray));
+		max-width: 720px;
+		margin: 0 auto;
+		padding: 3em 1.25em 4em;
 		text-align: center;
+		border-top: 1px solid rgb(var(--gray-light));
 	}
-	footer a {
+	.tagline {
+		color: var(--red);
+		font-size: 0.95em;
+		margin-bottom: 0.6em;
+	}
+	.meta {
 		color: rgb(var(--gray));
-	}
-	footer a:hover {
-		color: rgb(var(--gray-dark));
+		font-size: 0.82em;
 	}
 </style>

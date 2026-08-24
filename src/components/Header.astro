@@ -5,43 +5,43 @@ import HeaderLink from './HeaderLink.astro';
 
 <header>
 	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
-		<div class="internal-links">
+		<a class="brand" href="/">{SITE_TITLE}</a>
+		<div class="links">
 			<HeaderLink href="/">首页</HeaderLink>
-			<HeaderLink href="/blog">笔记</HeaderLink>
+			<HeaderLink href="/archive">归档</HeaderLink>
 			<HeaderLink href="/about">关于</HeaderLink>
 		</div>
 	</nav>
 </header>
 <style>
 	header {
-		margin: 0;
-		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
-	}
-	h2 {
-		margin: 0;
-		font-size: 1em;
-	}
-
-	h2 a,
-	h2 a.active {
-		text-decoration: none;
+		position: sticky;
+		top: 0;
+		z-index: 50;
+		background: var(--paper);
+		border-bottom: 1px solid rgb(var(--gray-light));
 	}
 	nav {
+		max-width: 720px;
+		margin: 0 auto;
+		padding: 0 1.25em;
+		height: 56px;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 	}
-	nav a {
-		padding: 1em 0.5em;
-		color: var(--black);
-		border-bottom: 4px solid transparent;
+	.brand {
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		color: var(--ink);
 		text-decoration: none;
 	}
-	nav a.active {
+	.brand:hover {
+		color: var(--red);
 		text-decoration: none;
-		border-bottom-color: var(--accent);
+	}
+	.links {
+		display: flex;
+		gap: 0.25em;
 	}
 </style>

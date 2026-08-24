@@ -1,6 +1,5 @@
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
-
-// 全站共用信息：想改网站名字和简介，只改这个文件就够了。
-export const SITE_TITLE = '我的笔记站'; // TODO: 改成你的网站名
-export const SITE_DESCRIPTION = '记录和分享我在游戏设计、读书与生活中的思考'; // TODO: 改成你的简介
+// 全站共用信息：网站名、简介、作者都在这一个文件里改。
+export const SITE_TITLE = '四时小路观测周报'; // 网站名
+export const SITE_DESCRIPTION = '每周同步四时小路的都市传说观察资讯：出没记录、传单情报与珍贵影像。'; // 一句话介绍
+export const SITE_AUTHOR = '又一不举害我备孕失败'; // 周报编辑（小路泥调查组）
+export const SITE_TAGLINE = '每周一期，观测都市传说。'; // 页脚趣味文案
