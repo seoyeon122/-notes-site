@@ -84,6 +84,6 @@ notes-site/
 ## 下一步
 
 - [ ] 验收后按反馈调整设计（字体 / 颜色 / 布局）
-- [ ] 补第 1 期《第一路口观测记录》真实内容
 - [ ] 填关于页的联系方式（`src/pages/about.astro`）
 - [ ] 按 `DEPLOY.md` 部署到 Cloudflare Pages（免备案上线）
+- [ ] 每周收录新一期（复制 `templates/周报模板.md` → `git push`）

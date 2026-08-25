@@ -78,7 +78,7 @@ Cloudflare 检测到推送，自动重新构建部署。**整个过程 1~2 分�
 
 - [ ] `src/consts.ts`：网站名、简介、编辑署名确认无误
 - [ ] `src/pages/about.astro`：补充联系方式
-- [ ] `src/content/issues/`：确认第 1 期占位已换成真实内容
+- [ ] `src/content/issues/`：确认已收录期数（第 1~3 期）内容与授权无误
 - [ ] 每期周报都有 `originalUrl`（B 站原文链接）
 - [ ] `npm run build` 能通过
 - [ ] GitHub 仓库已推送
