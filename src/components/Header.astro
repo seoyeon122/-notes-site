@@ -1,15 +1,19 @@
 ---
 import { SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
+import ThemeToggle from './ThemeToggle.astro';
 ---
 
 <header>
 	<nav>
 		<a class="brand" href="/">{SITE_TITLE}</a>
-		<div class="links">
-			<HeaderLink href="/">首页</HeaderLink>
-			<HeaderLink href="/archive">归档</HeaderLink>
-			<HeaderLink href="/about">关于</HeaderLink>
+		<div class="nav-right">
+			<div class="links">
+				<HeaderLink href="/">首页</HeaderLink>
+				<HeaderLink href="/archive">归档</HeaderLink>
+				<HeaderLink href="/about">关于</HeaderLink>
+			</div>
+			<ThemeToggle />
 		</div>
 	</nav>
 </header>
@@ -18,8 +22,8 @@ import HeaderLink from './HeaderLink.astro';
 		position: sticky;
 		top: 0;
 		z-index: 50;
-		background: var(--paper);
-		border-bottom: 1px solid rgb(var(--gray-light));
+		background: #0c0505; /* 固定暗色报头（明暗两模式一致，不随主题变） */
+		border-bottom: 1px solid rgba(246, 235, 232, 0.1);
 	}
 	nav {
 		max-width: 720px;
@@ -29,16 +33,22 @@ import HeaderLink from './HeaderLink.astro';
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		gap: 1em;
 	}
 	.brand {
 		font-weight: 700;
 		letter-spacing: 0.06em;
-		color: var(--ink);
+		color: #f6ebe8;
 		text-decoration: none;
 	}
 	.brand:hover {
-		color: var(--red);
+		color: #ff2231;
 		text-decoration: none;
+	}
+	.nav-right {
+		display: flex;
+		align-items: center;
+		gap: 0.6em;
 	}
 	.links {
 		display: flex;

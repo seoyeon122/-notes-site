@@ -1,0 +1,95 @@
+---
+// 「凌晨四点观测」：实时显示此刻哪个整点时区正处于凌晨 04:00–04:59
+// 四时小路是活跃在凌晨四点的都市传说；东八区固定对应中国。
+---
+
+<div class="four-am" data-animate>
+	<p class="four-am-label">凌晨四点，此刻降临在</p>
+	<p class="four-am-zone"><span id="four-am-zone">……</span></p>
+	<p class="four-am-note">四时小路出没时刻 · 整点时区观测</p>
+</div>
+
+<style>
+	.four-am {
+		margin: 1.5em 0 0;
+		padding: 1em 1.25em;
+		max-width: 26em;
+		border: 1px solid rgba(246, 235, 232, 0.14);
+		border-radius: 10px;
+		background: rgba(246, 235, 232, 0.05);
+		text-align: left;
+	}
+	.four-am-label {
+		font-size: 0.82em;
+		color: #b9b1ac;
+		letter-spacing: 0.12em;
+		margin-bottom: 0.4em;
+	}
+	.four-am-zone {
+		font-family: var(--font-serif);
+		font-size: 1.3em;
+		font-weight: 700;
+		color: #f6ebe8;
+		margin-bottom: 0.4em;
+	}
+	.four-am-note {
+		font-size: 0.78em;
+		color: #8b8580;
+	}
+</style>
+
+<script>
+	// 整点时区 → 最具代表性国家/城市（东八区固定为中国）
+	const ZONES = [
+		{ o: -12, country: '美国', city: '贝克岛' },
+		{ o: -11, country: '纽埃', city: '阿洛菲' },
+		{ o: -10, country: '美国', city: '夏威夷' },
+		{ o: -9, country: '美国', city: '阿拉斯加' },
+		{ o: -8, country: '美国', city: '洛杉矶' },
+		{ o: -7, country: '墨西哥', city: '墨西哥城' },
+		{ o: -6, country: '美国', city: '芝加哥' },
+		{ o: -5, country: '美国', city: '纽约' },
+		{ o: -4, country: '智利', city: '圣地亚哥' },
+		{ o: -3, country: '巴西', city: '圣保罗' },
+		{ o: -2, country: '巴西', city: '费尔南多群岛' },
+		{ o: -1, country: '佛得角', city: '普拉亚' },
+		{ o: 0, country: '英国', city: '伦敦' },
+		{ o: 1, country: '法国', city: '巴黎' },
+		{ o: 2, country: '希腊', city: '雅典' },
+		{ o: 3, country: '俄罗斯', city: '莫斯科' },
+		{ o: 4, country: '阿联酋', city: '迪拜' },
+		{ o: 5, country: '巴基斯坦', city: '伊斯兰堡' },
+		{ o: 6, country: '孟加拉国', city: '达卡' },
+		{ o: 7, country: '泰国', city: '曼谷' },
+		{ o: 8, country: '中国', city: '北京' },
+		{ o: 9, country: '日本', city: '东京' },
+		{ o: 10, country: '澳大利亚', city: '悉尼' },
+		{ o: 11, country: '所罗门群岛', city: '霍尼亚拉' },
+		{ o: 12, country: '新西兰', city: '奥克兰' },
+		{ o: 13, country: '萨摩亚', city: '阿皮亚' },
+		{ o: 14, country: '基里巴斯', city: '莱恩群岛' },
+	];
+
+	function fmt(o) {
+		return o === 0 ? 'UTC±0' : o > 0 ? `UTC+${o}` : `UTC${o}`;
+	}
+
+	// 此刻处于 04:00–04:59 的整点时区（通常 1 个，偶尔 2 个）
+	function zonesInFourAM() {
+		const utcH = new Date().getUTCHours();
+		return ZONES.filter((z) => (utcH + z.o + 24) % 24 === 4);
+	}
+
+	function render() {
+		const el = document.getElementById('four-am-zone');
+		if (!el) return;
+		const zones = zonesInFourAM();
+		el.textContent = zones.length
+			? zones.map((z) => `${z.country} · ${z.city}（${fmt(z.o)}）`).join('　与　')
+			: '此刻不在任何整点时区的凌晨四点';
+	}
+
+	render();
+	setInterval(render, 60 * 1000);
+	document.addEventListener('astro:page-load', render);
+</script>

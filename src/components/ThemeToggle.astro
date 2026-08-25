@@ -1,0 +1,63 @@
+---
+// 明暗模式切换按钮：点击在 <html data-theme> 之间切换，选择记忆在 localStorage
+---
+
+<button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换明暗模式" title="切换明暗模式">
+	<span class="icon">🌙</span>
+</button>
+
+<style>
+	.theme-toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.1em;
+		height: 2.1em;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 50%;
+		background: var(--card, var(--paper));
+		cursor: pointer;
+		font-size: 0.95em;
+		line-height: 1;
+		transition:
+			border-color var(--dur-fast) ease,
+			background-color var(--dur-fast) ease;
+	}
+	.theme-toggle:hover {
+		border-color: var(--accent);
+	}
+	.theme-toggle .icon {
+		display: block;
+	}
+</style>
+
+<script>
+	const btn = document.getElementById('theme-toggle');
+	const icon = btn?.querySelector('.icon');
+
+	function current() {
+		return document.documentElement.getAttribute('data-theme') || 'dark';
+	}
+
+	function syncIcon(theme) {
+		if (icon) icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+	}
+
+	function setTheme(theme) {
+		document.documentElement.setAttribute('data-theme', theme);
+		try {
+			localStorage.setItem('theme', theme);
+		} catch (e) {
+			/* 隐私模式等场景忽略 */
+		}
+		syncIcon(theme);
+	}
+
+	if (btn) {
+		syncIcon(current());
+		btn.addEventListener('click', () => setTheme(current() === 'dark' ? 'light' : 'dark'));
+	}
+
+	// ClientRouter 页面切换后脚本会重新执行，确保图标与当前主题一致
+	document.addEventListener('astro:page-load', () => syncIcon(current()));
+</script>

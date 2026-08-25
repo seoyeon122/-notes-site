@@ -6,7 +6,7 @@
 ## 1. 项目是什么
 
 四时小路观测周报网站：把合作朋友的每周周报（B 站专栏，作者"又一不举害我备孕失败"，对象为 VTuber @四时小路Komichi）**重新排版收录**成网站。
-设计参照：anyway.fm 编辑风。主色：交通红 `#C8102E` + 近黑 `#171717`；点缀：黄 `#FFD100` / 绿 `#009A44` / 蓝 `#0057B7`。
+设计参照：anyway.fm 编辑风。**白天默认**：纯白底 + 近黑 `#171717` 字 + 交通红 `#C8102E` 强调（点缀黄/绿/蓝）；**暗黑模式**：红黑渐变底（近黑→深红木色）+ 暖白 `#F2ECE6` 字。页头有明暗切换按钮（记忆 localStorage，防闪烁脚本在 BaseHead）。交通信号灯（红/黄/绿）为装饰元素。
 
 ## 2. 技术栈与版本
 
@@ -23,7 +23,7 @@
 - `src/pages/` — `index`（最新一期+往期）、`archive`、`issue/[slug]`、`about`、`404`、`rss.xml`
 - `src/layouts/IssueLayout.astro` — 期数页布局（含阅读进度条；h1 带 `data-animate`）
 - `src/components/` — Header / HeaderLink / Footer / BaseHead（含 ClientRouter+MotionInit）/ FormattedDate / **MotionInit**（动效管理器，见 §6）
-- `src/styles/global.css` — 设计 tokens（`--paper/--ink/--red/--yellow/--green/--blue` + 动效 tokens `--ease-out-expo/--dur-*`）
+- `src/styles/global.css` — 设计 tokens：白天在 `:root`、暗黑在 `:root[data-theme='dark']`（`--paper/--ink/--accent/--selection/--gray*` + 交通灯装饰色 + 动效 tokens）
 - `templates/周报模板.md` — 新一期复制它
 - `参考文献/` — 朋友原文存档，**已在 .gitignore，绝不提交**（见 §7 红线）
 
@@ -54,7 +54,7 @@ frontmatter：`title`(必填) / `issue`(必填，整数期数) / `pubDate`(必�
 
 ## 8. 当前状态与 Roadmap（优先级从高到低）
 
-**已完成**：内容模型（期数归档）、红黑编辑风设计、动效地基、git 私有仓库、文档（README/LEARNING/DEPLOY/周报模板/本文件）。
+**已完成**：内容模型（期数归档 1~3 期）、红黑双主题（白天+暗黑切换）、动效地基、git 私有仓库、文档（README/LEARNING/DEPLOY/周报模板/本文件）。
 
 **待办**：
 1. **骨架升级（下一个大任务）**：周报排版组件——顶部速览卡(TL;DR)、切片卡片、本周数据大数字块、文章内目录 TOC、时间线排版、上一篇/下一篇导航；并升级 `templates/周报模板.md` 让写作者"填表格式"套组件（MDX 已就绪，组件可做成 `.mdx` 内可用的标记/组件）
