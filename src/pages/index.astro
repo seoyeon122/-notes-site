@@ -6,7 +6,7 @@ import Rail from '../components/Rail.astro';
 import FourAMWatch from '../components/FourAMWatch.astro';
 import { getCollection } from 'astro:content';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import bg from '../assets/Background_test02.png';
+import bg from '../assets/Background_test01.png';
 
 const issues = (await getCollection('issues')).sort((a, b) => b.data.issue - a.data.issue);
 const latest = issues[0];

@@ -9,6 +9,8 @@ const links = [
 	{ href: '/about', label: '关于' },
 ];
 const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.startsWith(href));
+// 阅读页（周报/关于）固定浅色，明暗切换按钮不显示
+const isReading = pathname.startsWith('/issue/') || pathname === '/about';
 ---
 
 <aside class="rail">
@@ -25,9 +27,13 @@ const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.s
 			))
 		}
 	</nav>
-	<div class="rail-toggle">
-		<ThemeToggle />
-	</div>
+	{
+		!isReading && (
+			<div class="rail-toggle">
+				<ThemeToggle />
+			</div>
+		)
+	}
 </aside>
 
 <style>

@@ -12,7 +12,7 @@ const { title, issue, pubDate, author, originalUrl, summary, heroImage, highligh
 const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
 ---
 
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="light">
 	<head>
 		<BaseHead title={pageTitle} description={summary || title} />
 		<style>
@@ -141,6 +141,12 @@ const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
 			addEventListener('scroll', update, { passive: true });
 			addEventListener('astro:page-load', update);
 			update();
+
+			// 阅读页固定浅色（与首页/全局主题解耦，不随明暗切换变化）
+			document.documentElement.setAttribute('data-theme', 'light');
+			document.addEventListener('astro:page-load', () => {
+				document.documentElement.setAttribute('data-theme', 'light');
+			});
 
 			// 从首页高亮卡进入：滚动到对应小节
 			const hash = decodeURIComponent(window.location.hash.slice(1));
