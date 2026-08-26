@@ -6,7 +6,7 @@
 ## 1. 项目是什么
 
 四时小路观测周报网站：把合作朋友的每周周报（B 站专栏，作者"又一不举害我备孕失败"，对象为 VTuber @四时小路Komichi）**重新排版收录**成网站。
-设计参照：anyway.fm 编辑风。**白天默认**：纯白底 + 近黑 `#171717` 字 + 交通红 `#C8102E` 强调（点缀黄/绿/蓝）；**暗黑模式**：红黑渐变底（近黑→深红木色）+ 暖白 `#F2ECE6` 字。页头有明暗切换按钮（记忆 localStorage，防闪烁脚本在 BaseHead）。交通信号灯（红/黄/绿）为装饰元素。
+设计参照：anyway.fm 编辑风 + komichi-vup 暗红黑世界观。**默认暗色**：暗红黑 `#0C0505` 底 + 鲜红 `#FF2231` 强调 + 暖白 `#F6EBE8` 字（点缀黄/绿/蓝信号灯）；**纸面模式**（切换按钮启用）：暖白 `#F6F4F0` 底 + 深墨字。首页是"报告左右两页"：暗色封面（左）+ 可滚动周报窗口（右）+ 浅色往期观测（下）。页头有明暗切换按钮（记忆 localStorage，防闪烁脚本在 BaseHead）。
 
 ## 2. 技术栈与版本
 
@@ -18,12 +18,14 @@
 ## 3. 架构速览（文件地图）
 
 - `src/consts.ts` — 全站文案（站名/简介/编辑署名/页脚标语），一处修改
+- `操作手册.md` — **人类手操指南**（无 AI 时的维护步骤）；⚠️ 每次新增功能后必须同步更新它，保持与代码一致
+- `public/images/issue-N/` — 各期图片的本地副本（不再热链 B 站，见 §7）
 - `src/content.config.ts` — 内容模型：`issues` 集合（字段见 §4）
 - `src/content/issues/*.md` — ★ 周报内容；每周新增一期 = 复制 `templates/周报模板.md`
 - `src/pages/` — `index`（最新一期+往期）、`archive`、`issue/[slug]`、`about`、`404`、`rss.xml`
 - `src/layouts/IssueLayout.astro` — 期数页布局（含阅读进度条；h1 带 `data-animate`）
 - `src/components/` — Header / HeaderLink / Footer / BaseHead（含 ClientRouter+MotionInit）/ FormattedDate / **MotionInit**（动效管理器，见 §6）
-- `src/styles/global.css` — 设计 tokens：白天在 `:root`、暗黑在 `:root[data-theme='dark']`（`--paper/--ink/--accent/--selection/--gray*` + 交通灯装饰色 + 动效 tokens）
+- `src/styles/global.css` — 设计 tokens：默认暗色在 `:root`（komichi 暗红黑）、纸面模式在 `:root[data-theme='light']`（`--paper/--ink/--accent/--selection/--gray*` + 交通灯装饰色 + 动效 tokens）
 - `templates/周报模板.md` — 新一期复制它
 - `参考文献/` — 朋友原文存档，**已在 .gitignore，绝不提交**（见 §7 红线）
 
@@ -68,3 +70,4 @@ frontmatter：`title`(必填) / `issue`(必填，整数期数) / `pubDate`(必�
 
 - 用户是新手：解释"为什么"；一次只做一小块；交付后让用户浏览器验收（http://localhost:4321）
 - 用户可能中途暂停或换方向：**重要进展及时 `git commit` + `push`**，保证可回退、可接续
+- **新增任何功能后，同步更新 `操作手册.md`**（人类手操指南），让无 AI 时也能照做
