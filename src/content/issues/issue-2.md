@@ -1,10 +1,19 @@
-﻿---
+---
 title: '第二路口观测记录'
 issue: 2
 pubDate: 'Aug 17 2026'
 author: '又一不举害我备孕失败'
 originalUrl: 'https://www.bilibili.com/opus/1237193959922466838'
 summary: '本周入侵八次：音乐电台成为固定企划、3050 笔电燃尽最后一舞、首次游戏回、287 首次联动。'
+highlights:
+  - title: '3050 笔电的最后一舞'
+    points: ['首播功臣，燃尽到最后一刻', '电子天堂没有蓝屏']
+    image: '/images/issue-2/melody-comment.webp'
+    target: '8月10日'
+  - title: '287 首次联动 · 28区+ 更名'
+    points: ['四人各有各的区法', '正式更名 28 区+']
+    image: '/images/issue-2/rename-28.webp'
+    target: '8月16日'
 ---
 
 本周报由小路泥编写，旨在为四时小路的各位小路泥们同步每周最新的都市传说观察资讯，内容包括但不限于四时小路的出没记录，当期传单情报，也包含一部分电子设备被入侵时我们采用特殊技术留下的珍贵影像。

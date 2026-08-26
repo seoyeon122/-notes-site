@@ -1,10 +1,23 @@
-﻿---
+---
 title: '第三路口观测记录'
 issue: 3
 pubDate: 'Aug 24 2026'
 author: '又一不举害我备孕失败'
 originalUrl: 'https://www.bilibili.com/read/cv52623251'
 summary: '本周入侵七次：音乐电台固定企划、锈湖与致命公司的"路神九考"、3050 追悼会神回、冰火歌会审查。'
+highlights:
+  - title: '音乐电台成为固定企划'
+    points: ['周一早八点固定开播', '分享 radiohead《OK Computer》']
+    image: '/images/issue-3/radio.webp'
+    target: '8月17日'
+  - title: '「路神九考」连考两场'
+    points: ['锈湖第一考 · 致命公司第二考', '近四小时长考换三首歌通关']
+    image: '/images/issue-3/rust-lake.webp'
+    target: '8月19日'
+  - title: '3050 追悼会 · 本周神回'
+    points: ['丧事喜办，超管掐断', '追悼会后现场收礼金']
+    image: '/images/issue-3/funeral.webp'
+    target: '8月22日'
 ---
 
 本周报由小路泥编写，旨在为四时小路的各位小路泥们同步每周最新的都市传说观察资讯，内容包括但不限于四时小路的出没记录，当期传单情报，也包含一部分电子设备被入侵时我们采用特殊技术留下的珍贵影像。

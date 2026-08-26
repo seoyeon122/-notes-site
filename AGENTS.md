@@ -19,6 +19,7 @@
 
 - `src/consts.ts` — 全站文案（站名/简介/编辑署名/页脚标语），一处修改
 - `操作手册.md` — **人类手操指南**（无 AI 时的维护步骤）；⚠️ 每次新增功能后必须同步更新它，保持与代码一致
+- `决策记录.md` — **决策档案**（做过/否过什么、为什么）；⚠️ 重要决策后补一条，供压缩上下文时找回"为什么"
 - `public/images/issue-N/` — 各期图片的本地副本（不再热链 B 站，见 §7）
 - `src/content.config.ts` — 内容模型：`issues` 集合（字段见 §4）
 - `src/content/issues/*.md` — ★ 周报内容；每周新增一期 = 复制 `templates/周报模板.md`
@@ -31,7 +32,7 @@
 
 ## 4. 内容模型（issues 集合）
 
-frontmatter：`title`(必填) / `issue`(必填，整数期数) / `pubDate`(必填) / `author`(默认"又一不举害我备孕失败") / `originalUrl`(B站原文链接，建议每期必填) / `summary`(可选) / `heroImage`(可选)。
+frontmatter：`title`(必填) / `issue`(必填，整数期数) / `pubDate`(必填) / `author`(默认"又一不举害我备孕失败") / `originalUrl`(B站原文链接，建议每期必填) / `summary`(可选) / `highlights`(可选，高亮卡数据：title/points/image/target，首页两行卡 + 文章页"本周速览"用) / `heroImage`(可选)。
 正文：Markdown，按栏目用小标题分节；**链接清理** `?spm_id_from=` 等追踪参数。
 
 ## 5. 常用命令
@@ -70,4 +71,4 @@ frontmatter：`title`(必填) / `issue`(必填，整数期数) / `pubDate`(必�
 
 - 用户是新手：解释"为什么"；一次只做一小块；交付后让用户浏览器验收（http://localhost:4321）
 - 用户可能中途暂停或换方向：**重要进展及时 `git commit` + `push`**，保证可回退、可接续
-- **新增任何功能后，同步更新 `操作手册.md`**（人类手操指南），让无 AI 时也能照做
+- **新增任何功能后，同步更新 `操作手册.md` 与 `决策记录.md`**（人类手操指南 + 决策档案），让无 AI 时也能照做、压缩上下文时能找回"为什么"

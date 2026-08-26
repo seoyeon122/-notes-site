@@ -8,7 +8,7 @@ import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'issues'>['data'];
 
-const { title, issue, pubDate, author, originalUrl, summary, heroImage } = Astro.props;
+const { title, issue, pubDate, author, originalUrl, summary, heroImage, highlights = [] } = Astro.props;
 const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
 ---
 
@@ -39,6 +39,37 @@ const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
 				color: rgb(var(--gray));
 				font-size: 0.9em;
 			}
+			.hl-compact {
+				margin: 0 auto 2.5em;
+				max-width: 720px;
+				border: 1px solid rgb(var(--gray-light));
+				border-left: 4px solid var(--accent);
+				border-radius: 8px;
+				padding: 1.2em 1.5em;
+				background: rgb(var(--gray-light), 30%);
+			}
+			.hl-compact-label {
+				font-size: 0.8em;
+				letter-spacing: 0.15em;
+				color: rgb(var(--gray));
+				margin: 0 0 0.8em;
+			}
+			.hl-compact-item {
+				margin-bottom: 0.8em;
+			}
+			.hl-compact-item:last-child {
+				margin-bottom: 0;
+			}
+			.hl-compact-title {
+				font-weight: 700;
+				color: var(--ink);
+			}
+			.hl-compact-points {
+				margin: 0.2em 0 0;
+				padding-left: 1.2em;
+				color: rgb(var(--gray));
+				font-size: 0.9em;
+			}
 			.article-foot {
 				margin-top: 3em;
 				padding-top: 1.5em;
@@ -64,6 +95,27 @@ const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
 						{author && ` · ${author}`}
 					</p>
 				</header>
+				{
+					highlights.length > 0 && (
+						<div class="hl-compact">
+							<p class="hl-compact-label">本周速览</p>
+							{
+								highlights.map((h) => (
+									<div class="hl-compact-item">
+										<span class="hl-compact-title">{h.title}</span>
+										{h.points.length > 0 && (
+											<ul class="hl-compact-points">
+												{h.points.map((p) => (
+													<li>{p}</li>
+												))}
+											</ul>
+										)}
+									</div>
+								))
+							}
+						</div>
+					)
+				}
 				{heroImage && <Image width={1280} height={720} src={heroImage} alt="" />}
 				<div class="prose">
 					<slot />
@@ -89,6 +141,15 @@ const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
 			addEventListener('scroll', update, { passive: true });
 			addEventListener('astro:page-load', update);
 			update();
+
+			// 从首页高亮卡进入：滚动到对应小节
+			const hash = decodeURIComponent(window.location.hash.slice(1));
+			if (hash) {
+				setTimeout(() => {
+					const h = [...document.querySelectorAll('.prose h2')].find((el) => el.textContent.includes(hash));
+					if (h) h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				}, 60);
+			}
 		</script>
 	</body>
 </html>

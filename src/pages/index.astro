@@ -4,14 +4,21 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import FourAMWatch from '../components/FourAMWatch.astro';
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import bg from '../assets/Background_test02.png';
 
 const issues = (await getCollection('issues')).sort((a, b) => b.data.issue - a.data.issue);
 const latest = issues[0];
+const second = issues[1];
 const rest = issues.slice(1);
-const { Content } = latest ? await render(latest) : { Content: null };
+// 首页右区：每行一期的高亮卡（每期最多取前 2 条）
+const rows = [latest, second]
+	.filter(Boolean)
+	.map((issue) => ({ issue, cards: issue.data.highlights.slice(0, 2) }))
+	.filter((r) => r.cards.length > 0);
+// 标签语在"："后换行（只影响首页展示）
+const descParts = SITE_DESCRIPTION.split('：');
 ---
 
 <!doctype html>
@@ -144,50 +151,94 @@ const { Content } = latest ? await render(latest) : { Content: null };
 				}
 			}
 
-			/* 右页：可独立滚动的周报窗口（悬浮于上半区，不延伸到底部） */
+			/* 右区：两期高亮卡（无预览窗，白卡直接浮在暗底上） */
 			.report-panel {
 				display: flex;
+				justify-content: flex-start;
 				align-items: flex-start;
-				padding: 2.5rem 3rem 0 1rem;
+				padding: 2rem 2.5rem 0 0.5rem;
 			}
-			.report-page {
-				width: 100%;
-				height: min(72vh, 760px);
-				overflow-y: auto;
-				background: #f6f4f0;
-				color: #242833;
-				border-radius: 10px;
-				padding: 2.2em 2em 2.5em;
-				box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+			.hl-grid {
+				display: flex;
+				flex-direction: column;
+				gap: 34px;
 			}
-			.report-meta {
-				color: #8b8680;
+			.hl-row {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+			}
+			.hl-row-label {
+				color: #b9b1ac;
 				font-size: 0.85em;
-				margin-bottom: 0.5em;
+				letter-spacing: 0.04em;
+				text-decoration: none;
 			}
-			.report-page h3 {
+			.hl-row-label:hover {
+				color: #ff2231;
+				text-decoration: none;
+			}
+			.hl-row-cards {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 30px;
+			}
+			.hl-card {
+				display: flex;
+				flex-direction: column;
+				aspect-ratio: 4 / 3;
+				background: #fff;
+				border: 1px solid #e3ded5;
+				border-radius: 10px;
+				overflow: hidden;
+				text-decoration: none;
+				color: #242833;
+				transition:
+					transform 0.25s ease,
+					box-shadow 0.25s ease;
+			}
+			.hl-card:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+				text-decoration: none;
+			}
+			.hl-card-img {
+				width: 100%;
+				flex: 3;
+				object-fit: cover;
+				min-height: 0;
+				display: block;
+			}
+			.hl-card-body {
+				flex: 1;
+				padding: 0.5em 1em 0.7em;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				gap: 0.15em;
+				overflow: hidden;
+			}
+			.hl-card-body h4 {
+				margin: 0;
 				font-family: var(--font-serif);
+				font-size: 0.95em;
+				line-height: 1.25;
 				color: #242833;
-				font-size: 1.5em;
-				margin: 0 0 1.2em;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
-			.report-page :global(.prose) {
-				color: #242833;
-			}
-			.report-page :global(.prose h2),
-			.report-page :global(.prose h3),
-			.report-page :global(.prose h4) {
-				color: #242833;
-			}
-			.report-page :global(.prose a) {
-				color: #c8102e;
-			}
-			.report-page :global(.prose blockquote) {
+			.hl-card-body ul {
+				margin: 0;
+				padding-left: 1.1em;
 				color: #6b7180;
-				border-left-color: #c8102e;
+				font-size: 0.76em;
 			}
-			.report-page :global(.prose code) {
-				background: #eae6de;
+			.hl-card-enter {
+				margin-top: auto;
+				color: #c8102e;
+				font-size: 0.8em;
+				font-weight: 600;
 			}
 
 			/* ===== 下半：往期观测（yorushika 式暖白信息区） ===== */
@@ -263,6 +314,10 @@ const { Content } = latest ? await render(latest) : { Content: null };
 				}
 				.report-panel {
 					padding: 1rem 1.5rem 2rem;
+					justify-content: flex-start;
+				}
+				.hl-row-cards {
+					grid-template-columns: repeat(2, minmax(0, 1fr));
 				}
 			}
 		</style>
@@ -277,7 +332,9 @@ const { Content } = latest ? await render(latest) : { Content: null };
 						<span class="r"></span><span class="y"></span><span class="g"></span>
 					</div>
 					<h1 class="poster-title" data-animate>{SITE_TITLE}</h1>
-					<p class="poster-tagline" data-animate>{SITE_DESCRIPTION}</p>
+					<p class="poster-tagline" data-animate>
+					{descParts[0]}：<br />{descParts.slice(1).join('：')}
+				</p>
 					<FourAMWatch />
 					{
 						latest && (
@@ -303,23 +360,46 @@ const { Content } = latest ? await render(latest) : { Content: null };
 				</div>
 
 				<div class="report-panel">
-					<div class="report-page" data-lenis-prevent>
-						{
-							latest ? (
-								<>
-									<p class="report-meta">
-										第 {latest.data.issue} 期 · <FormattedDate date={latest.data.pubDate} /> · {latest.data.author}
-									</p>
-									<h3>{latest.data.title}</h3>
-									<div class="prose">
-										<Content />
-									</div>
-								</>
-							) : (
-								<p>暂无观测记录</p>
-							)
-						}
-					</div>
+					{
+						rows.length > 0 ? (
+							<div class="hl-grid">
+								{
+									rows.map((row) => (
+										<div class="hl-row">
+											<a class="hl-row-label" href={`/issue/${row.issue.id}/`}>
+												第 {row.issue.data.issue} 期 · {row.issue.data.title} →
+											</a>
+											<div class="hl-row-cards">
+												{
+													row.cards.map((h) => (
+														<a
+															class="hl-card"
+															href={`/issue/${row.issue.id}/#${encodeURIComponent(h.target || h.title)}`}
+														>
+															{h.image && <img class="hl-card-img" src={h.image} alt="" loading="lazy" />}
+															<div class="hl-card-body">
+																<h4>{h.title}</h4>
+																{h.points.length > 0 && (
+																	<ul>
+																		{h.points.map((p) => (
+																			<li>{p}</li>
+																		))}
+																	</ul>
+																)}
+																<span class="hl-card-enter">进入 ↗</span>
+															</div>
+														</a>
+													))
+												}
+											</div>
+										</div>
+									))
+								}
+							</div>
+						) : (
+							<p>暂无观测记录</p>
+						)
+					}
 				</div>
 			</section>
 
