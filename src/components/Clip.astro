@@ -1,0 +1,55 @@
+---
+// 切片卡片：把正文里的 B 站视频链接变成卡片块
+// 用法（在 .mdx 文件里）：<Clip title="标题" url="https://www.bilibili.com/video/BV..." />
+interface Props {
+	title: string;
+	url: string;
+}
+
+const { title, url } = Astro.props;
+---
+
+<a class="clip" href={url} target="_blank" rel="noopener noreferrer">
+	<span class="clip-play" aria-hidden="true">▶</span>
+	<span class="clip-title">{title}</span>
+	<span class="clip-arrow" aria-hidden="true">↗</span>
+</a>
+
+<style>
+	.clip {
+		display: flex;
+		align-items: center;
+		gap: 0.7em;
+		padding: 0.7em 1em;
+		margin: 0.9em 0;
+		border: 1px solid rgb(var(--gray-light));
+		border-left: 4px solid var(--accent);
+		border-radius: 8px;
+		background: rgb(var(--gray-light), 30%);
+		text-decoration: none;
+		color: var(--ink);
+		transition:
+			border-color 0.2s ease,
+			background-color 0.2s ease;
+	}
+	.clip:hover {
+		border-color: var(--accent);
+		background: rgb(var(--accent), 8%);
+		text-decoration: none;
+	}
+	.clip-play {
+		color: var(--accent);
+		font-size: 0.8em;
+		flex-shrink: 0;
+	}
+	.clip-title {
+		flex: 1;
+		font-size: 0.92em;
+		color: var(--ink);
+	}
+	.clip-arrow {
+		color: var(--accent);
+		font-weight: 700;
+		flex-shrink: 0;
+	}
+</style>

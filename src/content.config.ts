@@ -5,7 +5,7 @@ import { z } from 'astro/zod';
 // 内容模型：一期周报 = 一个 Markdown 文件
 const issues = defineCollection({
 	// 读取 src/content/issues/ 目录下的 Markdown 文件
-	loader: glob({ base: './src/content/issues', pattern: '**/*.md' }),
+	loader: glob({ base: './src/content/issues', pattern: '**/*.{md,mdx}' }),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(), // 本期标题

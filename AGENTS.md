@@ -13,7 +13,7 @@
 - **Astro 7.2.4**（静态站 SSG）。⚠️ v7 与旧版 API 有差异：页面过渡用 `<ClientRouter />`（来自 `astro:transitions`），**不是** `<ViewTransitions />`；动手前查 https://docs.astro.build
 - Node 26（要求 ≥22.12）、npm
 - 动效：GSAP 3.15（ScrollTrigger）+ Lenis 1.3（平滑滚动）
-- 集成已配置：@astrojs/mdx（**后续文章内组件用它**）、@astrojs/rss、@astrojs/sitemap
+- 集成已配置：@astrojs/mdx（**文章内组件用它，如 Clip 切片卡片**）、@astrojs/rss、@astrojs/sitemap
 
 ## 3. 架构速览（文件地图）
 
@@ -25,7 +25,7 @@
 - `src/content/issues/*.md` — ★ 周报内容；每周新增一期 = 复制 `templates/周报模板.md`
 - `src/pages/` — `index`（最新一期+往期）、`archive`、`issue/[slug]`、`about`、`404`、`rss.xml`
 - `src/layouts/IssueLayout.astro` — 期数页布局（**固定浅色阅读页**：`<html data-theme="light">` 自声明，不随全局主题变；右侧 **Timeline Scrollspy 时间线目录**（灰色线段+滚动高亮+悬停显示章节名，≥1200px 显示）+ 阅读进度条；h1 带 `data-animate`）
-- `src/components/` — **Rail**（左侧栏：竖排站名+信号灯+导航+明暗切换）/ Footer / BaseHead（含 ClientRouter+MotionInit）/ FormattedDate / **MotionInit**（动效管理器，见 §6）/ ThemeToggle（「明/暗」文字切换）
+- `src/components/` — **Rail**（左侧栏：竖排站名+信号灯+导航+明暗切换）/ **Clip**（切片卡片：正文视频链接卡片化，`.mdx` 里用）/ Footer / BaseHead（含 ClientRouter+MotionInit）/ FormattedDate / **MotionInit**（动效管理器，见 §6）/ ThemeToggle（「明/暗」文字切换）
 - `src/styles/global.css` — 设计 tokens：默认暗色在 `:root`（komichi 暗红黑）、纸面模式在 `:root[data-theme='light']`（`--paper/--ink/--accent/--selection/--gray*` + 交通灯装饰色 + 动效 tokens）
 - `templates/周报模板.md` — 新一期复制它
 - `参考文献/` — 朋友原文存档，**已在 .gitignore，绝不提交**（见 §7 红线）
