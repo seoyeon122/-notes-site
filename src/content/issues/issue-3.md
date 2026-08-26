@@ -5,6 +5,7 @@ pubDate: 'Aug 24 2026'
 author: '又一不举害我备孕失败'
 originalUrl: 'https://www.bilibili.com/read/cv52623251'
 summary: '本周入侵七次：音乐电台固定企划、锈湖与致命公司的"路神九考"、3050 追悼会神回、冰火歌会审查。'
+period: '2026.08.17-2026.08.23'
 highlights:
   - title: '音乐电台成为固定企划'
     points: ['周一早八点固定开播', '分享 radiohead《OK Computer》']

@@ -5,6 +5,7 @@ pubDate: 'Aug 17 2026'
 author: '又一不举害我备孕失败'
 originalUrl: 'https://www.bilibili.com/opus/1237193959922466838'
 summary: '本周入侵八次：音乐电台成为固定企划、3050 笔电燃尽最后一舞、首次游戏回、287 首次联动。'
+period: '2026.08.10-2026.08.16'
 highlights:
   - title: '3050 笔电的最后一舞'
     points: ['首播功臣，燃尽到最后一刻', '电子天堂没有蓝屏']

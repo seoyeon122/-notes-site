@@ -414,7 +414,7 @@ const descParts = SITE_DESCRIPTION.split('：');
 										<span class="no">第 {issue.data.issue} 期</span>
 										<span class="title">{issue.data.title}</span>
 										<span class="date">
-											<FormattedDate date={issue.data.pubDate} />
+											{issue.data.period || <FormattedDate date={issue.data.pubDate} />}
 										</span>
 									</a>
 								</li>

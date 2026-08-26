@@ -6,9 +6,12 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Rail from '../components/Rail.astro';
 
-type Props = CollectionEntry<'issues'>['data'];
+type Props = CollectionEntry<'issues'>['data'] & {
+	prev?: CollectionEntry<'issues'> | null;
+	next?: CollectionEntry<'issues'> | null;
+};
 
-const { title, issue, pubDate, author, originalUrl, summary, heroImage, highlights = [], headings = [] } =
+const { title, issue, pubDate, author, originalUrl, summary, heroImage, highlights = [], headings = [], prev = null, next = null } =
 	Astro.props;
 const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
 const tocItems = headings.filter((h) => h.depth === 2);
@@ -152,6 +155,42 @@ const tocItems = headings.filter((h) => h.depth === 2);
 				gap: 0.8em;
 				font-size: 0.92em;
 			}
+			/* 上一篇 / 下一篇 */
+			.pager {
+				max-width: 720px;
+				margin: 3em auto 0;
+				display: flex;
+				justify-content: space-between;
+				gap: 1em;
+			}
+			.pager-link {
+				display: flex;
+				align-items: center;
+				gap: 0.7em;
+				text-decoration: none;
+				padding: 0.5em 0.2em;
+			}
+			.pager-link:hover .pager-no {
+				text-decoration: underline;
+			}
+			.pager-arrow {
+				color: var(--accent);
+				display: inline-flex;
+			}
+			.pager-text {
+				display: flex;
+				flex-direction: column;
+				gap: 0.15em;
+			}
+			.pager-no {
+				color: var(--accent);
+				font-weight: 700;
+				font-size: 0.95em;
+			}
+			.pager-period {
+				color: var(--ink);
+				font-size: 0.85em;
+			}
 		</style>
 	</head>
 	<body>
@@ -201,6 +240,60 @@ const tocItems = headings.filter((h) => h.depth === 2);
 					<a href="/archive">← 全部期数</a>
 				</footer>
 			</article>
+			<nav class="pager" aria-label="上下篇">
+				{
+					prev ? (
+						<a class="pager-link prev" href={`/issue/${prev.id}/`}>
+							<span class="pager-arrow" aria-hidden="true">
+								<svg
+									viewBox="0 0 24 24"
+									width="22"
+									height="22"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2.5"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								>
+									<path d="M15 5l-7 7 7 7"></path>
+								</svg>
+							</span>
+							<span class="pager-text">
+								<span class="pager-no">第 {prev.data.issue} 期</span>
+								<span class="pager-period">{prev.data.period}</span>
+							</span>
+						</a>
+					) : (
+						<span></span>
+					)
+				}
+				{
+					next ? (
+						<a class="pager-link next" href={`/issue/${next.id}/`}>
+							<span class="pager-text">
+								<span class="pager-no">第 {next.data.issue} 期</span>
+								<span class="pager-period">{next.data.period}</span>
+							</span>
+							<span class="pager-arrow" aria-hidden="true">
+								<svg
+									viewBox="0 0 24 24"
+									width="22"
+									height="22"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2.5"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								>
+									<path d="M9 5l7 7-7 7"></path>
+								</svg>
+							</span>
+						</a>
+					) : (
+						<span></span>
+					)
+				}
+			</nav>
 		</main>
 		<Footer />
 		{

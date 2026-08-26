@@ -14,8 +14,14 @@ type Props = CollectionEntry<'issues'>;
 
 const issue = Astro.props;
 const { Content, headings } = await render(issue);
+
+// 上一篇 / 下一篇（按期数排序，第 1 期无上一篇、最新一期无下一篇）
+const allIssues = (await getCollection('issues')).sort((a, b) => a.data.issue - b.data.issue);
+const idx = allIssues.findIndex((i) => i.id === issue.id);
+const prev = idx > 0 ? allIssues[idx - 1] : null;
+const next = idx >= 0 && idx < allIssues.length - 1 ? allIssues[idx + 1] : null;
 ---
 
-<IssueLayout {...issue.data} headings={headings}>
+<IssueLayout {...issue.data} headings={headings} prev={prev} next={next}>
 	<Content />
 </IssueLayout>

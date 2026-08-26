@@ -14,6 +14,7 @@ const issues = defineCollection({
 			author: z.string().default('又一不举害我备孕失败'), // 作者署名（周报编辑）
 			originalUrl: z.string().url().optional(), // B 站原文链接（每期保留署名+原文链接）
 			summary: z.string().default(''), // 一句话摘要（首页用）
+			period: z.string().default(''), // 该周周期（如 2026.08.17-2026.08.23，归档/上下篇显示）
 			highlights: z
 				.array(
 					z.object({

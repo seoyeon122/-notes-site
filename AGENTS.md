@@ -32,7 +32,7 @@
 
 ## 4. 内容模型（issues 集合）
 
-frontmatter：`title`(必填) / `issue`(必填，整数期数) / `pubDate`(必填) / `author`(默认"又一不举害我备孕失败") / `originalUrl`(B站原文链接，建议每期必填) / `summary`(可选) / `highlights`(可选，高亮卡数据：title/points/image/target，首页两行卡 + 文章页"本周速览"用) / `heroImage`(可选)。
+frontmatter：`title`(必填) / `issue`(必填，整数期数) / `pubDate`(必填) / `author`(默认"又一不举害我备孕失败") / `originalUrl`(B站原文链接，建议每期必填) / `summary`(可选) / `period`(推荐，该周周期如 `2026.08.17-2026.08.23`，归档/上下篇显示) / `highlights`(可选，高亮卡数据：title/points/image/target，首页两行卡 + 文章页"本周速览"用) / `heroImage`(可选)。
 正文：Markdown，按栏目用小标题分节；**链接清理** `?spm_id_from=` 等追踪参数。
 
 ## 5. 常用命令
