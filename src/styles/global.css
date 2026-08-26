@@ -194,3 +194,28 @@ p {
 		font-size: 1.8em;
 	}
 }
+
+/* ===== 页面过渡：旧页向下渐隐 → 新页向上渐显（视频剪辑/PPT 式） ===== */
+::view-transition-old(root) {
+	animation: vt-fade-down 0.38s ease both;
+}
+::view-transition-new(root) {
+	animation: vt-fade-up 0.45s ease 0.38s both;
+}
+/* 左侧栏（装订脊）单独快照：过渡时保持不动，不参与渐隐渐显 */
+::view-transition-old(rail),
+::view-transition-new(rail) {
+	animation: none;
+}
+@keyframes vt-fade-down {
+	to {
+		opacity: 0;
+		transform: translateY(26px);
+	}
+}
+@keyframes vt-fade-up {
+	from {
+		opacity: 0;
+		transform: translateY(-26px);
+	}
+}

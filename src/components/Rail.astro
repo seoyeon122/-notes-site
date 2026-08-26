@@ -51,6 +51,7 @@ const isReading = pathname.startsWith('/issue/') || pathname === '/about';
 		padding: 1.5em 0 1.5em;
 		background: #0c0505;
 		border-right: 1px solid rgba(246, 235, 232, 0.1);
+		view-transition-name: rail; /* 过渡时单独快照，不参与页面渐隐渐显 */
 	}
 	.rail-brand {
 		font-family: var(--font-serif);

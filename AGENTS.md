@@ -47,6 +47,7 @@ frontmatter：`title`(必填) / `issue`(必填，整数期数) / `pubDate`(必�
 - 全站已接 Lenis 平滑滚动 + GSAP ScrollTrigger，并兼容 ClientRouter 页面切换（`astro:page-load` 时重置）
 - 新元素要进场动画：**加 `data-animate` 属性即可**（自动淡入上移 + 交错）
 - 已尊重系统 `prefers-reduced-motion`（开启时全部动画关闭）——新增动效必须保持这一点
+- **页面过渡**：旧页向下渐隐 → 新页向上渐显（`global.css` 底部 `vt-fade-*` 关键帧）；左侧栏 `view-transition-name: rail` 单独快照保持不动（`::view-transition-old/new(rail){animation:none}`）
 
 ## 7. 硬约束 / 红线
 
