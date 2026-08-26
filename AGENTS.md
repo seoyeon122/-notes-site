@@ -24,7 +24,7 @@
 - `src/content.config.ts` — 内容模型：`issues` 集合（字段见 §4）
 - `src/content/issues/*.md` — ★ 周报内容；每周新增一期 = 复制 `templates/周报模板.md`
 - `src/pages/` — `index`（最新一期+往期）、`archive`、`issue/[slug]`、`about`、`404`、`rss.xml`
-- `src/layouts/IssueLayout.astro` — 期数页布局（**固定浅色阅读页**：`<html data-theme="light">` 自声明，不随全局主题变；含阅读进度条；h1 带 `data-animate`）
+- `src/layouts/IssueLayout.astro` — 期数页布局（**固定浅色阅读页**：`<html data-theme="light">` 自声明，不随全局主题变；含目录 TOC（自动从小标题生成）+ 阅读进度条；h1 带 `data-animate`）
 - `src/components/` — **Rail**（左侧栏：竖排站名+信号灯+导航+明暗切换）/ Footer / BaseHead（含 ClientRouter+MotionInit）/ FormattedDate / **MotionInit**（动效管理器，见 §6）/ ThemeToggle（「明/暗」文字切换）
 - `src/styles/global.css` — 设计 tokens：默认暗色在 `:root`（komichi 暗红黑）、纸面模式在 `:root[data-theme='light']`（`--paper/--ink/--accent/--selection/--gray*` + 交通灯装饰色 + 动效 tokens）
 - `templates/周报模板.md` — 新一期复制它

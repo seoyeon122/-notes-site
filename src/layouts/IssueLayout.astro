@@ -8,7 +8,8 @@ import Rail from '../components/Rail.astro';
 
 type Props = CollectionEntry<'issues'>['data'];
 
-const { title, issue, pubDate, author, originalUrl, summary, heroImage, highlights = [] } = Astro.props;
+const { title, issue, pubDate, author, originalUrl, summary, heroImage, highlights = [], headings = [] } =
+	Astro.props;
 const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
 ---
 
@@ -70,6 +71,36 @@ const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
 				color: rgb(var(--gray));
 				font-size: 0.9em;
 			}
+			.toc {
+				max-width: 720px;
+				margin: 0 auto 2em;
+				padding: 0.8em 1.2em;
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 8px;
+				background: rgb(var(--gray-light), 30%);
+			}
+			.toc-label {
+				font-size: 0.78em;
+				letter-spacing: 0.15em;
+				color: rgb(var(--gray));
+				margin: 0 0 0.5em;
+			}
+			.toc-list {
+				list-style: none;
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.35em 1.1em;
+				margin: 0;
+				padding: 0;
+			}
+			.toc-list a {
+				font-size: 0.85em;
+				color: var(--accent);
+				text-decoration: none;
+			}
+			.toc-list a:hover {
+				text-decoration: underline;
+			}
 			.article-foot {
 				margin-top: 3em;
 				padding-top: 1.5em;
@@ -95,6 +126,24 @@ const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
 						{author && ` · ${author}`}
 					</p>
 				</header>
+				{
+					headings.filter((h) => h.depth === 2).length > 0 && (
+						<nav class="toc" aria-label="文章目录">
+							<p class="toc-label">目录</p>
+							<ol class="toc-list">
+								{
+									headings
+										.filter((h) => h.depth === 2)
+										.map((h) => (
+											<li>
+												<a href={`#${h.slug}`}>{h.text}</a>
+											</li>
+										))
+								}
+							</ol>
+						</nav>
+					)
+				}
 				{
 					highlights.length > 0 && (
 						<div class="hl-compact">
@@ -156,6 +205,18 @@ const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
 					if (h) h.scrollIntoView({ behavior: 'smooth', block: 'start' });
 				}, 60);
 			}
+
+			// 目录点击：平滑滚动到对应小节
+			document.querySelectorAll('.toc-list a').forEach((a) => {
+				a.addEventListener('click', (e) => {
+					e.preventDefault();
+					const target = document.querySelector(a.getAttribute('href') || '');
+					if (target) {
+						target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+						history.replaceState(null, '', a.getAttribute('href'));
+					}
+				});
+			});
 		</script>
 	</body>
 </html>

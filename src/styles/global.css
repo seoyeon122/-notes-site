@@ -90,6 +90,7 @@ h2 {
 	border-bottom: 2px solid var(--accent);
 	padding-bottom: 0.25em;
 	display: inline-block;
+	scroll-margin-top: 1.2em; /* 锚点跳转时留出呼吸空间 */
 }
 
 h3 {
