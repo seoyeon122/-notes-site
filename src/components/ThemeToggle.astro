@@ -1,33 +1,24 @@
 ---
-// 明暗模式切换按钮：点击在 <html data-theme> 之间切换，选择记忆在 localStorage
+// 明暗切换：点击在 <html data-theme> 之间切换，按钮文字「明 / 暗」（当前为暗色显示「明」，点击切到明色）
 ---
 
 <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换明暗模式" title="切换明暗模式">
-	<span class="icon">🌙</span>
+	<span class="icon">明</span>
 </button>
 
 <style>
 	.theme-toggle {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 2.1em;
-		height: 2.1em;
-		border: 1px solid rgb(var(--gray-light));
-		border-radius: 50%;
-		background: var(--card, var(--paper));
+		border: none;
+		background: none;
 		cursor: pointer;
+		color: #e6e2d8;
 		font-size: 0.95em;
-		line-height: 1;
-		transition:
-			border-color var(--dur-fast) ease,
-			background-color var(--dur-fast) ease;
+		letter-spacing: 0.1em;
+		padding: 0.4em 0.8em;
+		transition: color 0.2s ease;
 	}
 	.theme-toggle:hover {
-		border-color: var(--accent);
-	}
-	.theme-toggle .icon {
-		display: block;
+		color: #ff2231;
 	}
 </style>
 
@@ -40,7 +31,7 @@
 	}
 
 	function syncIcon(theme) {
-		if (icon) icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+		if (icon) icon.textContent = theme === 'dark' ? '明' : '暗';
 	}
 
 	function setTheme(theme) {
@@ -58,6 +49,6 @@
 		btn.addEventListener('click', () => setTheme(current() === 'dark' ? 'light' : 'dark'));
 	}
 
-	// ClientRouter 页面切换后脚本会重新执行，确保图标与当前主题一致
+	// ClientRouter 页面切换后脚本会重新执行，确保按钮文字与当前主题一致
 	document.addEventListener('astro:page-load', () => syncIcon(current()));
 </script>

@@ -55,6 +55,7 @@ html {
 body {
 	font-family: var(--font-sans);
 	margin: 0;
+	padding-left: 80px; /* 给左侧栏（装订脊）让位 */
 	background: var(--paper);
 	background-attachment: fixed; /* 渐变不随滚动滑动，更沉静 */
 	color: var(--ink);
@@ -175,7 +176,7 @@ p {
 #progress-bar {
 	position: fixed;
 	top: 0;
-	left: 0;
+	left: 80px; /* 避开左侧栏 */
 	height: 3px;
 	width: 0;
 	background: var(--accent);

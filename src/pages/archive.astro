@@ -2,7 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
+import Rail from '../components/Rail.astro';
 import { getCollection } from 'astro:content';
 import { SITE_TITLE } from '../consts';
 
@@ -56,7 +56,7 @@ const issues = (await getCollection('issues')).sort((a, b) => b.data.issue - a.d
 		</style>
 	</head>
 	<body>
-		<Header />
+		<Rail />
 		<main>
 			<h1>观测归档</h1>
 			<ul>

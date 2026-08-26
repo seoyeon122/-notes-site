@@ -1,0 +1,106 @@
+---
+// 左侧栏（装订脊）：站名竖排 + 竖排信号灯 + 导航 + 明暗切换
+import ThemeToggle from './ThemeToggle.astro';
+
+const pathname = Astro.url.pathname;
+const links = [
+	{ href: '/', label: '首页' },
+	{ href: '/archive', label: '归档' },
+	{ href: '/about', label: '关于' },
+];
+const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.startsWith(href));
+---
+
+<aside class="rail">
+	<span class="rail-brand" aria-hidden="true">四<br />时<br />小<br />路</span>
+	<div class="rail-signals" aria-hidden="true">
+		<span class="r"></span><span class="y"></span><span class="g"></span>
+	</div>
+	<nav class="rail-nav">
+		{
+			links.map((l) => (
+				<a href={l.href} class:list={{ active: isActive(l.href) }}>
+					{l.label}
+				</a>
+			))
+		}
+	</nav>
+	<div class="rail-toggle">
+		<ThemeToggle />
+	</div>
+</aside>
+
+<style>
+	.rail {
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		width: 80px;
+		z-index: 90;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1.4em;
+		padding: 1.5em 0 1.5em;
+		background: #0c0505;
+		border-right: 1px solid rgba(246, 235, 232, 0.1);
+	}
+	.rail-brand {
+		font-family: var(--font-serif);
+		color: #e6e2d8;
+		font-size: 13px;
+		line-height: 1.55;
+		text-align: center;
+		letter-spacing: 0.1em;
+	}
+	.rail-signals {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+	.rail-signals span {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+	}
+	.rail-signals .r {
+		background: #ff2231;
+	}
+	.rail-signals .y {
+		background: #ffd100;
+	}
+	.rail-signals .g {
+		background: #00a651;
+	}
+	.rail-nav {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.6em;
+		margin-top: 0.5em;
+	}
+	.rail-nav a {
+		display: block;
+		padding: 0.3em 0.9em;
+		color: #e6e2d8; /* 比白色偏米灰 */
+		font-size: 0.9em;
+		letter-spacing: 0.18em;
+		text-decoration: none;
+		border-left: 3px solid transparent;
+		transition:
+			color 0.2s ease,
+			border-color 0.2s ease;
+	}
+	.rail-nav a:hover {
+		color: #ff2231;
+		text-decoration: none;
+	}
+	.rail-nav a.active {
+		color: #f6ebe8;
+		border-left-color: #ff2231;
+	}
+	.rail-toggle {
+		margin-top: auto;
+	}
+</style>
