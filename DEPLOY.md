@@ -1,8 +1,8 @@
 # 部署上线指南（阶段四：免备案方案）
 
-目标：把网站部署到 **Cloudflare Pages**，获得一个公开网址（`xxx.pages.dev`），以后每次写完文章推送一下，网站自动更新。
+目标：让网站可被公开访问。**当前已在 Cloudflare Pages 上线**（`weeklykomichi.pages.dev`，免费、免备案），但实测大陆访问需要代理；**后续目标：阿里云/腾讯云香港服务器（免备案、国内可直连）**，见「方案 B」。
 
-特点：**完全免费、免备案**。大陆访问通常可用（速度一般）；想要大陆稳定快速，将来可再迁回国内服务器（那时才需要备案）。
+特点：Cloudflare = 免费即时、海外访问好、**大陆不稳定**；香港服务器 = 国内访问明显更好、**免备案**，但每月有少量费用。
 
 ## 你需要准备（都是免费的）
 
@@ -74,6 +74,21 @@ Cloudflare 检测到推送，自动重新构建部署。**整个过程 1~2 分�
 
 ---
 
+## 方案 B：阿里云 / 腾讯云香港服务器（免备案，国内可直连）
+
+> 香港服务器**不需要 ICP 备案**，国内一般可直连，速度明显好于 Cloudflare 免费版。适合作为"国内正式版"。
+
+1. 买一台**香港轻量应用服务器**（阿里云轻量 / 腾讯云轻量，约 ¥30~50/月，2C2G 够用）
+2. 系统装 Ubuntu/Debian，安装 Nginx：`sudo apt install nginx`
+3. 本地构建：`npm run build` → 把 `dist/` 上传到服务器（如 `scp -r dist user@服务器IP:/var/www/weeklykomichi/`）
+4. Nginx 站点配置：`root /var/www/weeklykomichi;` + `try_files $uri $uri/ /index.html;`
+5. 域名（如 `weeklykomichi.com`）DNS 的 A 记录指向服务器 IP → 直接访问
+6. 以后更新：本地 `npm run build` → 重新上传 `dist/` 覆盖（可写个一行脚本）
+
+> 注意：香港服务器需要自己维护（系统更新、Nginx 配置），没有 Cloudflare"push 自动部署"方便。两条线可共存：Cloudflare 版管海外，香港版管国内。
+
+---
+
 ## 上线前清单（Checklist）
 
 - [ ] `src/consts.ts`：网站名、简介、编辑署名确认无误
@@ -91,7 +106,7 @@ Cloudflare 检测到推送，自动重新构建部署。**整个过程 1~2 分�
 | push 要求密码 | GitHub 已不支持密码推送 | 用 Personal Access Token：GitHub → Settings → Developer settings → Personal access tokens → 生成（勾选 repo 权限），当密码用 |
 | Cloudflare 构建失败 | 看构建日志 | 常见：网络导致 `npm install` 失败 → 点重试；output directory 填错 → 确认是 `dist` |
 | 部署成功但页面空白 | 构建设置不对 | 确认 Build command 是 `npm run build`、输出目录是 `dist` |
-| 大陆访问很慢 | 节点在海外 | 免费方案正常现象；想快需国内服务器 + 备案（见 LEARNING.md） |
+| 大陆访问很慢/需翻墙 | 节点在海外 | Cloudflare 免费版正常现象；想快走「方案 B」香港服务器（免备案），或国内服务器+备案 |
 
 ## 延伸：git 常用命令速查
 

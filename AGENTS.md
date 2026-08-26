@@ -63,7 +63,7 @@ frontmatter：`title`(必填) / `issue`(必填，整数期数) / `pubDate`(必�
 **待办**：
 1. ~~骨架升级~~（✅ **已全部完成**：速览卡/时间线目录/上一篇下一篇/本周数据块/切片卡片，模板已升级）
 2. ~~等授权 → 恢复 issue-2~~（已完成：已获授权，第 2 期完整内容已恢复）；等用户决定 → 公开仓库 / 部署上线
-3. 部署 Cloudflare Pages（免备案；见 DEPLOY.md；连上 GitHub 后每次 push 自动部署）
+3. ~~部署 Cloudflare Pages~~（✅ **已上线**：weeklykomichi.pages.dev；大陆访问需代理）→ 后续按 DEPLOY.md「方案 B」迁阿里云/腾讯云香港服务器（免备案、国内可直连）
 4. 可选：自定义域名；WebGL 特别篇页（架构支持 Three.js 岛屿，非必须）
 
 **长期每周流程**：朋友发周报 → 复制模板到 `src/content/issues/` → 重排版 → `git push`。
