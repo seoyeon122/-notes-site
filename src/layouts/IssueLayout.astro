@@ -11,6 +11,7 @@ type Props = CollectionEntry<'issues'>['data'];
 const { title, issue, pubDate, author, originalUrl, summary, heroImage, highlights = [], headings = [] } =
 	Astro.props;
 const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
+const tocItems = headings.filter((h) => h.depth === 2);
 ---
 
 <html lang="zh-CN" data-theme="light">
@@ -71,35 +72,75 @@ const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
 				color: rgb(var(--gray));
 				font-size: 0.9em;
 			}
-			.toc {
-				max-width: 720px;
-				margin: 0 auto 2em;
-				padding: 0.8em 1.2em;
-				border: 1px solid rgb(var(--gray-light));
-				border-radius: 8px;
-				background: rgb(var(--gray-light), 30%);
+			/* 时间线目录（Timeline Scrollspy）：右侧灰色小线段，滚动高亮当前章节 */
+			.toc-tl {
+				position: fixed;
+				right: 28px;
+				top: 50%;
+				transform: translateY(-50%);
+				z-index: 40;
+				display: none; /* 窄屏隐藏 */
 			}
-			.toc-label {
-				font-size: 0.78em;
-				letter-spacing: 0.15em;
-				color: rgb(var(--gray));
-				margin: 0 0 0.5em;
+			@media (min-width: 1200px) {
+				.toc-tl {
+					display: block;
+				}
 			}
-			.toc-list {
+			.toc-tl ol {
 				list-style: none;
-				display: flex;
-				flex-wrap: wrap;
-				gap: 0.35em 1.1em;
 				margin: 0;
 				padding: 0;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-end;
+				gap: 10px;
 			}
-			.toc-list a {
-				font-size: 0.85em;
-				color: var(--accent);
+			.toc-tl-item a {
+				display: flex;
+				align-items: center;
+				gap: 10px;
 				text-decoration: none;
+				color: inherit;
 			}
-			.toc-list a:hover {
-				text-decoration: underline;
+			.toc-tl-seg {
+				display: block;
+				width: 4px;
+				height: 14px;
+				border-radius: 999px;
+				background: #c9c4bc; /* 灰 */
+				transition:
+					width 0.25s ease,
+					height 0.25s ease,
+					background-color 0.25s ease;
+			}
+			.toc-tl-label {
+				order: -1; /* 标签在左、线段在右 */
+				font-size: 0.85em;
+				color: #6b7180;
+				white-space: nowrap;
+				opacity: 0;
+				transform: translateX(8px);
+				transition:
+					opacity 0.2s ease,
+					transform 0.2s ease;
+			}
+			.toc-tl-item.active .toc-tl-seg {
+				width: 6px;
+				height: 20px;
+				background: #e0dcd3; /* 更浅的灰（高亮） */
+			}
+			.toc-tl-item.active .toc-tl-label {
+				font-size: 1.1em;
+				font-weight: 700;
+				color: #242833;
+			}
+			/* 悬停：显示全部章节名 */
+			.toc-tl:hover .toc-tl-label {
+				opacity: 1;
+				transform: translateX(0);
+			}
+			.toc-tl-item a:hover .toc-tl-label {
+				color: #c8102e;
 			}
 			.article-foot {
 				margin-top: 3em;
@@ -126,24 +167,6 @@ const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
 						{author && ` · ${author}`}
 					</p>
 				</header>
-				{
-					headings.filter((h) => h.depth === 2).length > 0 && (
-						<nav class="toc" aria-label="文章目录">
-							<p class="toc-label">目录</p>
-							<ol class="toc-list">
-								{
-									headings
-										.filter((h) => h.depth === 2)
-										.map((h) => (
-											<li>
-												<a href={`#${h.slug}`}>{h.text}</a>
-											</li>
-										))
-								}
-							</ol>
-						</nav>
-					)
-				}
 				{
 					highlights.length > 0 && (
 						<div class="hl-compact">
@@ -180,6 +203,24 @@ const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
 			</article>
 		</main>
 		<Footer />
+		{
+			tocItems.length > 0 && (
+				<nav class="toc-tl" aria-label="文章目录">
+					<ol>
+						{
+							tocItems.map((h) => (
+								<li class="toc-tl-item">
+									<a href={`#${h.slug}`}>
+										<span class="toc-tl-label">{h.text}</span>
+										<span class="toc-tl-seg"></span>
+									</a>
+								</li>
+							))
+						}
+					</ol>
+				</nav>
+			)
+		}
 		<script>
 			const bar = document.getElementById('progress-bar');
 			function update() {
@@ -207,7 +248,7 @@ const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
 			}
 
 			// 目录点击：平滑滚动到对应小节
-			document.querySelectorAll('.toc-list a').forEach((a) => {
+			document.querySelectorAll('.toc-tl-item a').forEach((a) => {
 				a.addEventListener('click', (e) => {
 					e.preventDefault();
 					const target = document.querySelector(a.getAttribute('href') || '');
@@ -217,6 +258,25 @@ const pageTitle = issue ? `第 ${issue} 期 · ${title}` : title;
 					}
 				});
 			});
+
+			// 时间线目录滚动监听（Scrollspy）：高亮当前章节
+			const tlSections = [...document.querySelectorAll('.prose h2')];
+			const tlItems = [...document.querySelectorAll('.toc-tl-item')];
+			function updateTlSpy() {
+				if (!tlItems.length) return;
+				const marker = window.scrollY + window.innerHeight * 0.35;
+				let active = 0;
+				tlSections.forEach((s, i) => {
+					if (s.getBoundingClientRect().top + window.scrollY <= marker) active = i;
+				});
+				if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+					active = tlItems.length - 1;
+				}
+				tlItems.forEach((it, i) => it.classList.toggle('active', i === active));
+			}
+			addEventListener('scroll', () => requestAnimationFrame(updateTlSpy), { passive: true });
+			addEventListener('astro:page-load', updateTlSpy);
+			updateTlSpy();
 		</script>
 	</body>
 </html>
