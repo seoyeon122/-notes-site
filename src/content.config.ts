@@ -15,6 +15,7 @@ const issues = defineCollection({
 			originalUrl: z.string().url().optional(), // B 站原文链接（每期保留署名+原文链接）
 			summary: z.string().default(''), // 一句话摘要（首页用）
 			period: z.string().default(''), // 该周周期（如 2026.08.17-2026.08.23，归档/上下篇显示）
+			stats: z.record(z.string(), z.union([z.number(), z.string()])).default({}), // 本周数据（大数字块），键=标签，值=数字或文字
 			highlights: z
 				.array(
 					z.object({
