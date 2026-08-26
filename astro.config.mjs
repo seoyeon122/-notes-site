@@ -6,6 +6,6 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com', // TODO: 上线前改成你的真实域名（影响 sitemap 和 RSS 链接）
+	site: 'https://weeklykomichi.pages.dev', // 部署项目名 = weeklykomichi；以后买自定义域名再改这里
 	integrations: [mdx(), sitemap()],
 });
