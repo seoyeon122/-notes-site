@@ -23,20 +23,6 @@ const { title, description, image = FallbackImage } = Astro.props;
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="referrer" content="no-referrer" />
-<script is:inline>
-	// 主题初始化：在页面绘制前根据记忆/系统偏好设置明暗模式，避免闪烁（FOUC）
-	// 若页面已在 HTML 里自声明了主题（如阅读页固定浅色 data-theme="light"），尊重它，不覆盖
-	(function () {
-		try {
-			if (document.documentElement.getAttribute('data-theme')) return;
-			var saved = localStorage.getItem('theme');
-			var theme = saved === 'dark' || saved === 'light' ? saved : 'dark';
-			document.documentElement.setAttribute('data-theme', theme);
-		} catch (e) {
-			/* 忽略 */
-		}
-	})();
-</script>
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
 <link rel="icon" href="/favicon.ico" />

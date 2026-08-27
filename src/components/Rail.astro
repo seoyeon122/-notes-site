@@ -1,7 +1,5 @@
 ---
-// 左侧栏（装订脊）：站名竖排 + 竖排信号灯 + 导航 + 明暗切换
-import ThemeToggle from './ThemeToggle.astro';
-
+// 左侧栏（装订脊）：站名竖排 + 竖排信号灯 + 导航
 const pathname = Astro.url.pathname;
 const links = [
 	{ href: '/', label: '首页' },
@@ -9,8 +7,6 @@ const links = [
 	{ href: '/about', label: '关于' },
 ];
 const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.startsWith(href));
-// 阅读页（周报/关于）固定浅色，明暗切换按钮不显示
-const isReading = pathname.startsWith('/issue/') || pathname === '/about';
 ---
 
 <aside class="rail">
@@ -27,13 +23,6 @@ const isReading = pathname.startsWith('/issue/') || pathname === '/about';
 			))
 		}
 	</nav>
-	{
-		!isReading && (
-			<div class="rail-toggle">
-				<ThemeToggle />
-			</div>
-		)
-	}
 </aside>
 
 <style>
@@ -108,9 +97,6 @@ const isReading = pathname.startsWith('/issue/') || pathname === '/about';
 		color: #f6ebe8;
 		border-left-color: #ff2231;
 	}
-	.rail-toggle {
-		margin-top: auto;
-	}
 
 	/* ===== 移动端（≤820px）：左侧装订脊 → 顶部横栏 ===== */
 	@media (max-width: 820px) {
@@ -151,10 +137,6 @@ const isReading = pathname.startsWith('/issue/') || pathname === '/about';
 		.rail-nav a.active {
 			border-left-color: transparent;
 			border-bottom-color: #ff2231;
-		}
-		.rail-toggle {
-			margin-top: 0;
-			margin-left: auto; /* 推到最右 */
 		}
 	}
 </style>
