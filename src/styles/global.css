@@ -200,6 +200,25 @@ p {
 	}
 }
 
+/* ===== 移动端（≤820px）：侧栏上移成顶栏，正文从"给左边让位"改为"给顶部让位" ===== */
+@media (max-width: 820px) {
+	:root {
+		--rail-h: 60px; /* 顶栏高度，Rail.astro / 进度条 / 锚点共用 */
+	}
+	body {
+		padding-left: 0;
+		padding-top: var(--rail-h);
+	}
+	#progress-bar {
+		left: 0;
+		top: var(--rail-h);
+	}
+	/* 目录点击 / 锚点跳转时，标题别被顶栏盖住 */
+	h2 {
+		scroll-margin-top: calc(var(--rail-h) + 0.8em);
+	}
+}
+
 /* ===== 页面过渡：旧页向下渐隐 → 新页向上渐显（视频剪辑/PPT 式） ===== */
 ::view-transition-old(root) {
 	animation: vt-fade-down 0.38s ease both;

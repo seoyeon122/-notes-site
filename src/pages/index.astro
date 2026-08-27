@@ -320,6 +320,19 @@ const descParts = SITE_DESCRIPTION.split('：');
 					grid-template-columns: repeat(2, minmax(0, 1fr));
 				}
 			}
+			/* 超窄屏（手机竖屏）：高亮卡两列太挤，改单列 */
+			@media (max-width: 480px) {
+				.hl-row-cards {
+					grid-template-columns: 1fr;
+					gap: 18px;
+				}
+				.hl-row {
+					gap: 8px;
+				}
+				.hl-grid {
+					gap: 28px;
+				}
+			}
 		</style>
 	</head>
 	<body>
