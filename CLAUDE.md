@@ -6,7 +6,7 @@
 
 ## 1. 项目一句话
 
-为 VTuber「四时小路 Komichi」粉丝做的周报网站：把合作朋友的 B 站专栏周报重新排版收录，已获授权。技术栈 Astro 7 + GSAP + Lenis，托管 Cloudflare Pages。
+为 VTuber「四时小路 Komichi」粉丝做的周报网站：把合作朋友的 B 站专栏周报重新排版收录，已获授权。技术栈 Astro 7 + GSAP + Lenis，托管 Vercel。
 
 ---
 

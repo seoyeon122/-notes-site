@@ -94,7 +94,7 @@ npm run preview  # 预览构建结果
 
 ## 10. 部署上线
 
-- 见 `DEPLOY.md`（Cloudflare Pages，免备案；连 GitHub 后每次 push 自动部署）
+- 见 `DEPLOY.md`（Vercel + GitHub，免备案；连 GitHub 后每次 push 自动部署）
 
 ## 11. 常见故障排查
 

@@ -1,15 +1,17 @@
-# 部署上线指南（阶段四：免备案方案）
+# 部署上线指南（Vercel + GitHub）
 
-目标：让网站可被公开访问。**当前已在 Cloudflare Pages 上线**（`weeklykomichi.pages.dev`，免费、免备案），但实测大陆访问需要代理；**后续目标：阿里云/腾讯云香港服务器（免备案、国内可直连）**，见「方案 B」。
+目标：让网站可被公开访问。**当前已在 Vercel 上线**，通过 GitHub 仓库自动部署。每次 `git push` 到 `main` 分支，Vercel 会自动构建并发布。
 
-特点：Cloudflare = 免费即时、海外访问好、**大陆不稳定**；香港服务器 = 国内访问明显更好、**免备案**，但每月有少量费用。
+特点：Vercel = 免费即时、海外访问好、与 GitHub 集成方便；**大陆访问速度一般**，如需国内直连见「方案 B」香港服务器。
+
+---
 
 ## 你需要准备（都是免费的）
 
-| 账号 | 用途 | 注册地址 |
-|---|---|---|
+| 账号   | 用途                     | 注册地址           |
+| ------ | ------------------------ | ------------------ |
 | GitHub | 存放网站源码（git 仓库） | https://github.com |
-| Cloudflare | 托管网站 + 域名服务 | https://dash.cloudflare.com |
+| Vercel | 构建并托管网站           | https://vercel.com |
 
 ---
 
@@ -18,40 +20,52 @@
 打开终端，进入项目目录，把下面的名字和邮箱换成你自己的：
 
 ```bash
-cd D:\002-explore\notes-site
+cd e:\002-site
 git config user.name "你的名字"
 git config user.email "你的邮箱@example.com"
 ```
 
 > 本仓库已经初始化好了 git（`git init` 已执行、首次提交已完成）。这一步只是告诉 git"你是谁"，以后每次提交会记录作者信息。
 
+---
+
 ## 第 2 步：推到 GitHub
 
 1. 登录 GitHub → 右上角 **+** → **New repository**
-2. 仓库名填 `notes-site`，选 **Public**，**不要**勾选任何初始化选项（README、.gitignore 都不勾）
-3. 创建后，把仓库地址（形如 `https://github.com/你的名字/notes-site.git`）记下来
+2. 仓库名填 `-notes-site`（或你现在的仓库名），选 **Private**（内容授权相关，暂不公开）
+3. 创建后，把仓库地址（形如 `https://github.com/你的名字/-notes-site.git`）记下来
 4. 在本地终端执行：
 
 ```bash
-git remote add origin https://github.com/你的名字/notes-site.git
+git remote add origin https://github.com/你的名字/-notes-site.git
 git push -u origin main
 ```
 
 > 第一次推送会弹窗登录 GitHub（或要求用户名 + Personal Access Token，见文末常见问题）。
 
-## 第 3 步：在 Cloudflare Pages 创建项目
+---
 
-1. 登录 Cloudflare → 左侧菜单 **Workers & Pages** → **Create** → **Pages** → **Connect to Git**
-2. 授权连接你的 GitHub 账号，选择 `notes-site` 仓库
-3. 构建设置（一般会自动识别，没有就手动填）：
+## 第 3 步：在 Vercel 创建项目
+
+1. 登录 Vercel → 点击 **Add New...** → **Project**
+2. 点击 **Import Git Repository**，授权并连接你的 GitHub 账号
+3. 找到并选择 `-notes-site` 仓库，点击 **Import**
+4. 构建设置（一般会自动识别 Astro，没有就手动填）：
    - Framework preset：**Astro**
    - Build command：`npm run build`
    - Build output directory：`dist`
-4. 点击 **Save and Deploy**，等一两分钟
+   - Root directory：`./`（项目就在仓库根目录）
+5. 点击 **Deploy**，等 1~2 分钟
+
+> 如果导入时提示 "Unable to unpack repo: there was at least one filename that was too long"，通常是仓库里有损坏的符号链接。检查 `git ls-files --stage | grep '^120000'`，把 symlink 改回普通文件后再推。
+
+---
 
 ## 第 4 步：看到你的网站
 
-部署完成后会得到一个网址：`<项目名>.pages.dev`（如 `notes-site.pages.dev`）。浏览器打开它——你的网站上线了！🎉
+部署完成后会得到一个网址：`<项目名>.vercel.app`（如 `-notes-site.vercel.app`，Vercel 会自动生成）。浏览器打开它——你的网站上线了！🎉
+
+---
 
 ## 第 5 步：以后更新文章（日常工作流）
 
@@ -63,20 +77,22 @@ git commit -m "新增：一篇新笔记"
 git push
 ```
 
-Cloudflare 检测到推送，自动重新构建部署。**整个过程 1~2 分钟，你只需要这三行命令。**
+Vercel 检测到 `main` 分支有新推送，会自动重新构建部署。**整个过程 1~2 分钟，你只需要这三行命令。**
+
+---
 
 ## 第 6 步（可选）：绑定你自己的域名
 
 1. 买一个域名（`name.com`、阿里云、腾讯云等，约 ¥50~100/年）
-2. 把域名的 DNS 托管到 Cloudflare（免费）
-3. Cloudflare Pages → 你的项目 → **Custom domains** → 添加域名
-4. 顺便把 `astro.config.mjs` 里的 `site` 改成 `https://你的域名`，重新推送
+2. 进入 Vercel 项目 → **Settings** → **Domains** → 输入你的域名并添加
+3. 按 Vercel 提示，在域名 DNS 里添加对应的 CNAME 或 A 记录
+4. 把 `astro.config.mjs` 里的 `site` 改成 `https://你的域名`，重新推送
 
 ---
 
 ## 方案 B：阿里云 / 腾讯云香港服务器（免备案，国内可直连）
 
-> 香港服务器**不需要 ICP 备案**，国内一般可直连，速度明显好于 Cloudflare 免费版。适合作为"国内正式版"。
+> 香港服务器**不需要 ICP 备案**，国内一般可直连，速度明显好于 Vercel 免费版。适合作为"国内正式版"。
 
 1. 买一台**香港轻量应用服务器**（阿里云轻量 / 腾讯云轻量，约 ¥30~50/月，2C2G 够用）
 2. 系统装 Ubuntu/Debian，安装 Nginx：`sudo apt install nginx`
@@ -85,7 +101,7 @@ Cloudflare 检测到推送，自动重新构建部署。**整个过程 1~2 分�
 5. 域名（如 `weeklykomichi.com`）DNS 的 A 记录指向服务器 IP → 直接访问
 6. 以后更新：本地 `npm run build` → 重新上传 `dist/` 覆盖（可写个一行脚本）
 
-> 注意：香港服务器需要自己维护（系统更新、Nginx 配置），没有 Cloudflare"push 自动部署"方便。两条线可共存：Cloudflare 版管海外，香港版管国内。
+> 注意：香港服务器需要自己维护（系统更新、Nginx 配置），没有 Vercel"push 自动部署"方便。两条线可共存：Vercel 版管海外/开发预览，香港版管国内。
 
 ---
 
@@ -97,23 +113,24 @@ Cloudflare 检测到推送，自动重新构建部署。**整个过程 1~2 分�
 - [ ] 每期周报都有 `originalUrl`（B 站原文链接）
 - [ ] `npm run build` 能通过
 - [ ] GitHub 仓库已推送
-- [ ] Cloudflare 部署成功，`*.pages.dev` 能打开
+- [ ] Vercel 部署成功，`*.vercel.app` 能打开
 
 ## 常见问题
 
-| 现象 | 原因 | 解决 |
-|---|---|---|
-| push 要求密码 | GitHub 已不支持密码推送 | 用 Personal Access Token：GitHub → Settings → Developer settings → Personal access tokens → 生成（勾选 repo 权限），当密码用 |
-| Cloudflare 构建失败 | 看构建日志 | 常见：网络导致 `npm install` 失败 → 点重试；output directory 填错 → 确认是 `dist` |
-| 部署成功但页面空白 | 构建设置不对 | 确认 Build command 是 `npm run build`、输出目录是 `dist` |
-| 大陆访问很慢/需翻墙 | 节点在海外 | Cloudflare 免费版正常现象；想快走「方案 B」香港服务器（免备案），或国内服务器+备案 |
+| 现象                | 原因                    | 解决                                                                                                                             |
+| ------------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| push 要求密码       | GitHub 已不支持密码推送 | 用 Personal Access Token：GitHub → Settings → Developer settings → Personal access tokens → 生成（勾选 repo 权限），当密码用 |
+| Vercel 构建失败     | 看构建日志              | 常见：`npm install` 网络失败 → 点重试；output directory 填错 → 确认是 `dist`；framework preset 不是 Astro → 手动选择             |
+| 部署成功但页面空白  | 构建设置不对            | 确认 Build command 是`npm run build`、输出目录是 `dist`                                                                          |
+| "Unable to unpack repo: filename too long" | 仓库里有损坏的符号链接 | 本地执行 `git ls-files --stage \| grep '^120000'`，找到后删除重建为普通文件，再 push                             |
+| 大陆访问很慢/需翻墙 | 节点在海外              | Vercel 免费版正常现象；想快走「方案 B」香港服务器（免备案），或国内服务器+备案                                               |
 
 ## 延伸：git 常用命令速查
 
-| 命令 | 作用 |
-|---|---|
-| `git status` | 看哪些文件改了 |
-| `git add .` | 把所有改动加入暂存区 |
-| `git commit -m "说明"` | 提交一个版本 |
-| `git push` | 推送到远程（触发自动部署） |
-| `git log --oneline` | 看提交历史 |
+| 命令                     | 作用                       |
+| ------------------------ | -------------------------- |
+| `git status`           | 看哪些文件改了             |
+| `git add .`            | 把所有改动加入暂存区       |
+| `git commit -m "说明"` | 提交一个版本               |
+| `git push`             | 推送到远程（触发自动部署） |
+| `git log --oneline`    | 看提交历史                 |

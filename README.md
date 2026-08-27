@@ -85,5 +85,5 @@ notes-site/
 
 - [ ] 验收后按反馈调整设计（字体 / 颜色 / 布局）
 - [ ] 填关于页的联系方式（`src/pages/about.astro`）
-- [ ] 按 `DEPLOY.md` 部署到 Cloudflare Pages（免备案上线）
+- [ ] 按 `DEPLOY.md` 部署到 Vercel（通过 GitHub 自动部署，免备案上线）
 - [ ] 每周收录新一期（复制 `templates/weekly-template.md` → `git push`）
