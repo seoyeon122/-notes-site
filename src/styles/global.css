@@ -61,9 +61,13 @@ body {
 	color: var(--ink);
 	line-height: 1.8;
 	-webkit-font-smoothing: antialiased;
+	min-height: 100svh;
+	display: flex;
+	flex-direction: column;
 }
 
 main {
+	flex: 1; /* 内容区撑满，页脚吸底（内容短时也贴住屏幕底部） */
 	max-width: 720px;
 	margin: 0 auto;
 	padding: 2.5em 1.25em 4em;
