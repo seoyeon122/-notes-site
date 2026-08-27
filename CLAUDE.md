@@ -13,8 +13,8 @@
 ## 2. 动手前必读
 
 - 先读 [AGENTS.md](AGENTS.md)：项目交接、文件地图、红线、Roadmap。
-- 再读 [操作手册.md](操作手册.md)：无 AI 时的手操步骤，很多修改流程 AI 也应遵循。
-- 设计/决策背景随时查 [决策记录.md](决策记录.md) 与 [设计文档.md](设计文档.md)。
+- 再读 [manual.md](manual.md)：无 AI 时的手操步骤，很多修改流程 AI 也应遵循。
+- 设计/决策背景随时查 [decisions.md](decisions.md) 与 [design.md](design.md)。
 
 ---
 
@@ -50,11 +50,11 @@
 
 | 改了什么 | 必须更新的文档 |
 |---|---|
-| 新功能、新组件、新流程 | `操作手册.md` + `决策记录.md` |
-| 首页结构 / 视觉 / 交互重大调整 | `操作手册.md` + `决策记录.md` + 必要时 `设计文档.md` |
-| 内容模型、frontmatter 字段 | `操作手册.md` + `AGENTS.md` §4 + `决策记录.md` |
+| 新功能、新组件、新流程 | `manual.md` + `decisions.md` |
+| 首页结构 / 视觉 / 交互重大调整 | `manual.md` + `decisions.md` + 必要时 `design.md` |
+| 内容模型、frontmatter 字段 | `manual.md` + `AGENTS.md` §4 + `decisions.md` |
 | 仅文案 / 常量 | `src/consts.ts` 即可，无需更新文档 |
-| 仅配色数值微调 | `操作手册.md` 对应章节 + `决策记录.md` |
+| 仅配色数值微调 | `manual.md` 对应章节 + `decisions.md` |
 
 > **红线**：新增功能后不更新文档，等同于未完成。
 
@@ -98,7 +98,7 @@
 | 改首页三版结构/高亮卡/早间电台 | `src/pages/index.astro` |
 | 改左侧栏/导航/移动端顶栏 | `src/components/Rail.astro` + `src/styles/global.css` |
 | 改暗色/浅色主题变量 | `src/styles/global.css`（`:root` / `:root[data-theme="light"]`） |
-| 新增一期周报 | 复制 `templates/周报模板.md` → `src/content/issues/issue-N.md` |
+| 新增一期周报 | 复制 `templates/weekly-template.md` → `src/content/issues/issue-N.md` |
 | 文章内视频链接卡片化 | 文件改 `.mdx`，用 `<Clip title="..." url="..." />` |
 | 改凌晨四点时区映射 | `src/components/FourAMWatch.astro` |
 | 换首页背景图 | `src/assets/` + `src/pages/index.astro` 顶部 import |
@@ -110,7 +110,7 @@
 ## 10. 参考文档
 
 - [AGENTS.md](AGENTS.md) — 项目交接、文件地图、Roadmap
-- [操作手册.md](操作手册.md) — 无 AI 手操步骤
-- [决策记录.md](决策记录.md) — 做过/否过什么、为什么
-- [设计文档.md](设计文档.md) — 形态、视觉、组件讨论
+- [manual.md](manual.md) — 无 AI 手操步骤
+- [decisions.md](decisions.md) — 做过/否过什么、为什么
+- [design.md](design.md) — 形态、视觉、组件讨论
 - [DEPLOY.md](DEPLOY.md) — 部署指南

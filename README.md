@@ -31,7 +31,7 @@ npm run preview
 
 ## 收录一期周报（每周的核心工作）
 
-1. 复制 `templates/周报模板.md` 到 `src/content/issues/` 目录
+1. 复制 `templates/weekly-template.md` 到 `src/content/issues/` 目录
 2. 文件名改成英文，如 `issue-3.md`（决定网址 `/issue/issue-3/`）
 3. 修改 frontmatter：
 
@@ -56,7 +56,7 @@ summary: '一句话摘要'         # ← 可选：首页展示用
 notes-site/
 ├── astro.config.mjs        # Astro 配置（站点地址、集成插件）
 ├── package.json            # 项目信息、依赖、命令脚本
-├── templates/周报模板.md     # ★ 每周收录新一期时复制它
+├── templates/weekly-template.md     # ★ 每周收录新一期时复制它
 ├── src/
 │   ├── consts.ts           # 网站名、简介、编辑署名（改这里）
 │   ├── content.config.ts   # 内容模型：周报字段校验
@@ -86,4 +86,4 @@ notes-site/
 - [ ] 验收后按反馈调整设计（字体 / 颜色 / 布局）
 - [ ] 填关于页的联系方式（`src/pages/about.astro`）
 - [ ] 按 `DEPLOY.md` 部署到 Cloudflare Pages（免备案上线）
-- [ ] 每周收录新一期（复制 `templates/周报模板.md` → `git push`）
+- [ ] 每周收录新一期（复制 `templates/weekly-template.md` → `git push`）

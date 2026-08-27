@@ -40,7 +40,7 @@
 ### 阶段二：收录周报（进行中 ▶️）
 - 理解：Markdown、frontmatter、内容集合
 - 产出：把每周的 B 站周报重排成 `src/content/issues/` 下的一个 `.md` 文件
-- 动手题：复制 `templates/周报模板.md`，改期数和正文，观察归档页自动出现新一期
+- 动手题：复制 `templates/weekly-template.md`，改期数和正文，观察归档页自动出现新一期
 
 ### 阶段三：改样子
 - 理解：Astro 组件、页面路由、CSS

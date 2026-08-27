@@ -18,16 +18,16 @@
 ## 3. 架构速览（文件地图）
 
 - `src/consts.ts` — 全站文案（站名/简介/编辑署名/页脚标语），一处修改
-- `操作手册.md` — **人类手操指南**（无 AI 时的维护步骤）；⚠️ 每次新增功能后必须同步更新它，保持与代码一致
-- `决策记录.md` — **决策档案**（做过/否过什么、为什么）；⚠️ 重要决策后补一条，供压缩上下文时找回"为什么"
+- `manual.md` — **人类手操指南**（无 AI 时的维护步骤）；⚠️ 每次新增功能后必须同步更新它，保持与代码一致
+- `decisions.md` — **决策档案**（做过/否过什么、为什么）；⚠️ 重要决策后补一条，供压缩上下文时找回"为什么"
 - `public/images/issue-N/` — 各期图片的本地副本（不再热链 B 站，见 §7）
 - `src/content.config.ts` — 内容模型：`issues` 集合（字段见 §4）
-- `src/content/issues/*.md` — ★ 周报内容；每周新增一期 = 复制 `templates/周报模板.md`
+- `src/content/issues/*.md` — ★ 周报内容；每周新增一期 = 复制 `templates/weekly-template.md`
 - `src/pages/` — `index`（最新一期+往期）、`archive`、`issue/[slug]`、`about`、`404`、`rss.xml`
 - `src/layouts/IssueLayout.astro` — 期数页布局（**固定浅色阅读页**：`<html data-theme="light">` 自声明，不随全局主题变；右侧 **Timeline Scrollspy 时间线目录**（灰色线段+滚动高亮+悬停显示章节名，≥1200px 显示）+ 阅读进度条；h1 带 `data-animate`）
 - `src/components/` — **Rail**（左侧栏：竖排站名+信号灯+导航）/ **Clip**（切片卡片：正文视频链接卡片化，`.mdx` 里用）/ Footer / BaseHead（含 ClientRouter+MotionInit）/ FormattedDate / **MotionInit**（动效管理器，见 §6）
 - `src/styles/global.css` — 设计 tokens：默认暗色在 `:root`（komichi 暗红黑）、纸面模式在 `:root[data-theme='light']`（`--paper/--ink/--accent/--selection/--gray*` + 交通灯装饰色 + 动效 tokens）
-- `templates/周报模板.md` — 新一期复制它
+- `templates/weekly-template.md` — 新一期复制它
 - `参考文献/` — 朋友原文存档，**已在 .gitignore，绝不提交**（见 §7 红线）
 
 ## 4. 内容模型（issues 集合）
@@ -58,7 +58,7 @@ frontmatter：`title`(必填) / `issue`(必填，整数期数) / `pubDate`(必�
 
 ## 8. 当前状态与 Roadmap（优先级从高到低）
 
-**已完成**：内容模型（期数归档 1~3 期）、红黑双主题（暗色全站 + 浅色阅读页）、动效地基、git 私有仓库、文档（README/LEARNING/DEPLOY/周报模板/本文件）。
+**已完成**：内容模型（期数归档 1~3 期）、红黑双主题（暗色全站 + 浅色阅读页）、动效地基、git 私有仓库、文档（README/LEARNING/DEPLOY/weekly-template/本文件）。
 
 **待办**：
 1. ~~骨架升级~~（✅ **已全部完成**：速览卡/时间线目录/上一篇下一篇/本周数据块/切片卡片，模板已升级）
@@ -75,4 +75,4 @@ frontmatter：`title`(必填) / `issue`(必填，整数期数) / `pubDate`(必�
 - **验收方式（省 token）**：用户本地能直接打开 http://localhost:4321 看效果，**AI 不要用截图/视觉工具（vision_html_screenshot / read_image 等）验证视觉结果**；AI 验证只做 `npm run build` 通过 + 用 grep/read 抽查产物关键点（类名、颜色值、结构顺序）即可，视觉判断交给用户浏览器
 - 用户可能中途暂停或换方向：**重要进展及时 `git commit` + `push`**，保证可回退、可接续
 - 用户说"先做预览不做推送"时：**只改代码 + `npm run build`，不 commit、不 push、不更新文档**，等用户确认效果后再一并提交并同步文档
-- **新增任何功能后，同步更新 `操作手册.md` 与 `决策记录.md`**（人类手操指南 + 决策档案），让无 AI 时也能照做、压缩上下文时能找回"为什么"
+- **新增任何功能后，同步更新 `manual.md` 与 `decisions.md`**（人类手操指南 + 决策档案），让无 AI 时也能照做、压缩上下文时能找回"为什么"

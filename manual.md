@@ -24,7 +24,7 @@ npm run preview  # 预览构建结果
 ## 2. 每周收录一期周报（核心工作流）
 
 1. 把朋友周报原文存到 `参考文献/`（如 `zhuanlan-4.md`，此目录不入库）
-2. 复制 `templates/周报模板.md` → `src/content/issues/issue-4.md`
+2. 复制 `templates/weekly-template.md` → `src/content/issues/issue-4.md`
 3. 修改 frontmatter（`---` 之间）：
    - `title`（必填）、`issue`（必填，期数）、`pubDate`（必填，如 `'Aug 31 2026'`）
    - `author`（默认已填）、`originalUrl`（B 站原文链接，建议填）、`summary`（可选）
