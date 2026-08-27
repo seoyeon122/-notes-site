@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-	<!-- 四时小路观测周报 · 信号灯图标（暗红黑底 + 红黄绿三灯） -->
-	<rect x="1" y="1" width="14" height="14" rx="3.5" fill="#0c0505" />
-	<circle cx="8" cy="3.6" r="1.7" fill="#ff2231" />
-	<circle cx="8" cy="8" r="1.7" fill="#ffd100" />
-	<circle cx="8" cy="12.4" r="1.7" fill="#00a651" />
-</svg>
