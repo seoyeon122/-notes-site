@@ -70,7 +70,7 @@ npm run preview  # 预览构建结果
 - 位于首页第一版（暗色封面）和第二版（往期观测）之间，`src/pages/index.astro` 里的 `<section class="radio">`
 - **渐变背景**：`.radio` 的 `background: linear-gradient(180deg, #b27685 0%, #beb09c 100%)`（顶藕粉 `#b27685` → 底暖米 `#beb09c`）；改色号在这里
 - **高度**：`.radio` 当前为 `min-height: 120svh`（占 1.2 屏），让滚动到第二版时有余地，减少第一版残留；想改回一屏或再加高，改这里
-- **左区**：`radio-kicker`（眉标）、`radio-title`（标题）、`radio-desc`（介绍，当前占位文案"每周一清晨…"）、`radio-cta`（按钮）；正式文案待填充
+- **左区**：`radio-kicker`（眉标）、`radio-title`（标题）、`radio-desc`（介绍，"每周一清晨，小路在电波里等你……"）、`radio-cta`（按钮，文字"收听最新一期"，链接指向第三期 B 站视频 `BV1vHhN6HEQ6`）
 - **右区**：`.radio-grid` 里 4 个 `.radio-slot`，每张都是正方形图片 + B 站视频外链（`target="_blank"`）。图片放在 `public/images/radio/`，文件名按顺序 `image_01.png`、`image_02.jpg`、`image_03.png`、`image_04.png`；链接在 `src/pages/index.astro` 的 4 个 `<a class="radio-slot">` 里改。第 4 张图底部有灰色小字备注"由于第四期还未放送，这一首是小小琴安利曲"。
 - **左右比例与第一版一致**：`grid-template-columns: minmax(0, calc(50% + 160px)) minmax(0, calc(50% - 160px))`
 
