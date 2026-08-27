@@ -309,8 +309,8 @@ const descParts = SITE_DESCRIPTION.split('：');
 			.radio {
 				position: relative;
 				overflow: hidden;
-				min-height: 100svh;
-				min-height: 100vh;
+				min-height: 120svh; /* 加高 1.2 倍：滚动到第二版时有余地，减少上一版残留 */
+				min-height: 120vh;
 				display: grid;
 				grid-template-columns: minmax(0, calc(50% + 160px)) minmax(0, calc(50% - 160px));
 				background: linear-gradient(180deg, #b27685 0%, #beb09c 100%);
