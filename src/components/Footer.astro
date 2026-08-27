@@ -1,12 +1,12 @@
 ---
-import { SITE_AUTHOR, SITE_TAGLINE } from '../consts';
+import { SITE_AUTHOR, SITE_MAINTAINER, SITE_TAGLINE } from '../consts';
 const today = new Date();
 ---
 
 <footer>
 	<p class="tagline">{SITE_TAGLINE}</p>
 	<p class="meta">
-		编辑：{SITE_AUTHOR} · 本站周报同步自 B 站专栏 · © {today.getFullYear()} 四时小路 Komichi
+		编辑：{SITE_AUTHOR} · 站点维护：{SITE_MAINTAINER} · © {today.getFullYear()} 四时小路 Komichi
 	</p>
 </footer>
 <style>

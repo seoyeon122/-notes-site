@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/IssueLayout.astro';
-import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_MAINTAINER, SITE_TITLE } from '../consts';
 ---
 
 <Layout title="关于本刊" description={SITE_DESCRIPTION} pubDate={new Date('Aug 17 2026')} author={SITE_AUTHOR}>
@@ -8,6 +8,7 @@ import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		《{SITE_TITLE}》是一份都市传说观测周报，由{SITE_AUTHOR}编写，为各位小路泥同步四时小路每周最新的都市传说观察资讯：出没记录、当期传单情报，以及电子设备被入侵时留下的珍贵影像。
 	</p>
 	<p>每期内容同步收录自 B 站专栏，文末保留原文链接；部分素材来自小路泥们的贡献，感谢每一位观测者。</p>
+	<p>本站由 {SITE_MAINTAINER} 搭建与维护；周报内容由 {SITE_AUTHOR} 编写，已获授权收录。</p>
 	<p>
 		想了解四时小路本人的动态，可以关注
 		<a href="https://space.bilibili.com/1512246445" target="_blank" rel="noopener noreferrer">
