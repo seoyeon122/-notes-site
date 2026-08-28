@@ -14,7 +14,10 @@ const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.s
 	<div class="rail-signals" aria-hidden="true">
 		<span class="r"></span><span class="y"></span><span class="g"></span>
 	</div>
-	<nav class="rail-nav">
+	<button class="rail-burger" type="button" aria-label="菜单" aria-expanded="false" aria-controls="rail-menu">
+		<span></span><span></span><span></span>
+	</button>
+	<nav class="rail-nav" id="rail-menu">
 		{
 			links.map((l) => (
 				<a href={l.href} class:list={{ active: isActive(l.href) }}>
@@ -97,6 +100,10 @@ const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.s
 		color: #f6ebe8;
 		border-left-color: #ff2231;
 	}
+	/* 汉堡按钮：默认隐藏，只在移动端显示 */
+	.rail-burger {
+		display: none;
+	}
 
 	/* ===== 移动端（≤820px）：左侧装订脊 → 顶部横栏 ===== */
 	@media (max-width: 820px) {
@@ -111,7 +118,7 @@ const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.s
 			align-items: center;
 			justify-content: flex-start;
 			gap: 1em;
-			padding: 0 1em;
+			padding: 0 0 0 1em; /* 左边留 1em，右边不留（汉堡按钮自己负责右边距） */
 			border-right: none;
 			border-bottom: 1px solid rgba(246, 235, 232, 0.1);
 		}
@@ -123,20 +130,121 @@ const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.s
 		.rail-signals {
 			display: none; /* 顶栏空间有限，信号灯先隐藏（想保留可改成横排小灯） */
 		}
+		/* 汉堡按钮：三根横线，靠右，距右边缘留 15px */
+		.rail-burger {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			gap: 4px;
+			width: 44px;
+			height: 44px;
+			margin-left: auto;
+			margin-right: 15px;
+			padding: 0 11px;
+			background: none;
+			border: none;
+			cursor: pointer;
+		}
+		.rail-burger span {
+			display: block;
+			width: 100%;
+			height: 2px;
+			background: #e6e2d8;
+			border-radius: 1px;
+			transition:
+				transform 0.25s ease,
+				opacity 0.25s ease;
+		}
+		/* 展开时三横线变 X */
+		.rail-burger[aria-expanded='true'] span:nth-child(1) {
+			transform: translateY(6px) rotate(45deg);
+		}
+		.rail-burger[aria-expanded='true'] span:nth-child(2) {
+			opacity: 0;
+		}
+		.rail-burger[aria-expanded='true'] span:nth-child(3) {
+			transform: translateY(-6px) rotate(-45deg);
+		}
+		/* 导航：默认收起为下拉菜单，展开时从顶栏下方滑出 */
 		.rail-nav {
-			flex-direction: row;
-			align-items: center;
-			gap: 0.3em;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			flex-direction: column;
+			align-items: stretch;
+			gap: 0;
 			margin-top: 0;
+			background: #0c0505;
+			border-bottom: 1px solid rgba(246, 235, 232, 0.1);
+			padding: 0.4em 0;
+			/* 收起状态：透明 + 上移，并不可交互 */
+			opacity: 0;
+			transform: translateY(-8px);
+			visibility: hidden;
+			transition:
+				opacity 0.22s ease,
+				transform 0.22s ease,
+				visibility 0.22s;
+		}
+		.rail[data-open='true'] .rail-nav {
+			opacity: 1;
+			transform: translateY(0);
+			visibility: visible;
 		}
 		.rail-nav a {
 			border-left: none;
-			border-bottom: 3px solid transparent;
-			padding: 0.3em 0.6em;
+			border-bottom: none;
+			padding: 0.85em 1.2em;
+			font-size: 1em;
+			letter-spacing: 0.14em;
 		}
 		.rail-nav a.active {
 			border-left-color: transparent;
-			border-bottom-color: #ff2231;
+			border-bottom-color: transparent;
+			color: #ff2231; /* 移动端激活态：文字变红，不用下划线 */
 		}
 	}
 </style>
+
+<script>
+	// 移动端汉堡菜单：点击切换展开/收起，同步 aria-expanded 与 data-open
+	// 注意：ClientRouter 切页后 DOM 会换新，脚本不会自动重跑，
+	// 所以绑定逻辑放在 init() 里，并在 astro:page-load 时重新执行（Astro 官方推荐做法）。
+	// astro:page-load 在首次整页加载时也会触发一次，若再手动调 initBurger() 会重复绑定、
+	// 两个监听器互相抵消（点开又立即关上，看起来"无响应"）。
+	// 所以用 data-burger-ready 标记：同一个 rail 只绑定一次。
+	function initBurger() {
+		const rail = document.querySelector('.rail');
+		if (!rail || rail.dataset.burgerReady === '1') return;
+		rail.dataset.burgerReady = '1';
+
+		function setOpen(open) {
+			rail.dataset.open = open ? 'true' : 'false';
+			rail.querySelector('.rail-burger')?.setAttribute('aria-expanded', String(open));
+		}
+
+		// 委托：点击汉堡按钮 → 切换；点击导航链接 → 收起
+		rail.addEventListener('click', (e) => {
+			const burger = rail.querySelector('.rail-burger');
+			if (e.target.closest('.rail-burger')) {
+				setOpen(rail.dataset.open !== 'true');
+				return;
+			}
+			if (e.target.closest('.rail-nav a')) {
+				setOpen(false);
+			}
+		});
+
+		setOpen(false); // 切页后菜单复位为收起
+	}
+
+	// 首次加载：等 DOM 就绪后再绑定（模块脚本执行时 DOM 可能尚未解析完）
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initBurger);
+	} else {
+		initBurger();
+	}
+	// 切页后（含首次加载触发的 astro:page-load）重新初始化；新 DOM 无标记，会正常绑定
+	document.addEventListener('astro:page-load', initBurger);
+</script>
