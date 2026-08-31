@@ -68,7 +68,7 @@ frontmatter：`title`(必填) / `issue`(必填，整数期数) / `pubDate`(必�
    - ⏰ **待办提醒**：第四格链接暂为 `BV1eBt46uEuU`（2026-08-31 更新），**之后需更新为导剪版链接**（用户待办）
 5. 可选：自定义域名；WebGL 特别篇页（架构支持 Three.js 岛屿，非必须）
 
-**长期每周流程**：朋友发周报 → 复制模板到 `src/content/issues/` → 重排版 → `git push`。
+**长期每周流程**：朋友发周报 → 复制模板到 `src/content/issues/` → 重排版 → **同步在首页 `recentUpdates` 数组加一条"近期更新"跳转（周报用 `/issue/issue-N/`、电台用 `#radio`）** → `git push`。⚠️ 维护"近期更新"栏是硬性步骤，漏掉等于未完成（详见 CLAUDE.md §4）。
 
 ## 9. 协作模式
 
