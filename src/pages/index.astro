@@ -362,7 +362,7 @@ const recentUpdates = [
 				overflow: hidden;
 				min-height: 120svh; /* 加高 1.2 倍：滚动到第二版时有余地，减少上一版残留 */
 				min-height: 120vh;
-				scroll-margin-top: 80px; /* 锚点跳转（近期更新）时多留 80px，避开顶栏 */
+				scroll-margin-top: -80px; /* 锚点跳转（近期更新）时多往下滚 80px（负值=越过视口顶部 80px） */
 				display: grid;
 				grid-template-columns: minmax(0, calc(50% + 160px)) minmax(0, calc(50% - 160px));
 				background: linear-gradient(180deg, #b27685 0%, #beb09c 100%);
