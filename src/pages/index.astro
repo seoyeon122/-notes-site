@@ -26,6 +26,8 @@ const descParts = SITE_DESCRIPTION.split('：');
 const recentUpdates = [
 	{ date: '2026-08-31', title: '四时小路早间电台第四期', href: '#radio' },
 ];
+// ★ 早间电台"收听最新一期"按钮的链接：电台更新到新一期时改这里（与第四格最新视频保持一致）
+const radioLatestUrl = 'https://www.bilibili.com/video/BV1eBt46uEuU';
 ---
 
 <!doctype html>
@@ -599,7 +601,7 @@ const recentUpdates = [
 					<p class="radio-desc" data-animate>
 						每周一清晨，小路在电波里等你。这里是早间电台版块，四时小路的每一份安利，都是颇具她个人风格的色彩，希望你听的开心。
 					</p>
-					<a class="radio-cta" data-animate href="https://www.bilibili.com/video/BV1vHhN6HEQ6" target="_blank" rel="noopener noreferrer">收听最新一期 ↗</a>
+					<a class="radio-cta" data-animate href={radioLatestUrl} target="_blank" rel="noopener noreferrer">收听最新一期 ↗</a>
 				</div>
 				<div class="radio-panel">
 					<div class="radio-grid">
