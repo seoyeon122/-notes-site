@@ -19,6 +19,13 @@ const rows = [latest, second]
 	.filter((r) => r.cards.length > 0);
 // 标签语在"："后换行（只影响首页展示）
 const descParts = SITE_DESCRIPTION.split('：');
+// ★ 首页"近期更新"栏：每次周报或电台内容有更新时，在最前面加一条
+//   { date: 'YYYY-MM-DD', title: '标题', href: '跳转目标' }
+//   - 周报更新 → href 用 `/issue/issue-N/`
+//   - 电台更新 → href 用 `#radio`（跳转到早间电台版）
+const recentUpdates = [
+	{ date: '2026-08-31', title: '四时小路早间电台第四期', href: '#radio' },
+];
 ---
 
 <!doctype html>
@@ -305,12 +312,57 @@ const descParts = SITE_DESCRIPTION.split('：');
 				text-decoration: none;
 			}
 
+			/* 第一版左栏"近期更新"小栏：仿往期观测列表格式，暗色封面配色 */
+			.recent {
+				margin-top: 2.4em;
+				width: 100%;
+				max-width: 30em;
+			}
+			.recent-title {
+				font-family: var(--font-serif);
+				font-size: 1em;
+				color: #b9b1ac;
+				letter-spacing: 0.08em;
+				margin: 0 0 0.7em;
+				border: none;
+			}
+			.recent-list {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+			.recent-list li {
+				border-bottom: 1px solid rgba(246, 235, 232, 0.12);
+			}
+			.recent-list .row {
+				display: flex;
+				align-items: baseline;
+				gap: 0.9em;
+				padding: 0.85em 0.2em;
+				color: #f6ebe8;
+				text-decoration: none;
+			}
+			.recent-list .row:hover .title {
+				color: #ff2231;
+			}
+			.recent-list .date {
+				color: #ff2231;
+				font-weight: 600;
+				font-size: 0.88em;
+				min-width: 7.5em;
+			}
+			.recent-list .title {
+				flex: 1;
+				font-size: 0.95em;
+			}
+
 			/* ===== 第一点五版（早间电台）：渐变底 + 左介绍 + 右四图占位（预览） ===== */
 			.radio {
 				position: relative;
 				overflow: hidden;
 				min-height: 120svh; /* 加高 1.2 倍：滚动到第二版时有余地，减少上一版残留 */
 				min-height: 120vh;
+				scroll-margin-top: 80px; /* 锚点跳转（近期更新）时多留 80px，避开顶栏 */
 				display: grid;
 				grid-template-columns: minmax(0, calc(50% + 160px)) minmax(0, calc(50% - 160px));
 				background: linear-gradient(180deg, #b27685 0%, #beb09c 100%);
@@ -465,6 +517,21 @@ const descParts = SITE_DESCRIPTION.split('：');
 							</a>
 						)
 					}
+					<div class="recent" data-animate>
+						<h2 class="recent-title">近期更新</h2>
+						<ul class="recent-list">
+							{
+								recentUpdates.map((u) => (
+									<li>
+										<a class="row" href={u.href}>
+											<span class="date">{u.date}</span>
+											<span class="title">{u.title}</span>
+										</a>
+									</li>
+								))
+							}
+						</ul>
+					</div>
 					<a class="scroll-hint" href="#info" aria-label="向下查看更多" title="向下查看更多">
 						<svg
 							viewBox="0 0 24 24"
@@ -525,7 +592,7 @@ const descParts = SITE_DESCRIPTION.split('：');
 				</div>
 			</section>
 
-			<section class="radio">
+			<section class="radio" id="radio">
 				<div class="radio-left">
 					<span class="radio-kicker" data-animate>早间电台 · Morning Radio</span>
 					<h2 class="radio-title" data-animate>四时小路的早间电台</h2>
