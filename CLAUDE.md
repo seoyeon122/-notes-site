@@ -44,18 +44,48 @@
    - `git push`
 3. **同步更新文档**（见下一条）。
 
-### ⭐ 每次新增周报 / 电台内容时的必做清单（重要，别漏）
+### ⭐ 长期维护 AI 工作守则（每次新增周报 / 电台内容时必读）
 
-每当用户新增一期周报、或更新早间电台内容时，**除了新增内容本身，还必须同步维护首页"近期更新"栏和电台按钮链接**：
+每当用户新增一期周报、或更新早间电台内容时，按下面清单执行。**漏掉任一步等于本次任务未完成。**
 
-1. 在 `src/pages/index.astro` 顶部 `recentUpdates` 数组**最前面加一条**：
-   - 周报更新 → `{ date: 'YYYY-MM-DD', title: '第N期 · 标题', href: '/issue/issue-N/' }`
-   - 电台更新 → `{ date: 'YYYY-MM-DD', title: '…', href: '#radio' }`
-2. **电台更新到新一期时**，同步改 `radioLatestUrl` 常量（"收听最新一期"按钮的链接，应与最新一期视频一致）。
-3. 加完 `npm run build` 验证，随内容一起 `git push`。
-4. 若用户有"之后要改"的临时占位（如链接待替换为导剪版），同步挂一条到 `AGENTS.md` Roadmap 的待办提醒。
+#### 一、首页自动轮换的项（无需手动改，但要知道机制）
 
-> 这条是**硬性步骤**，和"更新文档"同级；漏掉等于本次任务未完成。
+`src/pages/index.astro` 用 `getCollection('issues')` 按 `issue` 号倒序取数据，以下全部**自动**跟随：
+- 首页高亮卡：`latest`（最新一期）+ `second`（上一期）自动下移，上上期自动不再显示
+- 首页"阅读最新一期"按钮：自动指向 `latest`
+- 往期观测列表：`rest`（除最新外）自动列出
+- 归档页、阅读页上一篇/下一篇、RSS：均基于集合自动生成
+
+⚠️ 但有一个**前置条件**：新一期周报的 frontmatter 必须填 `highlights`，否则高亮卡那行会因无数据被过滤掉、不显示。
+
+#### 二、必须手动维护的项
+
+**A. 新增一期周报（issue-N.md）时：**
+1. 在 `src/pages/index.astro` 顶部 `recentUpdates` 数组**最前面加一条**：`{ date: 'YYYY-MM-DD', title: '第N期 · 标题', href: '/issue/issue-N/' }`
+2. 确认 frontmatter 填了 `highlights`（否则首页卡片不显示）
+3. `npm run build` 验证 → `git push`
+
+**B. 早间电台更新到新一期时：**
+1. 在 `recentUpdates` 数组**最前面加一条**：`{ date: 'YYYY-MM-DD', title: '…', href: '#radio' }`
+2. 改 `radioLatestUrl` 常量（"收听最新一期"按钮链接，应与最新一期一致）
+3. 同步改首页 `.radio-grid` 里 4 个 `<a class="radio-slot">` 的 `href` + `public/images/radio/` 对应图片
+4. `npm run build` 验证 → `git push`
+
+**C. 有"之后要改"的临时占位时（如链接待替换为导剪版）：**
+- 同步挂一条到 `AGENTS.md` §8 Roadmap 的待办提醒，避免遗忘。
+
+#### 三、其他可能需要同步更新的点（排查清单）
+
+| 变动 | 位置 | 说明 |
+|---|---|---|
+| 站名/简介/署名/页脚 | `src/consts.ts` | 全站文案唯一入口，勿散落 |
+| 首页三版结构/高亮卡/电台 | `src/pages/index.astro` | 见 §3 首页三版顺序 |
+| 左侧栏导航链接 | `src/components/Rail.astro` 的 `links` | 加/删导航项 |
+| 明暗主题变量 | `src/styles/global.css` | `:root` / `:root[data-theme="light"]` |
+| 换 favicon / 首页背景图 | `src/assets/` + `scripts/gen-icons.cjs` | 见 §9 快速参考 |
+| 部署/域名/服务器 | `DEPLOY.md` | 换域名或迁服务器时 |
+
+> 本节是**硬性守则**，与"更新文档"同级；漏掉等于本次任务未完成。
 
 ---
 
