@@ -1,5 +1,5 @@
 ---
-// 左侧栏（装订脊）：站名竖排 + 竖排信号灯 + 导航
+// 左侧栏（装订脊/报头脊）：站名竖排 + 竖排信号灯 + 报头信息 + 导航
 const pathname = Astro.url.pathname;
 const links = [
 	{ href: '/', label: '首页' },
@@ -7,10 +7,13 @@ const links = [
 	{ href: '/about', label: '关于' },
 ];
 const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.startsWith(href));
+// 报头脊的印刷信息（报刊发刊信息感）
+const year = new Date().getFullYear();
 ---
 
 <aside class="rail">
 	<span class="rail-brand" aria-hidden="true">四时小路</span>
+	<span class="rail-masthead" aria-hidden="true">观测周报 · 每周刊</span>
 	<div class="rail-signals" aria-hidden="true">
 		<span class="r"></span><span class="y"></span><span class="g"></span>
 	</div>
@@ -26,6 +29,7 @@ const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.s
 			))
 		}
 	</nav>
+	<span class="rail-issue" aria-hidden="true">EST. {year}</span>
 </aside>
 
 <style>
@@ -53,6 +57,22 @@ const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.s
 		text-align: center;
 		letter-spacing: 0.1em;
 		writing-mode: vertical-rl; /* 竖排站名（桌面）；窄屏在下方媒体查询里改回横排 */
+	}
+	/* 报头脊的印刷信息：竖排小字，低存在感 */
+	.rail-masthead {
+		writing-mode: vertical-rl;
+		font-size: 10px;
+		letter-spacing: 0.16em;
+		color: #8b8580;
+		line-height: 1.6;
+	}
+	.rail-issue {
+		margin-top: auto;
+		font-family: var(--font-num);
+		font-size: 10px;
+		letter-spacing: 0.12em;
+		color: #8b8580;
+		writing-mode: vertical-rl;
 	}
 	.rail-signals {
 		display: flex;
@@ -129,6 +149,10 @@ const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.s
 		}
 		.rail-signals {
 			display: none; /* 顶栏空间有限，信号灯先隐藏（想保留可改成横排小灯） */
+		}
+		.rail-masthead,
+		.rail-issue {
+			display: none; /* 报头脊印刷信息只在桌面竖排显示 */
 		}
 		/* 汉堡按钮：三根横线，靠右，距右边缘留 15px */
 		.rail-burger {

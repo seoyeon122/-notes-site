@@ -29,7 +29,7 @@ const tocItems = headings.filter((h) => h.depth === 2);
 				display: inline-block;
 				color: var(--accent);
 				border: 1px solid var(--accent);
-				border-radius: 999px;
+				border-radius: 2px; /* 胶囊 → 直角细框 */
 				padding: 0.2em 1em;
 				font-size: 0.85em;
 				letter-spacing: 0.15em;
@@ -48,10 +48,10 @@ const tocItems = headings.filter((h) => h.depth === 2);
 				margin: 0 auto 2.5em;
 				max-width: 720px;
 				border: 1px solid rgb(var(--gray-light));
-				border-left: 4px solid var(--accent);
-				border-radius: 8px;
+				border-left: 3px solid var(--accent);
+				border-radius: 2px; /* 收圆角 */
 				padding: 1.2em 1.5em;
-				background: rgb(var(--gray-light), 30%);
+				background: transparent; /* 去底色 */
 			}
 			.hl-compact-label {
 				font-size: 0.8em;
@@ -162,13 +162,13 @@ const tocItems = headings.filter((h) => h.depth === 2);
 				gap: 0.2em;
 				padding: 1.1em 0.5em;
 				border: 1px solid rgb(var(--gray-light));
-				border-radius: 10px;
-				background: rgb(var(--gray-light), 30%);
+				border-radius: 2px; /* 收圆角 */
+				background: transparent; /* 去底色 */
 			}
 			.stat-value {
-				font-family: var(--font-serif);
+				font-family: var(--font-num); /* 等宽数字，报纸表格感 */
 				font-size: 1.9em;
-				font-weight: 700;
+				font-weight: 400; /* 去粗体 */
 				line-height: 1.1;
 				color: var(--accent);
 			}
