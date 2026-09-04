@@ -31,10 +31,11 @@ import { SITE_TITLE, RADIO_EPISODES } from '../consts';
 				font-size: 1.9em;
 				margin: 0;
 			}
-			/* 番剧索引式网格：桌面端排满，随宽度自动增减列 */
+			/* 番剧索引式网格：桌面端排满，列宽固定，封面保持 1:1 正方形 */
 			.radio-index {
 				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+				grid-template-columns: repeat(auto-fill, minmax(240px, 240px));
+				justify-content: center; /* 行不满时居中，不拉伸 */
 				gap: 1.6em;
 			}
 			.radio-item {
