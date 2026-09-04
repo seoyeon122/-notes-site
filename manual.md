@@ -80,19 +80,17 @@ npm run preview  # 预览构建结果
   `grid-template-columns: minmax(0, calc(50% + 160px)) minmax(0, calc(50% - 160px));`
 - 左边是封面、右边是周报窗口；改 `160px` 数值即可（左加宽 / 右变窄）
 
-## 6.5 早间电台版（第二点五版，施工中）
+## 6.5 早间电台（首页电台版 + 电台归档页）
 
-- 位于首页第一版（暗色封面）和第三版（往期观测）之间，`src/pages/index.astro` 里的 `<section class="radio">`
-- **渐变背景**：`.radio` 的 `background: linear-gradient(180deg, #b27685 0%, #beb09c 100%)`（顶藕粉 `#b27685` → 底暖米 `#beb09c`）；改色号在这里
-- **高度**：`.radio` 当前为 `min-height: 120svh`（占 1.2 屏），让滚动到第三版时有余地，减少第一版残留；想改回一屏或再加高，改这里
-- **左区**：`radio-kicker`（眉标）、`radio-title`（标题）、`radio-desc`（介绍，"每周一清晨，小路在电波里等你……"）、`radio-cta`（按钮，文字"收听最新一期"，链接指向第三期 B 站视频 `BV1vHhN6HEQ6`）
-- **右区**：`.radio-grid` 里 4 个 `.radio-slot`，每张都是正方形图片 + B 站视频外链（`target="_blank"`）。图片放在 `public/images/radio/`，文件名按顺序 `image_01.png`、`image_02.jpg`、`image_03.png`、`image_04.png`；链接在 `src/pages/index.astro` 的 4 个 `<a class="radio-slot">` 里改。第 4 张图底部有灰色小字备注"由于第四期还未放送，这一首是小小琴安利曲"。
-- **左右比例与第一版一致**：`grid-template-columns: minmax(0, calc(50% + 160px)) minmax(0, calc(50% - 160px))`
+- **电台数据统一在 `src/consts.ts` 的 `RADIO_EPISODES` 数组**（首页电台版、电台归档页、`RADIO_LATEST_URL` 按钮链接都从这里取）。
+- **每周更新电台**：把新一期加到数组**最前面**，填 `issue`（期号）/ `image`（封面图 `/images/radio/image_05.xxx`）/ `url`（B 站链接）/ `album`（分享专辑名）。
+- **首页电台版**：`src/pages/index.astro` 的 `<section class="radio">`，取 `RADIO_EPISODES.slice(0,4)` 显示最新 4 张；渐变背景在 `.radio`（顶藕粉 `#b27685` → 底暖米 `#beb09c`，叠纸张噪点）。
+- **电台归档页**：`/radio`（`src/pages/radio.astro`）——桌面端"番剧索引"网格排满、手机端一行两个；每张卡片显示「第 N 期 + 专辑名」，点击跳 B 站视频。
 
 ## 7. 改左侧栏导航
 
 - 左侧栏在 `src/components/Rail.astro`（宽 80px，固定贴左，全站共用）：
-  - **导航链接**：改文件里的 `links` 数组（首页 / 归档 / 关于），加链接加一项即可
+  - **导航链接**：改文件里的 `links` 数组（首页 / 归档 / 电台 / 关于），加链接加一项即可
   - 竖排站名、竖排信号灯装饰也在里面
 - **移动端自动变顶栏 + 汉堡菜单**（≤820px 宽）：站名常驻左侧，右侧汉堡按钮（三横线，44px 触控区，距右缘 15px），点开下拉菜单显示导航（激活项红字、点链接自动收起）。汉堡按钮和下拉样式在 `Rail.astro` 的 `@media (max-width: 820px)` 里；交互脚本在文件底部（事件委托 + `data-burger-ready` 幂等标记 + `astro:page-load` 重绑，**别改成直接绑定**，否则切页后会失效）
 - **正文让位**：从"左边距"自动改成"上边距"（`--rail-h:60px`，见 `global.css` 底部媒体查询）

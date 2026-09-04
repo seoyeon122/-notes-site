@@ -4,6 +4,7 @@ const pathname = Astro.url.pathname;
 const links = [
 	{ href: '/', label: '首页' },
 	{ href: '/archive', label: '归档' },
+	{ href: '/radio', label: '电台' },
 	{ href: '/about', label: '关于' },
 ];
 const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.startsWith(href));

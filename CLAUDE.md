@@ -67,9 +67,8 @@
 
 **B. 早间电台更新到新一期时：**
 1. 在 `recentUpdates` 数组**最前面加一条**：`{ date: 'YYYY-MM-DD', title: '…', href: '#radio' }`
-2. 改 `radioLatestUrl` 常量（"收听最新一期"按钮链接，应与最新一期一致）
-3. 同步改首页 `.radio-grid` 里 4 个 `<a class="radio-slot">` 的 `href` + `public/images/radio/` 对应图片
-4. `npm run build` 验证 → `git push`
+2. 在 `src/consts.ts` 的 `RADIO_EPISODES` 数组**最前面加一条**：`{ issue, image, url, album }`（封面图放 `public/images/radio/`）。首页电台版、电台归档页 `/radio`、「收听最新一期」按钮（`RADIO_LATEST_URL`）会自动跟随。
+3. `npm run build` 验证 → `git push`
 
 **C. 有"之后要改"的临时占位时（如链接待替换为导剪版）：**
 - 同步挂一条到 `AGENTS.md` §8 Roadmap 的待办提醒，避免遗忘。

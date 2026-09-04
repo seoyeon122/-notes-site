@@ -42,17 +42,17 @@
 
 /* ===== 纸面模式（yorushika 式暖灰白，切换按钮启用） ===== */
 :root[data-theme='light'] {
-	--paper: #f6f4f0; /* 暖灰白底 */
-	--card: #ffffff;
-	--ink: #242833;
+	--paper: #f2ede3; /* 更暖的米色纸底，弱化纯白数码感 */
+	--card: #faf7f1; /* 卡片纸白，不再刺眼纯白 */
+	--ink: #2b2b2b;
 	--accent: #c8102e; /* 纸面上用深一档的红，保证对比度 */
 	--accent-soft: #c48e9a;
-	--selection: rgba(255, 34, 49, 0.15);
+	--selection: rgba(200, 16, 46, 0.12);
 
-	--black: 36, 40, 51;
-	--gray: 107, 113, 128;
-	--gray-light: 214, 207, 194;
-	--gray-dark: 36, 40, 51;
+	--black: 43, 43, 43;
+	--gray: 105, 99, 90;
+	--gray-light: 210, 200, 184;
+	--gray-dark: 43, 43, 43;
 }
 
 html {
@@ -71,6 +71,17 @@ body {
 	min-height: 100svh;
 	display: flex;
 	flex-direction: column;
+}
+
+/* 纸张噪点质感：全局极淡纹理层，叠在背景上，消除"死黑/死白数码屏"感 */
+body::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	pointer-events: none;
+	opacity: 0.04; /* 极淡，只在细看时能察觉 */
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 main {
@@ -99,7 +110,8 @@ h1 {
 
 h2 {
 	font-size: 1.4em;
-	border-bottom: 1px solid var(--line); /* 细分隔线，代替 2px 红粗线 */
+	border-bottom: 1px solid var(--line); /* 细分隔线 */
+	box-shadow: 0 1px 0 0 var(--line); /* 双细线（装订线式） */
 	padding-bottom: 0.35em;
 	display: inline-block;
 	scroll-margin-top: 1.2em; /* 锚点跳转时留出呼吸空间 */

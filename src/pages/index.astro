@@ -5,7 +5,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Rail from '../components/Rail.astro';
 import FourAMWatch from '../components/FourAMWatch.astro';
 import { getCollection } from 'astro:content';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { SITE_DESCRIPTION, SITE_TITLE, RADIO_EPISODES, RADIO_LATEST_URL } from '../consts';
 import bg from '../assets/Background_test01.png';
 
 const issues = (await getCollection('issues')).sort((a, b) => b.data.issue - a.data.issue);
@@ -27,8 +27,8 @@ const recentUpdates = [
 	{ date: '2026-09-01', title: '第四期 · 都市传说身体抱恙', href: '/issue/issue-4/' },
 	{ date: '2026-08-31', title: '四时小路早间电台第四期', href: '#radio' },
 ];
-// ★ 早间电台"收听最新一期"按钮的链接：电台更新到新一期时改这里（与第四格最新视频保持一致）
-const radioLatestUrl = 'https://www.bilibili.com/video/BV18cte6mEuV';
+// ★ 早间电台"收听最新一期"按钮的链接 = 最新一期（数据在 consts.ts 的 RADIO_EPISODES）
+const radioLatestUrl = RADIO_LATEST_URL;
 ---
 
 <!doctype html>
@@ -647,19 +647,18 @@ const radioLatestUrl = 'https://www.bilibili.com/video/BV18cte6mEuV';
 				</div>
 				<div class="radio-panel">
 					<div class="radio-grid">
-						<a class="radio-slot" href="https://www.bilibili.com/video/BV1rfbb64ELm" target="_blank" rel="noopener noreferrer">
-							<img src="/images/radio/image_01.png" alt="" loading="lazy" />
-						</a>
-						<a class="radio-slot" href="https://www.bilibili.com/video/BV1mnbq6sENS" target="_blank" rel="noopener noreferrer">
-							<img src="/images/radio/image_02.jpg" alt="" loading="lazy" />
-						</a>
-						<a class="radio-slot" href="https://www.bilibili.com/video/BV1vHhN6HEQ6" target="_blank" rel="noopener noreferrer">
-							<img src="/images/radio/image_03.png" alt="" loading="lazy" />
-						</a>
-						<a class="radio-slot" href="https://www.bilibili.com/video/BV18cte6mEuV" target="_blank" rel="noopener noreferrer">
-							<img src="/images/radio/image_04.jpg" alt="" loading="lazy" />
-							<span class="radio-slot-note">在通往未达的道路上 —By 李吉吉</span>
-						</a>
+						{
+							RADIO_EPISODES.slice(0, 4).map((ep) => (
+								<a class="radio-slot" href={ep.url} target="_blank" rel="noopener noreferrer">
+									<img src={ep.image} alt={`第 ${ep.issue} 期 · ${ep.album}`} loading="lazy" />
+									{
+										ep.issue === 4 && (
+											<span class="radio-slot-note">在通往未达的道路上 —By 李吉吉</span>
+										)
+									}
+								</a>
+							))
+						}
 					</div>
 				</div>
 			</section>
