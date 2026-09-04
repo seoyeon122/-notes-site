@@ -44,6 +44,7 @@ import { SITE_TITLE, RADIO_EPISODES } from '../consts';
 				color: var(--ink);
 			}
 			.radio-item .cover {
+				display: block; /* 内联 span → 块级，aspect-ratio 才能生效 */
 				position: relative;
 				aspect-ratio: 1 / 1;
 				overflow: hidden;
