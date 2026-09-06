@@ -14,7 +14,7 @@ export interface RadioEpisode {
 	album: string; // 分享的专辑名
 }
 export const RADIO_EPISODES: RadioEpisode[] = [
-	{ issue: 4, image: '/images/radio/image_04.jpg', url: 'https://www.bilibili.com/video/BV18cte6mEuV', album: '在通往未达的道路上 / 李吉吉' },
+	{ issue: 4, image: '/images/radio/komichi-future-road-v1.png', url: 'https://www.bilibili.com/video/BV18cte6mEuV', album: '在通往未达的道路上 / 李吉吉' },
 	{ issue: 3, image: '/images/radio/image_03.png', url: 'https://www.bilibili.com/video/BV1vHhN6HEQ6', album: '月上伊甸 / 江上青山' },
 	{ issue: 2, image: '/images/radio/image_02.jpg', url: 'https://www.bilibili.com/video/BV1mnbq6sENS', album: 'OK Computer / radiohead' },
 	{ issue: 1, image: '/images/radio/image_01.png', url: 'https://www.bilibili.com/video/BV1rfbb64ELm', album: 'ビアリストックス / Bialystocks' },

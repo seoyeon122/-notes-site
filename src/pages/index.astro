@@ -479,6 +479,17 @@ const radioLatestUrl = RADIO_LATEST_URL;
 				color: rgba(246, 244, 240, 0.88);
 				font-size: 0.74em;
 				line-height: 1.45;
+				opacity: 0;
+				transform: translateY(100%);
+				transition:
+					opacity var(--dur-fast) ease,
+					transform var(--dur-fast) var(--ease-out-quart);
+				pointer-events: none;
+			}
+			.radio-slot:hover .radio-slot-note,
+			.radio-slot:focus-visible .radio-slot-note {
+				opacity: 1;
+				transform: translateY(0);
 			}
 
 			@media (max-width: 820px) {
@@ -651,11 +662,7 @@ const radioLatestUrl = RADIO_LATEST_URL;
 							RADIO_EPISODES.slice(0, 4).map((ep) => (
 								<a class="radio-slot" href={ep.url} target="_blank" rel="noopener noreferrer">
 									<img src={ep.image} alt={`第 ${ep.issue} 期 · ${ep.album}`} loading="lazy" />
-									{
-										ep.issue === 4 && (
-											<span class="radio-slot-note">在通往未达的道路上 / 李吉吉</span>
-										)
-									}
+									<span class="radio-slot-note">{ep.album}</span>
 								</a>
 							))
 						}

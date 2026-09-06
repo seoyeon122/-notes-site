@@ -84,7 +84,7 @@ npm run preview  # 预览构建结果
 
 - **电台数据统一在 `src/consts.ts` 的 `RADIO_EPISODES` 数组**（首页电台版、电台归档页、`RADIO_LATEST_URL` 按钮链接都从这里取）。
 - **每周更新电台**：把新一期加到数组**最前面**，填 `issue`（期号）/ `image`（封面图 `/images/radio/image_05.xxx`）/ `url`（B 站链接）/ `album`（分享专辑名）。
-- **首页电台版**：`src/pages/index.astro` 的 `<section class="radio">`，取 `RADIO_EPISODES.slice(0,4)` 显示最新 4 张；渐变背景在 `.radio`（顶藕粉 `#b27685` → 底暖米 `#beb09c`，叠纸张噪点）。
+- **首页电台版**：`src/pages/index.astro` 的 `<section class="radio">`，取 `RADIO_EPISODES.slice(0,4)` 显示最新 4 张；封面说明直接读取 `album`，默认隐藏，鼠标悬停或键盘聚焦时从底部显示。电台归档页的常驻文字不受这组首页样式影响。
 - **电台归档页**：`/radio`（`src/pages/radio.astro`）——桌面端"番剧索引"网格排满、手机端一行两个；每张卡片显示「第 N 期 + 专辑名」，点击跳 B 站视频。
 
 ## 7. 改左侧栏导航
