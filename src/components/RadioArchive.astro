@@ -24,7 +24,10 @@ const allEpisodes = RADIO_EPISODES;
         <img class="arch-cover" src={ep.image} alt={ep.album} width="480" height="480" />
         <div class="arch-info">
           <p class="arch-eyebrow">MORNING RADIO · 第 {ep.issue} 期</p>
-          <h2 id={`arch-title-${ep.issue}`}>{ep.album.split(' / ')[0]}</h2>
+          <div class="title-row">
+            <h2 id={`arch-title-${ep.issue}`}>{ep.album.split(' / ')[0]}</h2>
+            <a class="arch-listen-top" href={ep.url} target="_blank" rel="noopener noreferrer">{copy.listen}</a>
+          </div>
           <p class="arch-artist">{ep.album.split(' / ').slice(1).join(' / ')}</p>
           <p class="arch-desc">{ep.description}</p>
           <div class="arch-trackhead">
@@ -184,6 +187,8 @@ const allEpisodes = RADIO_EPISODES;
     letter-spacing: 0.14em;
     color: rgba(255, 255, 255, 0.7);
   }
+  .title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+  .title-row h2 { flex: 1; min-width: 0; }
   .arch-detail h2 {
     margin: 0;
     font-family: var(--font-serif);
@@ -193,6 +198,22 @@ const allEpisodes = RADIO_EPISODES;
     color: #fff;
     overflow-wrap: anywhere;
   }
+  .arch-listen-top {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    box-sizing: border-box;
+    padding: 5px 14px;
+    margin-top: 3px;
+    border: 1px solid rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.14);
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.72em;
+    white-space: nowrap;
+  }
+  .arch-listen-top:hover { background: rgba(255,255,255,0.29); text-decoration: none; }
   .arch-artist { margin: 6px 0 0; font-size: 0.85em; color: rgba(255,255,255,0.75); }
   .arch-desc { margin: 16px 0; font-size: 0.85em; line-height: 1.8; color: rgba(255,255,255,0.88); white-space: pre-line; }
   .arch-trackhead {
