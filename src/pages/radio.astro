@@ -2,7 +2,8 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Rail from '../components/Rail.astro';
-import { SITE_TITLE, RADIO_EPISODES } from '../consts';
+import RadioArchive from '../components/RadioArchive.astro';
+import { SITE_TITLE } from '../consts';
 ---
 
 <!doctype html>
@@ -16,7 +17,9 @@ import { SITE_TITLE, RADIO_EPISODES } from '../consts';
 				padding: 3em 2em 4em;
 			}
 			.radio-page-head {
-				margin-bottom: 2.5em;
+				max-width: 1400px;
+				margin: 0 0 50px; /* 分割线距专辑区 50px */
+				text-align: left;
 			}
 			.radio-page-head .kicker {
 				display: block;
@@ -29,65 +32,20 @@ import { SITE_TITLE, RADIO_EPISODES } from '../consts';
 				font-family: var(--font-serif);
 				font-weight: 400;
 				font-size: 1.9em;
-				margin: 0;
+				margin: 0 0 50px; /* 标题距分割线 50px */
 			}
-			/* 番剧索引式网格：桌面端排满，列宽固定，封面保持 1:1 正方形 */
-			.radio-index {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(240px, 240px));
-				justify-content: center; /* 行不满时居中，不拉伸 */
-				gap: 1.6em;
+			/* 阳光米色分割线：分隔标题区与专辑区 */
+			.radio-rule {
+				height: 1px;
+				background: linear-gradient(90deg, #f3d6a1 0%, rgba(243, 214, 161, 0.35) 45%, rgba(243, 214, 161, 0) 100%);
 			}
-			.radio-item {
-				display: block;
-				text-decoration: none;
-				color: var(--ink);
-			}
-			.radio-item .cover {
-				display: block; /* 内联 span → 块级，aspect-ratio 才能生效 */
-				position: relative;
-				aspect-ratio: 1 / 1;
-				overflow: hidden;
-				border-radius: 2px;
-				border: 1px solid rgb(var(--gray-light));
-			}
-			.radio-item .cover img {
+			/* RadioArchive 全宽展示（内部网格 auto-fill 自动排满） */
+			.radio-archive {
 				width: 100%;
-				height: 100%;
-				object-fit: cover;
-				display: block;
-				filter: saturate(0.95);
-				transition: transform 0.3s ease;
 			}
-			.radio-item:hover .cover img {
-				transform: scale(1.03); /* 轻微放大，替代悬浮抬升 */
-			}
-			.radio-item .meta {
-				margin-top: 0.6em;
-			}
-			.radio-item .no {
-				display: block;
-				font-size: 0.76em;
-				letter-spacing: 0.14em;
-				color: var(--accent);
-				margin-bottom: 0.15em;
-			}
-			.radio-item .album {
-				display: block;
-				font-family: var(--font-serif);
-				font-size: 0.95em;
-				line-height: 1.4;
-				color: var(--ink);
-			}
-
-			/* 手机：一行两个，和首页电台版一致 */
 			@media (max-width: 820px) {
 				main.radio-main {
 					padding: 1.6em 1em 3em;
-				}
-				.radio-index {
-					grid-template-columns: repeat(2, minmax(0, 1fr));
-					gap: 1em;
 				}
 			}
 		</style>
@@ -95,24 +53,13 @@ import { SITE_TITLE, RADIO_EPISODES } from '../consts';
 	<body>
 		<Rail />
 		<main class="radio-main">
-			<header class="radio-page-head">
-				<span class="kicker">MORNING RADIO · 每周一清晨</span>
-				<h1>四时小路的早间电台</h1>
-			</header>
-			<div class="radio-index">
-				{
-					RADIO_EPISODES.map((ep) => (
-						<a class="radio-item" href={ep.url} target="_blank" rel="noopener noreferrer">
-							<span class="cover">
-								<img src={ep.image} alt={`第 ${ep.issue} 期 · ${ep.album}`} loading="lazy" />
-							</span>
-							<span class="meta">
-								<span class="no">第 {ep.issue} 期</span>
-								<span class="album">{ep.album}</span>
-							</span>
-						</a>
-					))
-				}
+			<div class="radio-archive">
+				<header class="radio-page-head">
+					<span class="kicker">MORNING RADIO · 每周一清晨</span>
+					<h1>四时小路的早间电台</h1>
+					<div class="radio-rule" aria-hidden="true"></div>
+				</header>
+				<RadioArchive />
 			</div>
 		</main>
 		<Footer />

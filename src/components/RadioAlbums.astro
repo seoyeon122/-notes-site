@@ -1,0 +1,170 @@
+---
+import { RADIO_EPISODES, RADIO_DETAIL_COPY as copy } from '../consts';
+const visibleEpisodes = RADIO_EPISODES.filter((ep) => !ep.hidden);
+---
+
+<div class="albums" data-radio-albums>
+  <div class="album-grid">
+    {visibleEpisodes.map((ep) => (
+      <button class="album-cover" type="button" data-album={ep.issue} aria-expanded="false"
+        aria-controls={`album-detail-${ep.issue}`} aria-label={`第 ${ep.issue} 期 · ${ep.album}`}>
+        <img src={ep.image} alt={ep.album} loading="lazy" width="600" height="600" />
+        <span class="cover-note">{ep.album}<span aria-hidden="true">＋</span></span>
+      </button>
+    ))}
+  </div>
+  {visibleEpisodes.map((ep) => (
+    <section class="album-detail" id={`album-detail-${ep.issue}`} aria-labelledby={`album-title-${ep.issue}`} hidden>
+      <div class="detail-paper" data-close aria-hidden="true"></div>
+      <div class="detail-content" data-lenis-prevent>
+        <button type="button" class="back" data-close>{copy.back}</button>
+        <header class="album-heading">
+          <img class="detail-cover" src={ep.image} alt={ep.album} width="600" height="600" />
+          <div>
+            <p class="eyebrow">MORNING RADIO · 第 {ep.issue} 期</p>
+            <h3 id={`album-title-${ep.issue}`}>{ep.album.split(' / ')[0]}</h3>
+            <p class="artist">{ep.album.split(' / ').slice(1).join(' / ')}</p>
+          </div>
+        </header>
+        <p class="description">{ep.description}</p>
+        <div class="track-heading"><h4>{copy.tracks}</h4>{ep.trackNote && <span>{ep.trackNote}</span>}</div>
+        <ol class="tracks">
+          {ep.tracks.map((track, index) => <li><span>{String(index + 1).padStart(2, '0')}</span>{track}</li>)}
+        </ol>
+        <a class="listen" href={ep.url} target="_blank" rel="noopener noreferrer">{copy.listen}</a>
+      </div>
+    </section>
+  ))}
+  <img class="moving-cover" alt="" aria-hidden="true" hidden />
+</div>
+
+<style>
+  .albums { position: relative; width: 100%; min-width: 0; min-height: 640px; display: grid; align-items: center; isolation: isolate; }
+  .album-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; width: 100%; }
+  .album-cover { position: relative; display: block; aspect-ratio: 1; padding: 0; border: 0; border-radius: 0; overflow: hidden; cursor: pointer; background: #2b2024; color: #f6ebe8; font: inherit; text-align: left; }
+  .album-cover img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.95); }
+  .cover-note { position: absolute; inset: auto 0 0; display: flex; justify-content: space-between; gap: 8px; padding: .8em; background: rgba(43,32,36,.78); font-size: .74em; opacity: 0; transform: translateY(100%); transition: opacity .2s, transform .2s; }
+  .album-cover:hover .cover-note, .album-cover:focus-visible .cover-note { opacity: 1; transform: none; }
+  .album-detail { position: absolute; inset: 0; z-index: 2; color: #fff; }
+  .album-detail[hidden], .moving-cover[hidden] { display: none; }
+  .detail-paper { position: absolute; inset: 0; background: rgba(12, 8, 10, .78); border: 1px solid rgba(255,255,255,.16); box-shadow: 0 16px 48px #160b1426; transform-origin: top left; cursor: pointer; }
+  .detail-content { position: relative; height: 100%; box-sizing: border-box; padding: 10px clamp(18px, 2vw, 32px) 24px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #ffffff66 transparent; }
+  .back { display: block; min-height: 44px; padding: 0; margin: 0 0 10px; background: none; border: 0; color: #ffffffd9; font: inherit; font-size: .78em; cursor: pointer; }
+  .album-heading { display: grid; grid-template-columns: minmax(72px, 30%) minmax(0, 1fr); gap: 18px; align-items: center; }
+  .detail-cover { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; filter: saturate(.95); }
+  .eyebrow { margin: 0 0 8px; font-size: .61em; letter-spacing: .1em; color: #ffffffb8; }
+  h3 { margin: 0; font-family: var(--font-serif); font-size: clamp(1.15rem, 1.7vw, 1.8rem); font-weight: 400; line-height: 1.4; color: #fff; overflow-wrap: anywhere; }
+  .artist { margin: 8px 0 0; font-size: .8em; color: #ffffffb8; }
+  .description { margin: 22px 0; font-size: .8em; line-height: 1.8; color: #ffffffcf; white-space: pre-line; }
+  .track-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px; padding-bottom: 10px; border-bottom: 1px solid #ffffff33; }
+  h4 { margin: 0; font-size: .88em; color: #fff; font-weight: 400; }
+  .track-heading > span { font-size: .6em; color: #ffffffad; }
+  .tracks { list-style: none; padding: 0; margin: 0 0 22px; }
+  .tracks li { display: flex; gap: 18px; padding: 10px 0; border-bottom: 1px solid #ffffff24; font-size: .78em; }
+  .tracks li span { color: #ffffff99; font-family: var(--font-num); }
+  .listen { display: inline-flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 9px 20px; border: 1px solid #ffffff66; background: #ffffff14; color: #fff; text-decoration: none; font-size: .8em; }
+  .listen:hover { background: #ffffff29; text-decoration: none; }
+  button:focus-visible, a:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+  .moving-cover { position: absolute; top: 0; left: 0; z-index: 3; object-fit: cover; pointer-events: none; transform-origin: top left; filter: saturate(.95); }
+  @media (max-width: 820px) { .album-grid { gap: 18px; } }
+  @media (hover: none) { .cover-note { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .cover-note { transition: none; } }
+</style>
+
+<script>
+  function setupAlbums() {
+    document.querySelectorAll<HTMLElement>('[data-radio-albums]').forEach((root) => {
+      if (root.dataset.ready) return;
+      root.dataset.ready = 'true';
+      const grid = root.querySelector<HTMLElement>('.album-grid')!;
+      const moving = root.querySelector<HTMLImageElement>('.moving-cover')!;
+      let selected: HTMLButtonElement | null = null;
+      let detail: HTMLElement | null = null;
+      let busy = false;
+      const animations = new Set<Animation>();
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const animate = (el: HTMLElement, frames: Keyframe[], duration: number, delay = 0) => {
+        const animation = el.animate(frames, { duration: reduced.matches ? 0 : duration, delay: reduced.matches ? 0 : delay, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'both' });
+        animations.add(animation);
+        return animation.finished.catch(() => {});
+      };
+      const clear = () => { animations.forEach((a) => a.cancel()); animations.clear(); moving.hidden = true; };
+      const relative = (el: HTMLElement) => {
+        const box = el.getBoundingClientRect();
+        const host = root.getBoundingClientRect();
+        return { x: box.left - host.left, y: box.top - host.top, width: box.width, height: box.height };
+      };
+      async function toggle(button?: HTMLButtonElement) {
+        if (busy || (!button && !detail)) return;
+        busy = true;
+        const opening = !!button;
+        if (button) {
+          selected = button;
+          detail = root.querySelector<HTMLElement>(`#album-detail-${button.dataset.album}`)!;
+          detail.hidden = false;
+          detail.querySelector('.detail-content')!.scrollTop = 0;
+          button.setAttribute('aria-expanded', 'true');
+          (detail.querySelector('[data-close]') as HTMLButtonElement).focus({ preventScroll: true });
+          grid.inert = true;
+        }
+        const panel = detail!;
+        const origin = selected!;
+        const content = panel.querySelector<HTMLElement>('.detail-content')!;
+        const paper = panel.querySelector<HTMLElement>('.detail-paper')!;
+        const cover = panel.querySelector<HTMLImageElement>('.detail-cover')!;
+        // 每次重测位置，返回前恢复顶部，兼容窗口尺寸变化和目录滚动。
+        if (!opening) content.scrollTop = 0;
+        const from = relative(origin);
+        const to = relative(cover);
+        const bounds = relative(panel);
+        const small = `translate(${from.x}px, ${from.y}px) scale(${from.width / bounds.width}, ${from.height / bounds.height})`;
+        moving.src = cover.src;
+        moving.style.width = `${from.width}px`;
+        moving.style.height = `${from.height}px`;
+        moving.hidden = reduced.matches;
+        cover.style.visibility = reduced.matches ? '' : 'hidden';
+        origin.style.visibility = reduced.matches ? '' : 'hidden';
+        const imageStart = `translate(${from.x}px, ${from.y}px) scale(1)`;
+        const imageEnd = `translate(${to.x}px, ${to.y}px) scale(${to.width / from.width}, ${to.height / from.height})`;
+        await Promise.all([
+          animate(paper, opening ? [{ transform: small, opacity: .3 }, { transform: 'none', opacity: 1 }] : [{ transform: 'none', opacity: 1 }, { transform: small, opacity: 0 }], 580),
+          animate(moving, opening ? [{ transform: imageStart }, { transform: imageEnd }] : [{ transform: imageEnd }, { transform: imageStart }], 580),
+          animate(grid, opening ? [{ opacity: 1 }, { opacity: 0 }] : [{ opacity: 0 }, { opacity: 1 }], opening ? 200 : 380, opening ? 0 : 160),
+          animate(content, opening ? [{ opacity: 0 }, { opacity: 1 }] : [{ opacity: 1 }, { opacity: 0 }], opening ? 300 : 150, opening ? 240 : 0),
+        ]);
+        grid.style.opacity = opening ? '0' : '1';
+        cover.style.visibility = '';
+        origin.style.visibility = '';
+        clear();
+        if (!opening) {
+          panel.hidden = true;
+          grid.inert = false;
+          origin.setAttribute('aria-expanded', 'false');
+          if (root.isConnected) origin.focus({ preventScroll: true });
+          selected = null;
+          detail = null;
+        }
+        busy = false;
+      }
+      root.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement;
+        const button = target.closest<HTMLButtonElement>('[data-album]');
+        if (button && !detail) void toggle(button);
+        else if (target.closest('[data-close]')) void toggle();
+      });
+      // 点击详情面板之外的页面空白处关闭（组件内部由上面 root 处理，不重复触发）
+      document.addEventListener('click', (event) => {
+        if (!detail) return;
+        const target = event.target as HTMLElement;
+        if (target.closest('[data-radio-albums]')) return; // 点在组件内 → 交给 root 处理
+        void toggle();
+      });
+      root.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && detail) { event.preventDefault(); void toggle(); }
+      });
+      document.addEventListener('astro:before-swap', clear, { once: true });
+    });
+  }
+  setupAlbums();
+  document.addEventListener('astro:page-load', setupAlbums);
+</script>
