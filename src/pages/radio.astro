@@ -4,13 +4,21 @@ import Footer from '../components/Footer.astro';
 import Rail from '../components/Rail.astro';
 import RadioArchive from '../components/RadioArchive.astro';
 import { SITE_TITLE } from '../consts';
+import archiveBg from '../assets/archivedRadioBackground.png';
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" style={`--archive-bg: url("${archiveBg.src}")`}>
 	<head>
 		<BaseHead title={`早间电台 | ${SITE_TITLE}`} description="四时小路的早间电台 · 每周一清晨的音乐分享" />
 		<style>
+			/* 归档页背景图：原色铺满，不加遮罩（先看无遮罩效果） */
+			body {
+				background-image: var(--archive-bg);
+				background-size: cover;
+				background-position: center;
+				background-attachment: fixed;
+			}
 			main.radio-main {
 				max-width: none;
 				margin: 0;
