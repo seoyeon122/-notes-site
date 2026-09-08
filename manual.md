@@ -39,7 +39,7 @@ npm run preview  # 预览构建结果
 5. 本地 `npm run dev` 预览确认
 6. 提交推送：`git add .` → `git commit -m "新增：第 4 期"` → `git push`
 
-## 2.5 更新首页"近期更新"栏（每次周报/电台有更新都要做）
+## 2.5 更新首页"近期更新"栏（每次周报/电台/投稿有更新都要做）
 
 - 首页第一版左栏（"阅读最新一期"按钮下方）有"近期更新"栏，是**数据驱动**的：在 `src/pages/index.astro` 顶部的 `recentUpdates` 数组里**加一条**即可，页面自动多一行。
 - 加条目的格式：
@@ -52,7 +52,17 @@ npm run preview  # 预览构建结果
 - `href` 规则：
   - **周报更新** → `href: '/issue/issue-4/'`（跳转对应期数页）
   - **电台更新** → `href: '#radio'`（跳转到首页早间电台版，已带 80px 锚点偏移）
+  - **投稿更新** → `href: '#videos'`（跳转到首页投稿影院版）
 - 记得同时更新 `decisions.md` 或按需记录，然后 `git push`。
+
+## 2.6 新增视频投稿（首页投稿影院）
+
+- 投稿影院组件 = `src/components/VideoCinema.astro`，展示 `src/consts.ts` 的 `VIDEO_SUBMISSIONS` 数组（新到旧排列，组件按数组顺序轮播）。
+- 新增一条投稿：
+  1. 封面图放到 `public/images/videos/`（命名 `v00N.webp`，**必须是真 WebP**）
+  2. 在 `VIDEO_SUBMISSIONS` 数组**最前面**加：`{ title: '标题', image: '/images/videos/v00N.webp', url: '视频链接', description: '一句话' }`
+  3. 在 `recentUpdates` 数组**最前面**加一条：`{ date: 'YYYY-MM-DD', title: '新投稿 · 标题', href: '#videos' }`（见 §2.5）
+  4. `npm run build` 验证 → `git push`
 
 ## 3. 改文案（站名 / 简介 / 署名 / 页脚）
 

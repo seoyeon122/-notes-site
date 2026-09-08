@@ -2,12 +2,18 @@
 // 左侧栏（装订脊/报头脊）：站名竖排 + 竖排信号灯 + 报头信息 + 导航
 const pathname = Astro.url.pathname;
 const links = [
-	{ href: '/', label: '首页' },
+	{ href: '/', label: '首页', children: [
+		{ href: '#poster', label: '周报' },
+		{ href: '#radio', label: '电台' },
+		{ href: '#videos', label: '投稿' },
+	]},
 	{ href: '/archive', label: '归档' },
 	{ href: '/radio', label: '电台' },
 	{ href: '/about', label: '关于' },
 ];
 const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.startsWith(href));
+// 首页子栏（封面/电台/影院）只在首页显示；其他页面没有这些锚点
+const isHome = pathname === '/';
 // 报头脊的印刷信息（报刊发刊信息感）
 const year = new Date().getFullYear();
 ---
@@ -24,9 +30,20 @@ const year = new Date().getFullYear();
 	<nav class="rail-nav" id="rail-menu">
 		{
 			links.map((l) => (
-				<a href={l.href} class:list={{ active: isActive(l.href) }}>
-					{l.label}
-				</a>
+				<div class="nav-group">
+					<a href={l.href} class:list={{ active: isActive(l.href) }}>
+						{l.label}
+					</a>
+					{
+						l.children && isHome && (
+							<div class="nav-sub">
+								{l.children.map((c) => (
+									<a href={c.href}>{c.label}</a>
+								))}
+							</div>
+						)
+					}
+				</div>
 			))
 		}
 	</nav>
@@ -101,6 +118,19 @@ const year = new Date().getFullYear();
 		gap: 0.6em;
 		margin-top: 0.5em;
 	}
+	.nav-group {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.2em;
+	}
+	.nav-sub {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.1em;
+		margin-top: 0.1em;
+	}
 	.rail-nav a {
 		display: block;
 		padding: 0.3em 0.9em;
@@ -112,6 +142,16 @@ const year = new Date().getFullYear();
 		transition:
 			color 0.2s ease,
 			border-color 0.2s ease;
+	}
+	/* 首页子栏：更小、更弱，视觉上是首页的下级 */
+	.nav-sub a {
+		padding: 0.12em 0.5em 0.12em 1em;
+		font-size: 0.72em;
+		letter-spacing: 0.12em;
+		color: #8b8580;
+	}
+	.nav-sub a:hover {
+		color: #ff2231;
 	}
 	.rail-nav a:hover {
 		color: #ff2231;
@@ -223,6 +263,21 @@ const year = new Date().getFullYear();
 			padding: 0.85em 1.2em;
 			font-size: 1em;
 			letter-spacing: 0.14em;
+		}
+		.nav-group {
+			align-items: stretch;
+			gap: 0;
+		}
+		.nav-sub {
+			align-items: stretch;
+			gap: 0;
+			margin-top: 0;
+		}
+		.nav-sub a {
+			padding: 0.5em 1.2em 0.5em 2em; /* 子项左缩进 */
+			font-size: 0.88em;
+			letter-spacing: 0.12em;
+			color: #8b8580;
 		}
 		.rail-nav a.active {
 			border-left-color: transparent;

@@ -70,6 +70,11 @@
 2. 在 `src/consts.ts` 的 `RADIO_EPISODES` 数组**最前面加一条**：`{ issue, image, url, album }`（封面图放 `public/images/radio/`）。首页电台版、电台归档页 `/radio`、「收听最新一期」按钮（`RADIO_LATEST_URL`）会自动跟随。
 3. `npm run build` 验证 → `git push`
 
+**B′. 有新视频投稿时：**
+1. 投稿数据（封面图/标题/链接/描述）加到 `src/consts.ts` 的 `VIDEO_SUBMISSIONS` 数组**最前面**（封面放 `public/images/videos/`）；首页投稿影院版会自动跟随。
+2. 在 `recentUpdates` 数组**最前面加一条**：`{ date: 'YYYY-MM-DD', title: '新投稿 · 标题', href: '#videos' }`（跳首页投稿影院）。
+3. `npm run build` 验证 → `git push`
+
 **C. 有"之后要改"的临时占位时（如链接待替换为导剪版）：**
 - 同步挂一条到 `AGENTS.md` §8 Roadmap 的待办提醒，避免遗忘。
 

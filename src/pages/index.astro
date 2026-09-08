@@ -23,11 +23,13 @@ const rows = [latest, second]
 	.filter((r) => r.cards.length > 0);
 // 标签语在"："后换行（只影响首页展示）
 const descParts = SITE_DESCRIPTION.split('：');
-// ★ 首页"近期更新"栏：每次周报或电台内容有更新时，在最前面加一条
+// ★ 首页"近期更新"栏：每次周报/电台/投稿有更新时，在最前面加一条
 //   { date: 'YYYY-MM-DD', title: '标题', href: '跳转目标' }
 //   - 周报更新 → href 用 `/issue/issue-N/`
 //   - 电台更新 → href 用 `#radio`（跳转到早间电台版）
+//   - 投稿更新 → href 用 `#videos`（跳转到首页投稿影院版）
 const recentUpdates = [
+	{ date: '2026-09-07', title: '新投稿 · 大女優さん（想要上演一出疯狂的独角戏）', href: '#videos' },
 	{ date: '2026-09-07', title: '第五期 · 病弱形态与整活不断', href: '/issue/issue-5/' },
 	{ date: '2026-09-01', title: '第四期 · 都市传说身体抱恙', href: '/issue/issue-4/' },
 	{ date: '2026-08-31', title: '四时小路早间电台第四期', href: '#radio' },
@@ -589,7 +591,7 @@ const radioLatestUrl = RADIO_LATEST_URL;
 	<body>
 		<Rail />
 		<main class="home-main">
-			<section class="poster">
+			<section class="poster" id="poster">
 				<Image
 					class="poster-bg"
 					src={bg}
