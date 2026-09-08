@@ -155,14 +155,14 @@ export type VideoSubmission = {
 	description?: string;
 };
 
-// 填写示例：{ title: '标题', image: '/images/videos/cover.jpg', url: '视频链接' }
-// 暂未提供正式投稿，空数组会显示三个可切换的预览空位。
+// ★ 投稿列表：**最新的放最前**（新到旧排列），投稿影院默认显示第 1 条 = 最新投稿。
+// 后续新增投稿时：把新条目加到数组最前面，并同步 recentUpdates（见 CLAUDE.md §4 守则 B′）。
 export const VIDEO_SUBMISSIONS: VideoSubmission[] = [
 	{
-		title: '⛔️⚠️!!!CHO-DARI-️!!!⚠️⛔️',
-		image: '/images/videos/v001.webp',
-		url: 'https://www.bilibili.com/video/BV1q8Mq6dE7Q',
-		description: '+初投稿+⚠️偶尔也想尝试从「正道」偏离一步对吧？',
+		title: '想要上演一出疯狂的独角戏 | 「大女優さん / いよわ」【四时小路】',
+		image: '/images/videos/v003.webp',
+		url: 'https://www.bilibili.com/video/BV1irbN6DEYs',
+		description: '⚠️何时能以完美的剧本来行动？',
 	},
 	{
 		title: '赤着脚能去往何处呢？| 「天国 / 初音ミク × ひらぎ」【四时小路】',
@@ -171,9 +171,9 @@ export const VIDEO_SUBMISSIONS: VideoSubmission[] = [
 		description: '去往大海的彼岸、去往天国。',
 	},
 	{
-		title: '想要上演一出疯狂的独角戏 | 「大女優さん / いよわ」【四时小路】',
-		image: '/images/videos/v003.webp',
-		url: 'https://www.bilibili.com/video/BV1irbN6DEYs',
-		description: '⚠️何时能以完美的剧本来行动？',
+		title: '⛔️⚠️!!!CHO-DARI-️!!!⚠️⛔️',
+		image: '/images/videos/v001.webp',
+		url: 'https://www.bilibili.com/video/BV1q8Mq6dE7Q',
+		description: '+初投稿+⚠️偶尔也想尝试从「正道」偏离一步对吧？',
 	},
 ];

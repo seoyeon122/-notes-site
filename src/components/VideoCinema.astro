@@ -80,7 +80,10 @@ const submissions: VideoSubmission[] = VIDEO_SUBMISSIONS.length
 		min-height: 120vh;
 		display: grid;
 		align-items: center;
-		background: #202028;
+		/* 顶部黑色边：与上方版块分隔，顶部留一段纯黑呼吸区再进入影院 */
+		padding-top: 3rem;
+		box-sizing: border-box;
+		background: linear-gradient(180deg, #0c0505 0, #0c0505 2.4rem, #202028 2.4rem);
 		scroll-margin-top: 0;
 	}
 	.cinema-stage {
@@ -206,29 +209,68 @@ const submissions: VideoSubmission[] = VIDEO_SUBMISSIONS.length
 	}
 	@media (max-width: 820px) {
 		.video-cinema { min-height: auto; scroll-margin-top: 60px; }
+		/* 移动端：16:9 横海报在竖屏是矮横条，弃用背景图，封面独立成满宽大图 */
+		.cinema-stage {
+			position: relative;
+			width: 100%;
+			container-type: inline-size;
+			padding: 0 5%;
+			box-sizing: border-box;
+		}
+		.cinema-background { display: none; }
 		.cinema-screen {
-			position: absolute;
-			left: 32.3%;
-			top: 16.1%;
-			width: 62.2%;
-			height: 55%;
-			padding: 1.5% 1.2%;
-			grid-template-rows: 0 minmax(0, 1fr) 0;
-			gap: 0;
+			position: relative;
+			left: auto;
+			top: auto;
+			width: 100%;
+			height: auto;
+			padding: 0;
+			display: grid;
+			grid-template-rows: auto minmax(0, auto) auto;
+			gap: 10px;
+			background: transparent;
+			color: #ded8d3;
 		}
 		.cinema-heading:empty { display: none; }
-		.cinema-carousel { grid-template-columns: 30px minmax(0, 1fr) 30px; gap: 2px; }
-		.cinema-arrow { width: 30px; height: 30px; padding: 7px; border-color: transparent; }
-		.cinema-slides { height: 100%; }
-		.cinema-cover { width: auto; height: 88%; }
+		.cinema-heading { text-align: left; min-height: 0; }
+		.cinema-heading h2 {
+			font-size: clamp(15px, 4.5vw, 20px);
+			font-weight: 500;
+			letter-spacing: .1em;
+			color: #f6ebe8;
+		}
+		.cinema-carousel {
+			grid-template-columns: 30px minmax(0, 1fr) 30px;
+			gap: 6px;
+			min-height: 0;
+		}
+		.cinema-arrow { width: 30px; height: 30px; padding: 7px; border-color: transparent; background: transparent; }
+		.cinema-slides { height: auto; }
+		.cinema-slide { height: auto; }
+		.cinema-cover {
+			width: 100%;
+			height: auto;
+			aspect-ratio: 16 / 9; /* 满宽 16:9 大图 */
+			max-width: 100%;
+		}
+		.cinema-play { width: 48px; height: 48px; font-size: 18px; }
 		.cinema-caption {
-			position: absolute;
-			right: 3%;
-			bottom: 3%;
+			position: static;
 			padding: 0;
 		}
-		.cinema-caption-copy { display: none; }
-		.cinema-counter { font-size: clamp(7px, 1.8vw, 11px); color: #aaa4a4; }
+		.cinema-caption-copy { display: block; }
+		.cinema-caption-copy h3 {
+			font-size: 14px;
+			white-space: normal;
+			line-height: 1.5;
+			color: #f6ebe8;
+		}
+		.cinema-caption-copy p {
+			font-size: 12px;
+			white-space: normal;
+			line-height: 1.5;
+		}
+		.cinema-counter { font-size: 12px; }
 	}
 	@media (prefers-reduced-motion: reduce) {
 		.cinema-arrow { transition: none; }

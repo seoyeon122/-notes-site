@@ -540,6 +540,11 @@ const radioLatestUrl = RADIO_LATEST_URL;
 				.hl-row-cards {
 					grid-template-columns: repeat(2, minmax(0, 1fr));
 				}
+				/* 移动端精简：只保留最新一期的卡片行 + 最近两条更新 */
+				.hl-row[data-mobile-hide],
+				.recent-list li[data-mobile-hide] {
+					display: none;
+				}
 				.radio {
 					grid-template-columns: 1fr;
 				}
@@ -626,8 +631,8 @@ const radioLatestUrl = RADIO_LATEST_URL;
 						<h2 class="recent-title">近期更新</h2>
 						<ul class="recent-list">
 							{
-								recentUpdates.map((u) => (
-									<li>
+								recentUpdates.map((u, i) => (
+									<li data-mobile-hide={i > 1 ? '1' : undefined}>
 										<a class="row" href={u.href}>
 											<span class="date">{u.date}</span>
 											<span class="title">{u.title}</span>
@@ -658,8 +663,8 @@ const radioLatestUrl = RADIO_LATEST_URL;
 						rows.length > 0 ? (
 							<div class="hl-grid">
 								{
-									rows.map((row) => (
-										<div class="hl-row">
+									rows.map((row, i) => (
+										<div class="hl-row" data-mobile-hide={i > 0 ? '1' : undefined}>
 											<a class="hl-row-label" href={`/issue/${row.issue.id}/`}>
 												第 {row.issue.data.issue} 期 · {row.issue.data.title}
 											</a>
@@ -697,6 +702,8 @@ const radioLatestUrl = RADIO_LATEST_URL;
 				</div>
 			</section>
 
+			<VideoCinema />
+
 			<section class="radio" id="radio" style="position: relative; padding-bottom: 90px; box-sizing: border-box;">
 				<Image
 					class="radio-bg"
@@ -727,8 +734,6 @@ const radioLatestUrl = RADIO_LATEST_URL;
 					style="position: absolute; left: auto; top: auto; right: clamp(24px, 3vw, 40px); bottom: 144px; z-index: 3;"
 				>观测往期收录</a>
 			</section>
-
-			<VideoCinema />
 
 			<section class="info" id="info">
 				<div class="info-inner">
