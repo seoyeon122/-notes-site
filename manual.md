@@ -73,6 +73,8 @@ npm run preview  # 预览构建结果
 2. 打开 `src/pages/index.astro`，顶部改这行：
    `import bg from '../assets/Background_test02.png';` → 换成你的图
 3. 不透明度在 `.poster-bg` 的 `opacity`（当前 `0.9`，可改 0.8~1）
+4. 首页四张大背景已经用 Astro 的 `Image` 自动生成多档 WebP：浏览器会按屏幕宽度选择合适尺寸，2K 屏不会被小图强行放大；首屏背景优先加载，电台和视频影院背景延后加载。
+5. **不要把这些 `<Image>` 改成 `<Picture>`**：`Picture` 会多包一层标签，进入 CSS Grid 后可能挤乱左右排版。
 
 ## 6. 调首页左右两页宽度
 
@@ -86,6 +88,13 @@ npm run preview  # 预览构建结果
 - **每周更新电台**：把新一期加到数组**最前面**，填 `issue`（期号）/ `image`（封面图 `/images/radio/image_05.xxx`）/ `url`（B 站链接）/ `album`（分享专辑名）。
 - **首页电台版**：`src/pages/index.astro` 的 `<section class="radio">`，取 `RADIO_EPISODES.slice(0,4)` 显示最新 4 张；封面说明直接读取 `album`，默认隐藏，鼠标悬停或键盘聚焦时从底部显示。电台归档页的常驻文字不受这组首页样式影响。
 - **电台归档页**：`/radio`（`src/pages/radio.astro`）——桌面端"番剧索引"网格排满、手机端一行两个；每张卡片显示「第 N 期 + 专辑名」，点击跳 B 站视频。
+
+## 6.6 首页视频影院
+
+- **视频数据统一在 `src/consts.ts` 的 `VIDEO_SUBMISSIONS` 数组**，按从新到旧排列；新增视频时复制一项，填写 `title` / `image` / `url` / `description`。
+- 封面放进 `public/images/videos/`，建议保持 16:9、约 1350×760，保存为真正的 WebP；单张尽量控制在 100–250 KB。代码里的路径从 `/images/` 开始，不写 `public`。
+- 视频影院组件在 `src/components/VideoCinema.astro`，舞台背景源图是 `src/assets/videoback.jpg`；Astro 会在构建时自动输出适合不同屏幕的 WebP。
+- 改完运行 `npm run build`，确认所有图片都能被处理、页面可以正常生成。
 
 ## 7. 改左侧栏导航
 

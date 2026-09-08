@@ -5,19 +5,28 @@ import Rail from '../components/Rail.astro';
 import RadioArchive from '../components/RadioArchive.astro';
 import { SITE_TITLE } from '../consts';
 import archiveBg from '../assets/archivedRadioBackground.png';
+import { Image } from 'astro:assets';
 ---
 
 <!doctype html>
-<html lang="zh-CN" style={`--archive-bg: url("${archiveBg.src}")`}>
+<html lang="zh-CN">
 	<head>
 		<BaseHead title={`早间电台 | ${SITE_TITLE}`} description="四时小路的早间电台 · 每周一清晨的音乐分享" />
 		<style>
 			/* 归档页背景图：原色铺满，不加遮罩（先看无遮罩效果） */
 			body {
-				background-image: var(--archive-bg);
-				background-size: cover;
-				background-position: center;
-				background-attachment: fixed;
+				position: relative;
+				isolation: isolate;
+				background: #282b35;
+			}
+			.archive-bg {
+				position: fixed;
+				inset: 0;
+				z-index: -1;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				pointer-events: none;
 			}
 			main.radio-main {
 				max-width: none;
@@ -59,6 +68,19 @@ import archiveBg from '../assets/archivedRadioBackground.png';
 		</style>
 	</head>
 	<body>
+		<Image
+			class="archive-bg"
+			src={archiveBg}
+			format="webp"
+			widths={[640, 960, 1280, 1672]}
+			sizes="100vw"
+			quality="high"
+			loading="eager"
+			fetchpriority="high"
+			decoding="async"
+			alt=""
+			aria-hidden="true"
+		/>
 		<Rail />
 		<main class="radio-main">
 			<div class="radio-archive">

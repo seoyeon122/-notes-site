@@ -58,7 +58,7 @@ frontmatter：`title`(必填) / `issue`(必填，整数期数) / `pubDate`(必�
 
 ## 8. 当前状态与 Roadmap（优先级从高到低）
 
-**已完成**：内容模型（期数归档 1~3 期）、红黑双主题（暗色全站 + 浅色阅读页）、动效地基、git 私有仓库、文档（README/LEARNING/DEPLOY/weekly-template/本文件）。
+**已完成**：内容模型（期数归档 1~3 期）、红黑双主题（暗色全站 + 浅色阅读页）、动效地基、首页视频影院、响应式 WebP 大背景、git 私有仓库、文档（README/LEARNING/DEPLOY/weekly-template/本文件）。
 
 **待办**：
 1. ~~骨架升级~~（✅ **已全部完成**：速览卡/时间线目录/上一篇下一篇/本周数据块/切片卡片，模板已升级）
@@ -66,7 +66,8 @@ frontmatter：`title`(必填) / `issue`(必填，整数期数) / `pubDate`(必�
 3. ~~部署上线~~（✅ **已在 Vercel 上线**：通过 GitHub 仓库自动部署；大陆访问速度一般）→ 后续按 DEPLOY.md「方案 B」迁阿里云/腾讯云香港服务器（免备案、国内可直连）
 4. **早间电台版（第二点五版，施工中）**：渐变底已定、左介绍为占位文案、右四图正方形占位「施工中」；待用户提供正式文案 + 4 张电台图片
    - ~~⏰ 第四格链接待更新为导剪版~~ ✅ **已完成**：第四格与「收听最新一期」按钮均指向导剪版 `BV18cte6mEuV`（2026-09-01）
-5. 可选：自定义域名；WebGL 特别篇页（架构支持 Three.js 岛屿，非必须）
+5. **首页视频影院（已完成）**：组件 `VideoCinema.astro`，投稿数据在 `src/consts.ts` 的 `VIDEO_SUBMISSIONS`；封面放 `public/images/videos/`，当前三张均已压成真正的 WebP。四张大背景用 Astro `Image` 输出响应式 WebP，保持单一图片节点以免破坏 CSS Grid 排版。
+6. 可选：自定义域名；WebGL 特别篇页（架构支持 Three.js 岛屿，非必须）
 
 **长期每周流程**：朋友发周报 → 复制模板到 `src/content/issues/` → 重排版 → **同步在首页 `recentUpdates` 数组加一条"近期更新"跳转（周报用 `/issue/issue-N/`、电台用 `#radio`）** → `git push`。⚠️ 维护"近期更新"栏是硬性步骤，漏掉等于未完成（详见 CLAUDE.md §4）。
 

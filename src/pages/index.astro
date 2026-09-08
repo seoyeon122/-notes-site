@@ -5,7 +5,9 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Rail from '../components/Rail.astro';
 import FourAMWatch from '../components/FourAMWatch.astro';
 import RadioAlbums from '../components/RadioAlbums.astro';
+import VideoCinema from '../components/VideoCinema.astro';
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import { SITE_DESCRIPTION, SITE_TITLE, RADIO_LATEST_URL } from '../consts';
 import bg from '../assets/Background_test01.png';
 import radioBg from '../assets/Radiobackground.png';
@@ -382,11 +384,16 @@ const radioLatestUrl = RADIO_LATEST_URL;
 				display: grid;
 				grid-template-columns: minmax(0, calc(50% + 160px)) minmax(0, calc(50% - 160px));
 				background: #282b35;
-				background-image: var(--radio-background);
-				background-position: center;
-				background-size: cover;
-				background-repeat: no-repeat;
 				color: #f6ebe8;
+			}
+			.radio-bg {
+				position: absolute;
+				inset: 0;
+				z-index: 0;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				pointer-events: none;
 			}
 			.radio-left,
 			.radio-panel {
@@ -583,7 +590,19 @@ const radioLatestUrl = RADIO_LATEST_URL;
 		<Rail />
 		<main class="home-main">
 			<section class="poster">
-				<img class="poster-bg" src={bg.src} alt="" aria-hidden="true" />
+				<Image
+					class="poster-bg"
+					src={bg}
+					format="webp"
+					widths={[640, 960, 1280, 1672]}
+					sizes="100vw"
+					quality="high"
+					loading="eager"
+					fetchpriority="high"
+					decoding="async"
+					alt=""
+					aria-hidden="true"
+				/>
 				<div class="poster-left">
 					<div class="signals" data-animate>
 						<span class="r"></span><span class="y"></span><span class="g"></span>
@@ -676,7 +695,19 @@ const radioLatestUrl = RADIO_LATEST_URL;
 				</div>
 			</section>
 
-			<section class="radio" id="radio" style={`--radio-background: url("${radioBg.src}"); position: relative; padding-bottom: 90px; box-sizing: border-box;`}>
+			<section class="radio" id="radio" style="position: relative; padding-bottom: 90px; box-sizing: border-box;">
+				<Image
+					class="radio-bg"
+					src={radioBg}
+					format="webp"
+					widths={[640, 960, 1280, 1672]}
+					sizes="100vw"
+					quality="high"
+					loading="lazy"
+					decoding="async"
+					alt=""
+					aria-hidden="true"
+				/>
 				<div class="radio-left">
 					<span class="radio-kicker" data-animate>早间电台 · Morning Radio</span>
 					<h2 class="radio-title" data-animate>四时小路的早间电台</h2>
@@ -694,6 +725,8 @@ const radioLatestUrl = RADIO_LATEST_URL;
 					style="position: absolute; left: auto; top: auto; right: clamp(24px, 3vw, 40px); bottom: 144px; z-index: 3;"
 				>观测往期收录</a>
 			</section>
+
+			<VideoCinema />
 
 			<section class="info" id="info">
 				<div class="info-inner">
