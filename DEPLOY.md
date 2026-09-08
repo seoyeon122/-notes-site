@@ -1,5 +1,7 @@
 # 部署上线指南（Vercel + GitHub）
 
+> 🔒 **内部维护文档**：给项目维护者的部署指南。本仓库现已公开，本文供记录部署方式与香港服务器方案。
+
 目标：让网站可被公开访问。**当前已在 Vercel 上线**，通过 GitHub 仓库自动部署。每次 `git push` 到 `main` 分支，Vercel 会自动构建并发布。
 
 特点：Vercel = 免费即时、海外访问好、与 GitHub 集成方便；**大陆访问速度一般**，如需国内直连见「方案 B」香港服务器。
@@ -32,7 +34,7 @@ git config user.email "你的邮箱@example.com"
 ## 第 2 步：推到 GitHub
 
 1. 登录 GitHub → 右上角 **+** → **New repository**
-2. 仓库名填 `-notes-site`（或你现在的仓库名），选 **Private**（内容授权相关，暂不公开）
+2. 仓库名填 `-notes-site`（或你现在的仓库名）——仓库现已公开，若重新建仓可见性自选
 3. 创建后，把仓库地址（形如 `https://github.com/你的名字/-notes-site.git`）记下来
 4. 在本地终端执行：
 
