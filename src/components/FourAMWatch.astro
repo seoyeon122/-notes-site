@@ -1,12 +1,14 @@
 ---
-// 「凌晨四点观测」：实时显示此刻哪个整点时区正处于凌晨 04:00–04:59
-// 四时小路是活跃在凌晨四点的都市传说；东八区固定对应中国。
+// 「凌晨四点观测」：从 570 个真实地点（数据源自 KomichiTime 项目，
+// 见 github.com/Badj0ey/KomichiTime，MIT License）里，找出此刻当地正好是
+// 凌晨 04:00–04:59 的地点，随机展示一个；点击卡片可换一个。
+// 四时小路是活跃在凌晨四点的都市传说。
 ---
 
-<div class="four-am" data-animate>
+<div class="four-am" data-animate data-four-am tabindex="0" role="button" aria-label="换一个地点" title="点击换一个">
 	<p class="four-am-label">凌晨四点，此刻降临在</p>
 	<p class="four-am-zone"><span id="four-am-zone">……</span></p>
-	<p class="four-am-note">四时小路出没时刻 · 整点时区观测</p>
+	<p class="four-am-note">四时小路出没时刻 · 点击随机换一个</p>
 </div>
 
 <style>
@@ -18,6 +20,13 @@
 		border-radius: 2px; /* 收圆角 */
 		background: transparent; /* 去底色 */
 		text-align: left;
+		cursor: pointer;
+		transition: border-color 0.25s ease;
+	}
+	.four-am:hover,
+	.four-am:focus-visible {
+		border-color: rgba(255, 34, 49, 0.55);
+		outline: none;
 	}
 	.four-am-label {
 		font-size: 0.82em;
@@ -39,57 +48,69 @@
 </style>
 
 <script>
-	// 整点时区 → 最具代表性国家/城市（东八区固定为中国）
-	const ZONES = [
-		{ o: -12, country: '美国', city: '贝克岛' },
-		{ o: -11, country: '纽埃', city: '阿洛菲' },
-		{ o: -10, country: '美国', city: '夏威夷' },
-		{ o: -9, country: '美国', city: '阿拉斯加' },
-		{ o: -8, country: '美国', city: '洛杉矶' },
-		{ o: -7, country: '墨西哥', city: '墨西哥城' },
-		{ o: -6, country: '美国', city: '芝加哥' },
-		{ o: -5, country: '美国', city: '纽约' },
-		{ o: -4, country: '智利', city: '圣地亚哥' },
-		{ o: -3, country: '巴西', city: '圣保罗' },
-		{ o: -2, country: '巴西', city: '费尔南多群岛' },
-		{ o: -1, country: '佛得角', city: '普拉亚' },
-		{ o: 0, country: '英国', city: '伦敦' },
-		{ o: 1, country: '法国', city: '巴黎' },
-		{ o: 2, country: '希腊', city: '雅典' },
-		{ o: 3, country: '俄罗斯', city: '莫斯科' },
-		{ o: 4, country: '阿联酋', city: '迪拜' },
-		{ o: 5, country: '巴基斯坦', city: '伊斯兰堡' },
-		{ o: 6, country: '孟加拉国', city: '达卡' },
-		{ o: 7, country: '泰国', city: '曼谷' },
-		{ o: 8, country: '中国', city: '北京' },
-		{ o: 9, country: '日本', city: '东京' },
-		{ o: 10, country: '澳大利亚', city: '悉尼' },
-		{ o: 11, country: '所罗门群岛', city: '霍尼亚拉' },
-		{ o: 12, country: '新西兰', city: '奥克兰' },
-		{ o: 13, country: '萨摩亚', city: '阿皮亚' },
-		{ o: 14, country: '基里巴斯', city: '莱恩群岛' },
-	];
+	// 地点数据：{ n: 中文名, z: IANA 时区 }，570 条（countries/additionalRegions/ianaLocations 精简合并）
+	// 数据来源：KomichiTime（github.com/Badj0ey/KomichiTime，MIT）
+	let LOCATIONS = [];
 
-	function fmt(o) {
-		return o === 0 ? 'UTC±0' : o > 0 ? `UTC+${o}` : `UTC${o}`;
+	// 缓存 Intl 格式化器（每个时区一个，避免重复构造）
+	const fmtCache = new Map();
+	function hourInZone(date, zone) {
+		let f = fmtCache.get(zone);
+		if (!f) {
+			f = new Intl.DateTimeFormat('en-GB', { timeZone: zone, hour: '2-digit', hourCycle: 'h23' });
+			fmtCache.set(zone, f);
+		}
+		return Number(f.format(date));
 	}
 
-	// 此刻处于 04:00–04:59 的整点时区（通常 1 个，偶尔 2 个）
-	function zonesInFourAM() {
-		const utcH = new Date().getUTCHours();
-		return ZONES.filter((z) => (utcH + z.o + 24) % 24 === 4);
+	// 此刻当地正好 04:00–04:59 的所有地点
+	function fourAmCandidates(date = new Date()) {
+		return LOCATIONS.filter((loc) => hourInZone(date, loc.z) === 4);
 	}
 
-	function render() {
+	let currentId = null;
+	function render(date = new Date()) {
 		const el = document.getElementById('four-am-zone');
 		if (!el) return;
-		const zones = zonesInFourAM();
-		el.textContent = zones.length
-			? zones.map((z) => `${z.country} · ${z.city}（${fmt(z.o)}）`).join('　与　')
-			: '此刻不在任何整点时区的凌晨四点';
+		const candidates = fourAmCandidates(date);
+		if (!candidates.length) {
+			el.textContent = '此刻不在地球任何角落的四点';
+			return;
+		}
+		// 换一个：避开当前显示的那个
+		const pool = candidates.length > 1 && currentId != null
+			? candidates.filter((c) => c.n !== currentId)
+			: candidates;
+		const pick = pool[Math.floor(Math.random() * pool.length)];
+		currentId = pick.n;
+		el.textContent = pick.n;
 	}
 
-	render();
-	setInterval(render, 60 * 1000);
-	document.addEventListener('astro:page-load', render);
+	// 加载数据后首次渲染
+	async function init() {
+		try {
+			const res = await fetch('/data/four-am.json');
+			if (!res.ok) throw new Error(String(res.status));
+			LOCATIONS = await res.json();
+		} catch {
+			const el = document.getElementById('four-am-zone');
+			if (el) el.textContent = '地点数据暂不可用';
+			return;
+		}
+		render();
+	}
+
+	// 点击换一个
+	document.addEventListener('click', (e) => {
+		const card = e.target?.closest('[data-four-am]');
+		if (card) render();
+	});
+
+	// 每 30 秒重算（跨过整点 04:00→05:00 时自动切换地点）
+	init();
+	setInterval(render, 30 * 1000);
+	document.addEventListener('astro:page-load', () => {
+		currentId = null;
+		init();
+	});
 </script>
