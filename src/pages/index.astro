@@ -23,7 +23,7 @@ const rows = [latest, second]
 	.filter((r) => r.cards.length > 0);
 // 标签语在"："后换行（只影响首页展示）
 const descParts = SITE_DESCRIPTION.split('：');
-// ★ 首页"近期更新"栏：每次周报/电台/投稿有更新时，在最前面加一条
+// ★ 首页"近期更新"栏：每次周报/电台/投稿有更新时，在最前面加一条；只显示最新 4 条（超出的旧条目自动不显示）
 //   { date: 'YYYY-MM-DD', title: '标题', href: '跳转目标' }
 //   - 周报更新 → href 用 `/issue/issue-N/`
 //   - 电台更新 → href 用 `#radio`（跳转到早间电台版）
@@ -632,7 +632,7 @@ const radioLatestUrl = RADIO_LATEST_URL;
 						<h2 class="recent-title">近期更新</h2>
 						<ul class="recent-list">
 							{
-								recentUpdates.map((u, i) => (
+								recentUpdates.slice(0, 4).map((u, i) => (
 									<li data-mobile-hide={i > 1 ? '1' : undefined}>
 										<a class="row" href={u.href}>
 											<span class="date">{u.date}</span>

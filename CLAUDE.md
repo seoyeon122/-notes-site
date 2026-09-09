@@ -63,18 +63,18 @@
 #### 二、必须手动维护的项
 
 **A. 新增一期周报（issue-N.md）时：**
-1. 在 `src/pages/index.astro` 顶部 `recentUpdates` 数组**最前面加一条**：`{ date: 'YYYY-MM-DD', title: '第N期 · 标题', href: '/issue/issue-N/' }`
+1. 在 `src/pages/index.astro` 顶部 `recentUpdates` 数组**最前面加一条**：`{ date: 'YYYY-MM-DD', title: '第N期 · 标题', href: '/issue/issue-N/' }`（首页只显示最新 4 条，最旧的自动不显示）
 2. 确认 frontmatter 填了 `highlights`（否则首页卡片不显示）
 3. `npm run build` 验证 → `git push`
 
 **B. 早间电台更新到新一期时：**
-1. 在 `recentUpdates` 数组**最前面加一条**：`{ date: 'YYYY-MM-DD', title: '…', href: '#radio' }`
+1. 在 `recentUpdates` 数组**最前面加一条**：`{ date: 'YYYY-MM-DD', title: '…', href: '#radio' }`（首页只显示最新 4 条，最旧的自动不显示）
 2. 在 `src/consts.ts` 的 `RADIO_EPISODES` 数组**最前面加一条**：`{ issue, image, url, album }`（封面图放 `public/images/radio/`）。首页电台版、电台归档页 `/radio`、「收听最新一期」按钮（`RADIO_LATEST_URL`）会自动跟随。
 3. `npm run build` 验证 → `git push`
 
 **B′. 有新视频投稿时：**
 1. 投稿数据（封面图/标题/链接/描述）加到 `src/consts.ts` 的 `VIDEO_SUBMISSIONS` 数组**最前面**（封面放 `public/images/videos/`）；首页投稿影院版会自动跟随。
-2. 在 `recentUpdates` 数组**最前面加一条**：`{ date: 'YYYY-MM-DD', title: '新投稿 · 标题', href: '#videos' }`（跳首页投稿影院）。
+2. 在 `recentUpdates` 数组**最前面加一条**：`{ date: 'YYYY-MM-DD', title: '新投稿 · 标题', href: '#videos' }`（跳首页投稿影院；首页只显示最新 4 条，最旧的自动不显示）。
 3. `npm run build` 验证 → `git push`
 
 **C. 有"之后要改"的临时占位时（如链接待替换为导剪版）：**

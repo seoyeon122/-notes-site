@@ -71,7 +71,7 @@ frontmatter：`title`(必填) / `issue`(必填，整数期数) / `pubDate`(必�
 5. **首页视频影院（已完成）**：组件 `VideoCinema.astro`，投稿数据在 `src/consts.ts` 的 `VIDEO_SUBMISSIONS`；封面放 `public/images/videos/`，当前三张均已压成真正的 WebP。四张大背景用 Astro `Image` 输出响应式 WebP，保持单一图片节点以免破坏 CSS Grid 排版。
 6. 可选：自定义域名；WebGL 特别篇页（架构支持 Three.js 岛屿，非必须）
 
-**长期每周流程**：朋友发周报 → 复制模板到 `src/content/issues/` → 重排版 → **同步在首页 `recentUpdates` 数组加一条"近期更新"跳转（周报用 `/issue/issue-N/`、电台用 `#radio`、投稿用 `#videos`）** → `git push`。⚠️ 维护"近期更新"栏是硬性步骤，漏掉等于未完成（详见 CLAUDE.md §4）。
+**长期每周流程**：朋友发周报 → 复制模板到 `src/content/issues/` → 重排版 → **同步在首页 `recentUpdates` 数组加一条"近期更新"跳转（周报用 `/issue/issue-N/`、电台用 `#radio`、投稿用 `#videos`）**（只显示最新 4 条，旧条目自动不显示） → `git push`。⚠️ 维护"近期更新"栏是硬性步骤，漏掉等于未完成（详见 CLAUDE.md §4）。
 
 ## 9. 协作模式
 
