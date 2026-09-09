@@ -111,6 +111,8 @@
 
 ## 6. 测试与验证规则
 
+> 🖥️ **命令环境提示（新会话）**：本机终端是 **PowerShell** 不是 bash，别用 unix 命令；项目根目录 `D:\002-explore\notes-site`（旧 `e:\002-site` 已废弃）；git 用隐私邮箱、仓库已公开；编辑偶发 `EIO` 错原样重试即可。完整约定见 AGENTS.md §5。
+
 - **必跑**：`npm run build`，确认无 TypeScript/Astro 编译错误。
 - **视觉验收交给用户**：不要在 AI 侧用截图/视觉工具判断效果，用户浏览器才是标准。
 - **代码抽查允许**：用 `grep` / `read` 抽查产物关键点（类名、颜色值、结构顺序、frontmatter 字段）。

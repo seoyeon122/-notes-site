@@ -39,6 +39,14 @@ frontmatter：`title`(必填) / `issue`(必填，整数期数) / `pubDate`(必�
 
 ## 5. 常用命令
 
+> **命令环境约定（AI 新会话必读，避免踩坑）**：
+> - **终端是 PowerShell**（`pwsh`），不是 bash——不要用 `bash xxx`、`.sh`、`ls`、`cat`、`grep`、`find` 这类 unix 命令；对应用 `Get-ChildItem` / `Get-Content` / `Select-String`，或直接用可用的文件工具（read/write/edit/glob/grep）。Windows 下原生命令 `node`、`npm`、`git`、`curl.exe` 可直接调用。
+> - **工作目录**：项目在 `D:\002-explore\notes-site`。新会话执行命令前先确认在项目根目录（git 才会识别仓库）；PowerShell 里用 `workdir` 参数或 `cd`，**不要用 `cd e:\002-site`（那是废弃的旧路径）**。
+> - **git 身份已设**：`seoyeon122` / `59459301+seoyeon122@users.noreply.github.com`（GitHub 隐私邮箱，勿改回 QQ 邮箱）。仓库已公开，勿改 Private。
+> - **编辑 .astro/.md/.ts 文件**：优先用文件编辑工具（edit/write）；若偶发 `ReplaceFileW EIO` 错误，是 Windows 文件锁竞争（常见于 dev 服务器热更新时），**稍后原样重试即可**，严重时可先停 dev 服务器再改。
+> - **后台任务**：dev 服务器等长驻命令用后台方式运行（返回 job id），不要用前台阻塞。多个 dev 实例会抢端口——看到 "Another astro dev server is already running" 说明已有实例，直接用现有地址（通常 http://localhost:4321，偶为 4322）。
+> - **截图/视觉工具**：不要用（见 §9 验收约定）。
+
 - `npm run dev`（或 `astro dev --background` 后台模式；用 `astro dev status / stop / logs` 管理）
 - `npm run build` → `dist/`（改完必跑，验证一切）
 - git：`add → commit → push` 到 `origin/main`；仓库 **https://github.com/seoyeon122/-notes-site**（**已公开**，勿改回 Private）
