@@ -21,7 +21,7 @@ export const RADIO_EPISODES: RadioEpisode[] = [
 	{
 		issue: 5,
 		image: '/images/radio/image_05.png',
-		url: 'https://www.bilibili.com/video/BV1tibw6tE3X',
+		url: 'https://www.bilibili.com/video/BV1UMY26FEzQ',
 		album: '观众推歌电台第一期 / JPOP主题',
 		description: '大家工作日加油+',
 		trackNote: '', // 填好正式曲目后，改为 ''
