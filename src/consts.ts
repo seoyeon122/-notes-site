@@ -19,6 +19,15 @@ export interface RadioEpisode {
 }
 export const RADIO_EPISODES: RadioEpisode[] = [
 	{
+		issue: 6,
+		image: '/images/radio/image_06.png',
+		url: 'https://www.bilibili.com/video/BV1ypYr65EDx',
+		album: 'Tank and the Bangas',
+		description: '',
+		trackNote: '',
+		tracks: [],
+	},
+	{
 		issue: 5,
 		image: '/images/radio/image_05.png',
 		url: 'https://www.bilibili.com/video/BV1UMY26FEzQ',
