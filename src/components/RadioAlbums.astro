@@ -1,6 +1,6 @@
 ---
 import { RADIO_EPISODES, RADIO_DETAIL_COPY as copy } from '../consts';
-const visibleEpisodes = RADIO_EPISODES.filter((ep) => !ep.hidden);
+const visibleEpisodes = RADIO_EPISODES.filter((ep) => !ep.hidden).slice(0, 4);
 ---
 
 <div class="albums" data-radio-albums>
