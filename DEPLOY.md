@@ -111,7 +111,7 @@ Vercel 检测到 `main` 分支有新推送，会自动重新构建部署。**整
 
 - [ ] `src/consts.ts`：网站名、简介、编辑署名确认无误
 - [ ] `src/pages/about.astro`：补充联系方式
-- [ ] `src/content/issues/`：确认已收录期数（第 1~3 期）内容与授权无误
+- [ ] `src/content/issues/`：确认所有准备上线的期数内容与授权无误
 - [ ] 每期周报都有 `originalUrl`（B 站原文链接）
 - [ ] `npm run build` 能通过
 - [ ] GitHub 仓库已推送
