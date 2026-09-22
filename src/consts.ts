@@ -19,6 +19,28 @@ export interface RadioEpisode {
 }
 export const RADIO_EPISODES: RadioEpisode[] = [
 	{
+		issue: 7,
+		image: '/images/radio/image_07.webp',
+		url: 'https://www.bilibili.com/video/BV1obhe6uEd3',
+		album: 'empathogen / WILLOW',
+		description: 'WILLOW 于 2024 年推出的专辑：以爵士和原声编排为底色，在柔和旋律与摇滚能量之间游走。12 首歌中，还有 Jon Batiste 与 St. Vincent 参与合作。',
+		trackNote: '',
+		tracks: [
+			'home (feat. Jon Batiste)',
+			'ancient girl',
+			'symptom of life',
+			'the fear is not real',
+			'false self',
+			'pain for fun (feat. St. Vincent)',
+			'no words 1 & 2',
+			'down',
+			'run!',
+			'between i and she',
+			'“I know that face.”',
+			'b i g f e e l i n g s',
+		],
+	},
+	{
 		issue: 6,
 		image: '/images/radio/image_06.png',
 		url: 'https://www.bilibili.com/video/BV1ypYr65EDx',
