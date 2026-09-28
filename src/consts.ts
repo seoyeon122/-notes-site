@@ -19,6 +19,25 @@ export interface RadioEpisode {
 }
 export const RADIO_EPISODES: RadioEpisode[] = [
 	{
+		issue: 8,
+		image: '/images/radio/image_08.png',
+		url: 'https://www.bilibili.com/video/BV1qdae6yEdd',
+		album: '祈りでは届かない距離 / JYOCHO',
+		description: 'JYOCHO 于 2016 年推出的首张迷你专辑，以细腻的吉他编织温柔而复杂的旋律。本期收录专辑 7 首曲目，并补充《みんなおなじ》和《云う透り》。',
+		trackNote: '',
+		tracks: [
+			'family',
+			'安い命',
+			'furusato',
+			'故郷',
+			'太陽と暮らしてきた',
+			'あの木にはわたしにないものを',
+			'365',
+			'みんなおなじ（补充曲目）',
+			'云う透り（补充曲目）',
+		],
+	},
+	{
 		issue: 7,
 		image: '/images/radio/image_07.webp',
 		url: 'https://www.bilibili.com/video/BV1obhe6uEd3',
